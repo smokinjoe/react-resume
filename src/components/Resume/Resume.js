@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import './Resume.css';
+
+import './styles.css';
 
 const json = require('../../resume.json');
-
-// JOE: TODO: https://stackoverflow.com/a/43892905/355627
 
 class Resume extends Component {
 
