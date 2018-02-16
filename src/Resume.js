@@ -27,15 +27,6 @@ class Resume extends Component {
   }
 
   renderRelevantExperience () {
-    // {{each relevant_experience}}
-    //   <h3>{$value.company_name}</h3>
-    //   <div class="subheader">{$value.company_role}<br />
-    //   {$value.date_start} ~ {$value.date_end} </div>
-    //   <ul class="experience">
-    //     {{each $value.responsibilities}}<li>{$value.description}</li>{{/each}}
-    //   </ul>
-    // {{/each}}
-
     let arr = [];
 
     json.relevant_experience.forEach((xp, i) => {
@@ -60,18 +51,12 @@ class Resume extends Component {
         </div>
       );
 
-      // WIP:
     });
 
     return arr;
   }
 
   renderSchools () {
-    // {{each schools}}
-    //   <h3>{$value.school_name}</h3>
-    //   <div class="subheader">{$value.wut}<br />{$value.date_of_graduation}</div>
-    // {{/each}}
-
     let arr = [];
 
     json.schools.forEach((school, i) => {
@@ -82,11 +67,6 @@ class Resume extends Component {
   }
 
   renderProjects () {
-    // {{each projects}}
-    //   <h3>{$value.title}</h3>
-    //   <a href="{$value.link_url}">{$value.link_title}</a>
-    // {{/each}}
-
     let arr = [];
 
     json.projects.forEach((project, i) => {
@@ -106,16 +86,11 @@ class Resume extends Component {
       state,
       zip,
       phone,
-      // technical_experience,
-      // weapons_of_choice,
-      // relevant_experience,
-      // schools,
-      // projects,
       references
     } = json;
 
     return (
-      <div>
+      <div id="container">
         <div className={["header"]}>
           <div className={["name-email"]}>
             <span className={["name"]}>{name}<br />
