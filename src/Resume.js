@@ -6,10 +6,6 @@ const json = require('./resume.json');
 // JOE: TODO: https://stackoverflow.com/a/43892905/355627
 
 class Resume extends Component {
-  constructor (props) {
-    super(props);
-  }
-
   renderTechnicalExperience () {
     let arr = [];
 
@@ -23,8 +19,8 @@ class Resume extends Component {
   renderWeaponsOfChoice () {
     let arr = [];
 
-    json.weapons_of_choice.forEach(env => {
-      arr.push(<li>{ env.title }: { env.items.join(', ') }</li>);
+    json.weapons_of_choice.forEach((env, i) => {
+      arr.push(<li key={ i }>{ env.title }: { env.items.join(', ') }</li>);
     });
 
     return arr;
@@ -42,8 +38,8 @@ class Resume extends Component {
 
     let arr = [];
 
-    json.relevant_experience.forEach(xp => {
-      arr.push(<h3>{ xp.company_name }</h3>)
+    json.relevant_experience.forEach((xp, i) => {
+      arr.push(<h3 key={ i }>{ xp.company_name }</h3>)
 
       // WIP:
     });
@@ -59,8 +55,8 @@ class Resume extends Component {
 
     let arr = [];
 
-    json.schools.forEach(school => {
-      arr.push(<div><h3>{ school.school_name }</h3><div class="subheader">{ school.wut }<br />{ school.date_of_graduation }</div></div>)
+    json.schools.forEach((school, i) => {
+      arr.push(<div key={ i }><h3>{ school.school_name }</h3><div className={['subheader']}>{ school.wut }<br />{ school.date_of_graduation }</div></div>)
     });
 
     return arr;
@@ -74,8 +70,8 @@ class Resume extends Component {
 
     let arr = [];
 
-    json.projects.forEach(project => {
-      arr.push(<div><h3>project.title</h3><a href="{ project.link_url }">{ project.link_title }</a></div>);
+    json.projects.forEach((project, i) => {
+      arr.push(<div key={ i }><h3>project.title</h3><a href="{ project.link_url }">{ project.link_title }</a></div>);
     });
 
     return arr;
@@ -101,26 +97,26 @@ class Resume extends Component {
 
     return (
       <div>
-        <div class="header">
-          <div class="name-email">
-            <span class="name">{name}<br />
+        <div className={["header"]}>
+          <div className={["name-email"]}>
+            <span className={["name"]}>{name}<br />
               <a href="mailto:{email}">{email}</a><br />
               <a href="{website}">{website}</a>
             </span>
           </div>
-          <div class="address">{street_address}<br />{city} {state} {zip}<br />{phone}</div>
-          <div class="clear"></div>
+          <div className={["address"]}>{street_address}<br />{city} {state} {zip}<br />{phone}</div>
+          <div className={["clear"]}></div>
         </div>
 
         <div>
           <h2>Technical Experience</h2>
-          <ul class="technical-experience">
+          <ul className={["technical-experience"]}>
             { this.renderTechnicalExperience() }
           </ul>
         </div>
 
         <h2>Weapons of Choice</h2>
-        <ul class="weapons-of-choice">
+        <ul className={["weapons-of-choice"]}>
           { this.renderWeaponsOfChoice() }
         </ul>
 
@@ -131,12 +127,12 @@ class Resume extends Component {
         { this.renderSchools() }
 
         <h2>Projects</h2>
-        <div class="projects">
+        <div className={["projects"]}>
           { this.renderProjects() }
         </div>
 
-        <div class="footer">
-          <span class="refs">{ references }</span>
+        <div className={["footer"]}>
+          <span className={["refs"]}>{ references }</span>
         </div>
       </div>
     );
