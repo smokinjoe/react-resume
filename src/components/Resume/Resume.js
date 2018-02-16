@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Resume.css';
 
-const json = require('./resume.json');
+const json = require('../../resume.json');
 
 // JOE: TODO: https://stackoverflow.com/a/43892905/355627
 
