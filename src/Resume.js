@@ -3,6 +3,8 @@ import './Resume.css';
 
 const json = require('./resume.json');
 
+// JOE: TODO: https://stackoverflow.com/a/43892905/355627
+
 class Resume extends Component {
   constructor (props) {
     super(props);
@@ -11,29 +13,18 @@ class Resume extends Component {
   renderTechnicalExperience () {
     let arr = [];
 
-    json.technical_experience.forEach((exp) => {
-      let tmpArr = [];
-      // exp.items.forEach((item) => {
-      //   tmpArr.push(item);
-      // });
-
-      arr.push(<li>{ exp.title }: { exp.items.join(',') }</li>);
+    json.technical_experience.forEach((exp, i) => {
+      arr.push(<li key={ i }>{ exp.title }: { exp.items.join(', ') }</li>);
     });
 
     return arr;
   }
 
   renderWeaponsOfChoice () {
-    // {{each weapons_of_choice}}
-    // <li>{$value.title}: {{each $value.items}}{{if !$index}}{$value}{{else}}, {$value}{{/if}}{{/each}}</li>
-    // {{/each}}
-
     let arr = [];
 
     json.weapons_of_choice.forEach(env => {
-      let tmpArr = [];
-
-      arr.push(<li>{ env.title }: { env.items.join(',') }</li>);
+      arr.push(<li>{ env.title }: { env.items.join(', ') }</li>);
     });
 
     return arr;
