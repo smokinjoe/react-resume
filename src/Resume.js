@@ -6,21 +6,52 @@ const json = require('./resume.json');
 // JOE: TODO: https://stackoverflow.com/a/43892905/355627
 
 class Resume extends Component {
+
   renderTechnicalExperience () {
     let arr = [];
 
     json.technical_experience.forEach((exp, i) => {
-      arr.push(<li key={ i }>{ exp.title }: { exp.items.join(', ') }</li>);
+      arr.push(
+        <li key={ i }>{ exp.title }: { exp.items.join(', ') }</li>
+      );
     });
 
     return arr;
+  }
+
+  renderHeader () {
+    const {
+      name,
+      email,
+      website,
+      street_address,
+      city,
+      state,
+      zip,
+      phone
+    } = json;
+
+    return (
+      <div className={["header"]}>
+        <div className={["name-email"]}>
+          <span className={["name"]}>{name}<br />
+            <a href="mailto:{email}">{email}</a><br />
+            <a href="{website}">{website}</a>
+          </span>
+        </div>
+        <div className={["address"]}>{street_address}<br />{city} {state} {zip}<br />{phone}</div>
+        <div className={["clear"]}></div>
+      </div>
+    );
   }
 
   renderWeaponsOfChoice () {
     let arr = [];
 
     json.weapons_of_choice.forEach((env, i) => {
-      arr.push(<li key={ i }>{ env.title }: { env.items.join(', ') }</li>);
+      arr.push(
+        <li key={ i }>{ env.title }: { env.items.join(', ') }</li>
+      );
     });
 
     return arr;
@@ -60,7 +91,15 @@ class Resume extends Component {
     let arr = [];
 
     json.schools.forEach((school, i) => {
-      arr.push(<div key={ i }><h3>{ school.school_name }</h3><div className={['subheader']}>{ school.wut }<br />{ school.date_of_graduation }</div></div>)
+      arr.push(
+        <div key={ i }>
+          <h3>{ school.school_name }</h3>
+          <div className={['subheader']}>
+            { school.wut }<br />
+            { school.date_of_graduation }
+          </div>
+        </div>
+      );
     });
 
     return arr;
@@ -70,37 +109,22 @@ class Resume extends Component {
     let arr = [];
 
     json.projects.forEach((project, i) => {
-      arr.push(<div key={ i }><h3>project.title</h3><a href="{ project.link_url }">{ project.link_title }</a></div>);
+      arr.push(
+        <div key={ i }>
+          <h3>project.title</h3>
+          <a href="{ project.link_url }">{ project.link_title }</a>
+        </div>);
     });
 
     return arr;
   }
 
   render () {
-    const {
-      name,
-      email,
-      website,
-      street_address,
-      city,
-      state,
-      zip,
-      phone,
-      references
-    } = json;
+    const { references } = json;
 
     return (
       <div id="container">
-        <div className={["header"]}>
-          <div className={["name-email"]}>
-            <span className={["name"]}>{name}<br />
-              <a href="mailto:{email}">{email}</a><br />
-              <a href="{website}">{website}</a>
-            </span>
-          </div>
-          <div className={["address"]}>{street_address}<br />{city} {state} {zip}<br />{phone}</div>
-          <div className={["clear"]}></div>
-        </div>
+        { this.renderHeader() }
 
         <div>
           <h2>Technical Experience</h2>
