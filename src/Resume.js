@@ -39,7 +39,26 @@ class Resume extends Component {
     let arr = [];
 
     json.relevant_experience.forEach((xp, i) => {
-      arr.push(<h3 key={ i }>{ xp.company_name }</h3>)
+      let tmpArray = [];
+      xp.responsibilities.forEach((r, i) => {
+        tmpArray.push(
+          <li key={ i }>
+            { r.description }
+          </li>
+        );
+      });
+
+      arr.push(
+        <div key={ i }>
+          <h3>{ xp.company_name }</h3>
+          <div className={['subheader']}>
+            { xp.date_start } ~ { xp.date_end }
+          </div>
+          <ul className={['experience']}>
+            { tmpArray }
+          </ul>
+        </div>
+      );
 
       // WIP:
     });
