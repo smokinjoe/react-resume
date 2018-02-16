@@ -8,8 +8,6 @@ import {
 
 import './styles.css';
 
-// const json = require('../../resume.json');
-
 class Resume extends Component {
 
   constructor (props) {
