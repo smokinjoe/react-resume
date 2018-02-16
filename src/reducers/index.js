@@ -5,7 +5,7 @@ import {
 } from '../actions';
 
 const initialResumeState = {
-  data: {}
+  data: null
 };
 
 const resume = (state = initialResumeState, action) => {

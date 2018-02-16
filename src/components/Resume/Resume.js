@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import {
+  loadResume
+} from '../../actions';
 
 import './styles.css';
 
-const json = require('../../resume.json');
+// const json = require('../../resume.json');
 
 class Resume extends Component {
+
+  constructor (props) {
+    super(props);
+
+    this.props.loadResume();
+  }
 
   renderTechnicalExperience () {
     let arr = [];
 
-    json.technical_experience.forEach((exp, i) => {
+    this.props.resume.technical_experience.forEach((exp, i) => {
       arr.push(
         <li key={ i }>{ exp.title }: { exp.items.join(', ') }</li>
       );
@@ -28,7 +40,7 @@ class Resume extends Component {
       state,
       zip,
       phone
-    } = json;
+    } = this.props.resume;
 
     return (
       <div className={["header"]}>
@@ -47,7 +59,7 @@ class Resume extends Component {
   renderWeaponsOfChoice () {
     let arr = [];
 
-    json.weapons_of_choice.forEach((env, i) => {
+    this.props.resume.weapons_of_choice.forEach((env, i) => {
       arr.push(
         <li key={ i }>{ env.title }: { env.items.join(', ') }</li>
       );
@@ -59,7 +71,7 @@ class Resume extends Component {
   renderRelevantExperience () {
     let arr = [];
 
-    json.relevant_experience.forEach((xp, i) => {
+    this.props.resume.relevant_experience.forEach((xp, i) => {
       let tmpArray = [];
       xp.responsibilities.forEach((r, i) => {
         tmpArray.push(
@@ -89,7 +101,7 @@ class Resume extends Component {
   renderSchools () {
     let arr = [];
 
-    json.schools.forEach((school, i) => {
+    this.props.resume.schools.forEach((school, i) => {
       arr.push(
         <div key={ i }>
           <h3>{ school.school_name }</h3>
@@ -107,7 +119,7 @@ class Resume extends Component {
   renderProjects () {
     let arr = [];
 
-    json.projects.forEach((project, i) => {
+    this.props.resume.projects.forEach((project, i) => {
       arr.push(
         <div key={ i }>
           <h3>project.title</h3>
@@ -119,7 +131,11 @@ class Resume extends Component {
   }
 
   render () {
-    const { references } = json;
+    if (this.props.resume === null) {
+      return (null);
+    }
+
+    const { references } = this.props.resume;
 
     return (
       <div id="container">
@@ -156,4 +172,18 @@ class Resume extends Component {
   }
 }
 
-export default Resume;
+const _stateToProps = (state) => {
+  return {
+    resume: state.resume.data
+  };
+};
+
+const _dispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    loadResume
+  }, dispatch);
+};
+
+// export default Resume;
+
+export default connect(_stateToProps, _dispatchToProps)(Resume);
