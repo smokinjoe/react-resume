@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import {
   loadResume,
-  loadUserData
+  getUserData,
+  getTechnicalExperiences
 } from '../../actions';
 
 import './styles.css';
@@ -14,14 +15,17 @@ class Resume extends Component {
   constructor (props) {
     super(props);
 
-    this.props.loadUserData();
+    this.props.getUserData();
     this.props.loadResume();
+    this.props.getTechnicalExperiences();
   }
 
   renderTechnicalExperience () {
     let arr = [];
 
-    this.props.resume.technical_experience.forEach((exp, i) => {
+    console.log('JOE: this.props.technicalExperiences: ', this.props.technicalExperiences);
+
+    this.props.technicalExperiences.forEach((exp, i) => {
       arr.push(
         <li key={ i }>{ exp.title }: { exp.items.join(', ') }</li>
       );
@@ -174,15 +178,17 @@ class Resume extends Component {
 
 const _stateToProps = (state) => {
   return {
-    resume: state.resume.data,
-    user: state.user
+    resume: state.resumeTmp.data,
+    user: state.user,
+    technicalExperiences: state.technicalExperiences.data
   };
 };
 
 const _dispatchToProps = (dispatch) => {
   return bindActionCreators({
     loadResume,
-    loadUserData
+    getUserData,
+    getTechnicalExperiences
   }, dispatch);
 };
 

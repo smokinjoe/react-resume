@@ -17,7 +17,7 @@ const initialResumeState = {
   data: null
 };
 
-const resume = (state = initialResumeState, action) => {
+const resumeTmp = (state = initialResumeState, action) => {
   switch (action.type) {
     case LOAD_RESUME:
       return Object.assign({}, state, {
@@ -34,7 +34,7 @@ const resume = (state = initialResumeState, action) => {
 */
 
 import {
-  LOAD_USER_DATA
+  GET_USER_DATA
 } from '../actions';
 
 const initialUserData = {
@@ -50,7 +50,7 @@ const initialUserData = {
 
 const user = (state = initialUserData, action) => {
   switch (action.type) {
-    case LOAD_USER_DATA:
+    case GET_USER_DATA:
       return Object.assign({}, state, action.data);
       break;
 
@@ -60,12 +60,39 @@ const user = (state = initialUserData, action) => {
 };
 
 /**
+* Load technical experience data from API endpoint
+*/
+
+import {
+  GET_TECHNICAL_EXPERIENCES
+} from '../actions';
+
+// This nested array property needs to exist otherwise the array
+// becomes an object due to the nature of Object.assign
+const initialTechnicalExperiences = {
+  data: []
+};
+
+const technicalExperiences = (state = initialTechnicalExperiences, action) => {
+  switch (action.type) {
+    case GET_TECHNICAL_EXPERIENCES:
+      console.log('JOE: action.data: ', action.data);
+      return Object.assign({}, state, {data: action.data});
+      break;
+    default:
+      return state;
+  }
+};
+
+
+/**
 * Combine 'em all
 */
 
 const reducers = {
-  resume,
-  user
+  resumeTmp,
+  user,
+  technicalExperiences
 };
 
 const rootReducer = combineReducers(reducers);

@@ -53,21 +53,45 @@ const _loadResume = (dispatch) => {
 * Load user data from API endpoint
 */
 
-export const LOAD_USER_DATA = 'LOAD_USER_DATA';
-export const loadUserData = () => (dispatch) => _loadUserData(dispatch);
+export const GET_USER_DATA = 'GET_USER_DATA';
+export const getUserData = () => (dispatch) => _getUserData(dispatch);
 
-const _loadUserData = (dispatch) => {
+const _getUserData = (dispatch) => {
 
   _get({
     endpoint: 'users',
     callback: (items) => {
       if (typeof items.payload !== 'undefined') {
         dispatch({
-          type: LOAD_USER_DATA,
+          type: GET_USER_DATA,
           data: items.payload.pop()
         });
       }
     }
   })
 
+};
+
+/**
+* Load technical experience from API endpoint
+*/
+
+export const GET_TECHNICAL_EXPERIENCES = 'LOAD_TECHNICAL_EXPERIENCES';
+export const getTechnicalExperiences = () => (dispatch) => _getTechnicalExperiences(dispatch);
+
+const _getTechnicalExperiences = (dispatch) => {
+  _get({
+    endpoint: 'technical_experiences',
+    callback: (items) => {
+
+      // console.log('JOE: items: ', items);
+
+      if (typeof items.payload !== 'undefined') {
+        dispatch({
+          type: GET_TECHNICAL_EXPERIENCES,
+          data: items.payload
+        });
+      }
+    }
+  });
 };
