@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import {
-  loadResume
+  loadResume,
+  loadUserData
 } from '../../actions';
 
 import './styles.css';
@@ -13,6 +14,7 @@ class Resume extends Component {
   constructor (props) {
     super(props);
 
+    this.props.loadUserData();
     this.props.loadResume();
   }
 
@@ -38,7 +40,7 @@ class Resume extends Component {
       state,
       zip,
       phone
-    } = this.props.resume;
+    } = this.props.user;
 
     return (
       <div className={["header"]}>
@@ -120,7 +122,7 @@ class Resume extends Component {
     this.props.resume.projects.forEach((project, i) => {
       arr.push(
         <div key={ i }>
-          <h3>project.title</h3>
+          <h3>{ project.title }</h3>
           <a href="{ project.link_url }">{ project.link_title }</a>
         </div>);
     });
@@ -172,13 +174,15 @@ class Resume extends Component {
 
 const _stateToProps = (state) => {
   return {
-    resume: state.resume.data
+    resume: state.resume.data,
+    user: state.user
   };
 };
 
 const _dispatchToProps = (dispatch) => {
   return bindActionCreators({
-    loadResume
+    loadResume,
+    loadUserData
   }, dispatch);
 };
 
