@@ -125,7 +125,7 @@ export const getEmploymentExperiences = () => (dispatch) => _getEmploymentExperi
 
 const _getEmploymentExperiences = (dispatch) => {
   _get({
-    endpoint: 'employment_experienes',
+    endpoint: 'employment_experiences',
     callback: (items) => {
       if (typeof items.payload !== 'undefined') {
         dispatch({
