@@ -54,8 +54,8 @@ class Resume extends Component {
       <div className={["header"]}>
         <div className={["name-email"]}>
           <span className={["name"]}>{name}<br />
-            <a href="mailto:{email}">{email}</a><br />
-            <a href="{website}">{website}</a>
+            <a href={ "mailto:" + email }>{email}</a><br />
+            <a href={website}>{website}</a>
           </span>
         </div>
         <div className={["address"]}>{street_address}<br />{city} {state} {zip}<br />{phone}</div>

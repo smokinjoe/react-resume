@@ -101,7 +101,7 @@ const resume = (state = intialResumeState, action) => {
       action.data.sort((a, b) => {
         return b.id - a.id;
       });
-      
+
       return Object.assign({}, state, {
         employmentExperiences: action.data
       });
