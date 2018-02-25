@@ -67,9 +67,9 @@ class Resume extends Component {
   renderWeaponsOfChoice () {
     let arr = [];
 
-    this.props.resume.weaponsOfChoice.forEach((env, i) => {
+    this.props.resume.weaponsOfChoice.forEach((env) => {
       arr.push(
-        <li key={ i }>{ env.title }: { env.items.join(', ') }</li>
+        <li key={ env.id }>{ env.title }: { env.items.join(', ') }</li>
       );
     });
 
@@ -79,7 +79,7 @@ class Resume extends Component {
   renderEmploymentExperiences () {
     let arr = [];
 
-    this.props.resume.employmentExperiences.forEach((xp, i) => {
+    this.props.resume.employmentExperiences.forEach((xp) => {
       let tmpArray = [];
       xp.items.forEach((r, i) => {
         tmpArray.push(
@@ -90,7 +90,7 @@ class Resume extends Component {
       });
 
       arr.push(
-        <div key={ i }>
+        <div key={ xp.id }>
           <h3>{ xp.company_name }</h3>
           <div className={['subheader']}>
             { xp.date_start } ~ { xp.date_end }
@@ -109,9 +109,9 @@ class Resume extends Component {
   renderSchools () {
     let arr = [];
 
-    this.props.resume.schools.forEach((school, i) => {
+    this.props.resume.schools.forEach((school) => {
       arr.push(
-        <div key={ i }>
+        <div key={ school.id }>
           <h3>{ school.school_name }</h3>
           <div className={['subheader']}>
             { school.wut }<br />
@@ -127,9 +127,9 @@ class Resume extends Component {
   renderProjects () {
     let arr = [];
 
-    this.props.resume.projects.forEach((project, i) => {
+    this.props.resume.projects.forEach((project) => {
       arr.push(
-        <div key={ i }>
+        <div key={ project.id }>
           <h3>{ project.title }</h3>
           <a href="{ project.link_url }">{ project.link_title }</a>
         </div>);
