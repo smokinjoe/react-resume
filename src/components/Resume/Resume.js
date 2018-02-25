@@ -31,7 +31,7 @@ class Resume extends Component {
   renderTechnicalExperience () {
     let arr = [];
 
-    this.props.resume.technicalExperiences.reverse().forEach((exp, i) => {
+    this.props.resume.technicalExperiences.forEach((exp, i) => {
       arr.push(
         <li key={ i }>{ exp.title }: { exp.items.join(', ') }</li>
       );
@@ -81,7 +81,7 @@ class Resume extends Component {
   renderEmploymentExperiences () {
     let arr = [];
 
-    this.props.resume.employmentExperiences.reverse().forEach((xp, i) => {
+    this.props.resume.employmentExperiences.forEach((xp, i) => {
       let tmpArray = [];
       xp.items.forEach((r, i) => {
         tmpArray.push(
