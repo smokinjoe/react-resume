@@ -83,9 +83,6 @@ const _getTechnicalExperiences = (dispatch) => {
   _get({
     endpoint: 'technical_experiences',
     callback: (items) => {
-
-      // console.log('JOE: items: ', items);
-
       if (typeof items.payload !== 'undefined') {
         dispatch({
           type: GET_TECHNICAL_EXPERIENCES,
@@ -93,5 +90,94 @@ const _getTechnicalExperiences = (dispatch) => {
         });
       }
     }
+
+  });
+};
+
+/**
+* Load weapons of choice from API endpoint
+*/
+
+export const GET_WEAPONS_OF_CHOICE = 'GET_WEAPONS_OF_CHOICE';
+export const getWeaponsOfChoice = () => (dispatch) => _getWeaponsOfChoice(dispatch);
+
+const _getWeaponsOfChoice = (dispatch) => {
+  _get({
+    endpoint: 'weapons_of_choice',
+    callback: (items) => {
+      if (typeof items.payload !== 'undefined') {
+        dispatch({
+          type: GET_WEAPONS_OF_CHOICE,
+          data: items.payload
+        });
+      }
+    }
+
+  });
+};
+
+/**
+* Load employment experiences from API endpoint
+*/
+
+export const GET_EMPLOYMENT_EXPERIENCES = 'GET_EMPLOYMENT_EXPERIENCES';
+export const getEmploymentExperiences = () => (dispatch) => _getEmploymentExperiences(dispatch);
+
+const _getEmploymentExperiences = (dispatch) => {
+  _get({
+    endpoint: 'employment_experienes',
+    callback: (items) => {
+      if (typeof items.payload !== 'undefined') {
+        dispatch({
+          type: GET_EMPLOYMENT_EXPERIENCES,
+          data: items.payload
+        });
+      }
+    }
+
+  });
+};
+
+/**
+* Load schools from API endpoint
+*/
+
+export const GET_SCHOOLS = 'GET_SCHOOLS';
+export const getSchools = () => (dispatch) => _getSchools(dispatch);
+
+const _getSchools = (dispatch) => {
+  _get({
+    endpoint: 'schools',
+    callback: (items) => {
+      if (typeof items.payload !== 'undefined') {
+        dispatch({
+          type: GET_SCHOOLS,
+          data: items.payload
+        });
+      }
+    }
+
+  });
+};
+
+/**
+* Load projects from API endpoint
+*/
+
+export const GET_PROJECTS = 'GET_PROJECTS';
+export const getProjects = () => (dispatch) => _getProjects(dispatch);
+
+const _getProjects = (dispatch) => {
+  _get({
+    endpoint: 'projects',
+    callback: (items) => {
+      if (typeof items.payload !== 'undefined') {
+        dispatch({
+          type: GET_PROJECTS,
+          data: items.payload
+        });
+      }
+    }
+
   });
 };
