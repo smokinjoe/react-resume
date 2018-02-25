@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import {
-  loadResume,
   getUserData,
   getTechnicalExperiences,
   getWeaponsOfChoice,
@@ -20,7 +19,6 @@ class Resume extends Component {
     super(props);
 
     this.props.getUserData();
-    this.props.loadResume();
     this.props.getTechnicalExperiences();
     this.props.getWeaponsOfChoice();
     this.props.getEmploymentExperiences();
@@ -141,12 +139,6 @@ class Resume extends Component {
   }
 
   render () {
-    if (this.props.resumeTmp === null) {
-      return (null);
-    }
-
-    const { references } = this.props.resumeTmp;
-
     return (
       <div id="container">
         { this.renderHeader() }
@@ -175,7 +167,7 @@ class Resume extends Component {
         </div>
 
         <div className={["footer"]}>
-          <span className={["refs"]}>{ references }</span>
+          <span className={["refs"]}>References available upon request.</span>
         </div>
       </div>
     );
@@ -184,7 +176,6 @@ class Resume extends Component {
 
 const _stateToProps = (state) => {
   return {
-    resumeTmp: state.resumeTmp.data,
     user: state.user,
     resume: state.resume
   };
@@ -192,7 +183,6 @@ const _stateToProps = (state) => {
 
 const _dispatchToProps = (dispatch) => {
   return bindActionCreators({
-    loadResume,
     getUserData,
     getTechnicalExperiences,
     getWeaponsOfChoice,
