@@ -13,11 +13,11 @@ import {
   LOAD_RESUME
 } from '../actions';
 
-const initialResumeState = {
+const initialResumeStateTmp = {
   data: null
 };
 
-const resumeTmp = (state = initialResumeState, action) => {
+const resumeTmp = (state = initialResumeStateTmp, action) => {
   switch (action.type) {
     case LOAD_RESUME:
       return Object.assign({}, state, {
@@ -60,7 +60,7 @@ const user = (state = initialUserData, action) => {
 };
 
 /**
-* Load technical experience data from API endpoint
+* Load resume data
 */
 
 import {
@@ -69,15 +69,14 @@ import {
 
 // This nested array property needs to exist otherwise the array
 // becomes an object due to the nature of Object.assign
-const initialTechnicalExperiences = {
-  data: []
+const intialResumeState = {
+  technicalExperiences: []
 };
 
-const technicalExperiences = (state = initialTechnicalExperiences, action) => {
+const resume = (state = intialResumeState, action) => {
   switch (action.type) {
     case GET_TECHNICAL_EXPERIENCES:
-      console.log('JOE: action.data: ', action.data);
-      return Object.assign({}, state, {data: action.data});
+      return Object.assign({}, state, {technicalExperiences: action.data});
       break;
     default:
       return state;
@@ -92,7 +91,7 @@ const technicalExperiences = (state = initialTechnicalExperiences, action) => {
 const reducers = {
   resumeTmp,
   user,
-  technicalExperiences
+  resume
 };
 
 const rootReducer = combineReducers(reducers);

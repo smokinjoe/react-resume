@@ -23,8 +23,6 @@ class Resume extends Component {
   renderTechnicalExperience () {
     let arr = [];
 
-    console.log('JOE: this.props.technicalExperiences: ', this.props.technicalExperiences);
-
     this.props.technicalExperiences.forEach((exp, i) => {
       arr.push(
         <li key={ i }>{ exp.title }: { exp.items.join(', ') }</li>
@@ -180,7 +178,7 @@ const _stateToProps = (state) => {
   return {
     resume: state.resumeTmp.data,
     user: state.user,
-    technicalExperiences: state.technicalExperiences.data
+    technicalExperiences: state.resume.technicalExperiences
   };
 };
 
