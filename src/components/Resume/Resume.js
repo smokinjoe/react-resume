@@ -5,7 +5,11 @@ import { connect } from 'react-redux';
 import {
   loadResume,
   getUserData,
-  getTechnicalExperiences
+  getTechnicalExperiences,
+  getWeaponsOfChoice,
+  getEmploymentExperiences,
+  getSchools,
+  getProjects
 } from '../../actions';
 
 import './styles.css';
@@ -18,12 +22,16 @@ class Resume extends Component {
     this.props.getUserData();
     this.props.loadResume();
     this.props.getTechnicalExperiences();
+    this.props.getWeaponsOfChoice();
+    this.props.getEmploymentExperiences();
+    this.props.getSchools();
+    this.props.getProjects();
   }
 
   renderTechnicalExperience () {
     let arr = [];
 
-    this.props.technicalExperiences.forEach((exp, i) => {
+    this.props.resume.technicalExperiences.forEach((exp, i) => {
       arr.push(
         <li key={ i }>{ exp.title }: { exp.items.join(', ') }</li>
       );
@@ -61,7 +69,7 @@ class Resume extends Component {
   renderWeaponsOfChoice () {
     let arr = [];
 
-    this.props.resume.weapons_of_choice.forEach((env, i) => {
+    this.props.resume.weaponsOfChoice.forEach((env, i) => {
       arr.push(
         <li key={ i }>{ env.title }: { env.items.join(', ') }</li>
       );
@@ -70,15 +78,17 @@ class Resume extends Component {
     return arr;
   }
 
-  renderRelevantExperience () {
+  renderEmploymentExperiences () {
     let arr = [];
 
-    this.props.resume.relevant_experience.forEach((xp, i) => {
+    console.log('JOE: this.props.resume.employmentExperiences: ', this.props.resume.employmentExperiences);
+
+    this.props.resume.employmentExperiences.forEach((xp, i) => {
       let tmpArray = [];
-      xp.responsibilities.forEach((r, i) => {
+      xp.items.forEach((r, i) => {
         tmpArray.push(
           <li key={ i }>
-            { r.description }
+            { r }
           </li>
         );
       });
@@ -133,11 +143,11 @@ class Resume extends Component {
   }
 
   render () {
-    if (this.props.resume === null) {
+    if (this.props.resumeTmp === null) {
       return (null);
     }
 
-    const { references } = this.props.resume;
+    const { references } = this.props.resumeTmp;
 
     return (
       <div id="container">
@@ -156,7 +166,7 @@ class Resume extends Component {
         </ul>
 
         <h2>Relevant Experience</h2>
-        { this.renderRelevantExperience() }
+        { this.renderEmploymentExperiences() }
 
         <h2>Education</h2>
         { this.renderSchools() }
@@ -176,9 +186,9 @@ class Resume extends Component {
 
 const _stateToProps = (state) => {
   return {
-    resume: state.resumeTmp.data,
+    resumeTmp: state.resumeTmp.data,
     user: state.user,
-    technicalExperiences: state.resume.technicalExperiences
+    resume: state.resume
   };
 };
 
@@ -186,7 +196,11 @@ const _dispatchToProps = (dispatch) => {
   return bindActionCreators({
     loadResume,
     getUserData,
-    getTechnicalExperiences
+    getTechnicalExperiences,
+    getWeaponsOfChoice,
+    getEmploymentExperiences,
+    getSchools,
+    getProjects
   }, dispatch);
 };
 
