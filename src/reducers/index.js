@@ -64,19 +64,49 @@ const user = (state = initialUserData, action) => {
 */
 
 import {
-  GET_TECHNICAL_EXPERIENCES
+  GET_TECHNICAL_EXPERIENCES,
+  GET_WEAPONS_OF_CHOICE,
+  GET_EMPLOYMENT_EXPERIENCES,
+  GET_SCHOOLS,
+  GET_PROJECTS
 } from '../actions';
 
 // This nested array property needs to exist otherwise the array
 // becomes an object due to the nature of Object.assign
 const intialResumeState = {
-  technicalExperiences: []
+  technicalExperiences: [],
+  weaponsOfChoice: [],
+  employmentExperiences: [],
+  schools: [],
+  projects: []
 };
 
 const resume = (state = intialResumeState, action) => {
   switch (action.type) {
     case GET_TECHNICAL_EXPERIENCES:
-      return Object.assign({}, state, {technicalExperiences: action.data});
+      return Object.assign({}, state, {
+        technicalExperiences: action.data
+      });
+      break;
+    case GET_WEAPONS_OF_CHOICE:
+      return Object.assign({}, state, {
+        weaponsOfChoice: action.data
+      });
+      break;
+    case GET_EMPLOYMENT_EXPERIENCES:
+      return Object.assign({}, state, {
+        employmentExperiences: action.data
+      });
+      break;
+    case GET_SCHOOLS:
+      return Object.assign({}, state, {
+        schools: action.data
+      });
+      break;
+    case GET_PROJECTS:
+      return Object.assign({}, state, {
+        projects: action.data
+      });
       break;
     default:
       return state;
