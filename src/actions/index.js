@@ -5,14 +5,15 @@
 */
 const _get = (options = {}) => {
   const URL = 'http://localhost:8080/v1/';
-  const API_URI = '?api_key=6BYfKXXVP3gjt9wT9RybkE';
+  // const API_URI = '?api_key=6BYfKXXVP3gjt9wT9RybkE';
 
   if (typeof options.endpoint === 'undefined') {
     console.error('ERROR: You need to supply an endpoint.');
     return;
   }
 
-  let url = URL + options.endpoint + API_URI;
+  // let url = URL + options.endpoint + API_URI;
+  let url = URL + options.endpoint;
 
   // JOE: NOTE: needs some sort of error logging
 
@@ -20,7 +21,7 @@ const _get = (options = {}) => {
     method: 'GET',
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Authorization': 'Bearer ' + process.env.REACT_APP_JOE_RESUME_API_SECRET,
+      // 'Authorization': 'Bearer ' + process.env.REACT_APP_JOE_RESUME_API_SECRET,
       'Content-Type': 'Content-Type: application/json'
     }
   })
