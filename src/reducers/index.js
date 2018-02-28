@@ -10,30 +10,6 @@ import { combineReducers } from 'redux';
 */
 
 import {
-  LOAD_RESUME
-} from '../actions';
-
-const initialResumeStateTmp = {
-  data: null
-};
-
-const resumeTmp = (state = initialResumeStateTmp, action) => {
-  switch (action.type) {
-    case LOAD_RESUME:
-      return Object.assign({}, state, {
-        data: action.data
-      });
-    break;
-    default:
-      return state;
-  }
-};
-
-/**
-* Load user data from API endpoint
-*/
-
-import {
   GET_USER_DATA
 } from '../actions';
 
@@ -68,7 +44,8 @@ import {
   GET_WEAPONS_OF_CHOICE,
   GET_EMPLOYMENT_EXPERIENCES,
   GET_SCHOOLS,
-  GET_PROJECTS
+  GET_PROJECTS,
+  GET_RESUME
 } from '../actions';
 
 // This nested array property needs to exist otherwise the array
@@ -83,6 +60,22 @@ const intialResumeState = {
 
 const resume = (state = intialResumeState, action) => {
   switch (action.type) {
+    case GET_RESUME:
+      action.data.technicalExperiences.sort((a, b) => {
+        return b.id - a.id
+      });
+      action.data.employmentExperiences.sort((a, b) => {
+        return b.id - a.id
+      });
+
+      return Object.assign({}, state, {
+        technicalExperiences: action.data.technicalExperiences,
+        weaponsOfChoice: action.data.weaponsOfChoice,
+        employmentExperiences: action.data.employmentExperiences,
+        schools: action.data.schools,
+        projects: action.data.projects
+      });
+      break;
     case GET_TECHNICAL_EXPERIENCES:
       action.data.sort((a, b) => {
         return b.id - a.id;
@@ -127,7 +120,6 @@ const resume = (state = intialResumeState, action) => {
 */
 
 const reducers = {
-  resumeTmp,
   user,
   resume
 };

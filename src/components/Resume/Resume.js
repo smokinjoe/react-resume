@@ -3,12 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import {
-  getUserData,
-  getTechnicalExperiences,
-  getWeaponsOfChoice,
-  getEmploymentExperiences,
-  getSchools,
-  getProjects
+  getResume
 } from '../../actions';
 
 import './styles.css';
@@ -17,13 +12,7 @@ class Resume extends Component {
 
   constructor (props) {
     super(props);
-
-    this.props.getUserData();
-    this.props.getTechnicalExperiences();
-    this.props.getWeaponsOfChoice();
-    this.props.getEmploymentExperiences();
-    this.props.getSchools();
-    this.props.getProjects();
+    this.props.getResume();
   }
 
   renderTechnicalExperience () {
@@ -183,12 +172,7 @@ const _stateToProps = (state) => {
 
 const _dispatchToProps = (dispatch) => {
   return bindActionCreators({
-    getUserData,
-    getTechnicalExperiences,
-    getWeaponsOfChoice,
-    getEmploymentExperiences,
-    getSchools,
-    getProjects
+    getResume
   }, dispatch);
 };
 
