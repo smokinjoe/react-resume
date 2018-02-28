@@ -8,7 +8,7 @@ const URL = 'http://localhost:8080/v1/';
 const _authGet = (options = {}) => {
   // JOE: NOTE: needs some sort of error logging
 
-  const API_URI = '?api_key=6BYfKXXVP3gjt9wT9RybkE';
+  const API_URI = '?api_key=' + process.env.REACT_APP_JOE_RESUME_API_PUBLIC;
 
   if (typeof options.endpoint === 'undefined') {
     console.error('ERROR: You need to supply an endpoint.');
