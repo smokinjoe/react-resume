@@ -1,4 +1,4 @@
-const URL = 'http://localhost:8080/v1/';
+const URL = process.env.REACT_APP_JOE_RESUME_API_URL;
 
 /**
 * options:
