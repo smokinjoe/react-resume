@@ -80,6 +80,14 @@ const _getResume = (dispatch) => {
         type: GET_RESUME,
         data: items.payload
       });
+
+      if (typeof items.payload.user !== 'undefined') {
+        dispatch({
+          type: GET_USER_DATA,
+          data: items.payload.user.pop()
+        });
+      }
+
     }
   })
 
