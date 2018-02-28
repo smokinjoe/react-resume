@@ -120,7 +120,7 @@ class Resume extends Component {
       arr.push(
         <div key={ project.id }>
           <h3>{ project.title }</h3>
-          <a href="{ project.link_url }">{ project.link_title }</a>
+          <a href={ project.link_url }>{ project.link_title }</a>
         </div>);
     });
 
