@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const URL = process.env.REACT_APP_JOE_RESUME_API_URL;
 
 /**
@@ -225,3 +227,28 @@ const _getProjects = (dispatch) => {
 
   });
 };
+
+/**
+* Login action
+*/
+
+export const LOGIN = 'LOGIN';
+export const login = (username, password) => (dispatch) => _login(dispatch, username, password);
+
+const _login = (dispatch, username, password) => {
+  console.log('JOE: LOGIN with usernam: ', username);
+
+  axios.post(URL + 'login', {
+    usrname: username,
+    password: password
+  })
+  .then((response) => {
+    console.log('JOE: response: ', response);
+  });
+
+  dispatch({
+    type: LOGIN,
+    data: null
+  });
+};
+
