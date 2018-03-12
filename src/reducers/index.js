@@ -17,14 +17,15 @@ import {
   GET_USER_DATA
 } from '../actions';
 
+// JOE: NOTE: this stuff will be fetched via api later
 const initialUserData = {
-  city: null,
-  email: null,
-  name: null,
-  phone: null,
+  city: 'San Francisco',
+  email: 'joe.ekiert@gmail.com',
+  name: 'Joe Ekiert',
+  phone: '978.375.5916',
   state: null,
   street_address: null,
-  website: null,
+  website: 'http://ekiert.net',
   zip: null
 };
 
