@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 
 import Resume from './components/Resume';
+import Login from './components/Login';
 
 class App extends Component {
   render () {
@@ -31,10 +32,6 @@ const Main = () => (
     <Route exact path='/' component={ Resume } />
     <Route path='/login' component={ Login } />
   </Switch>
-);
-
-const Login = () => (
-  <h1>Login</h1>
 );
 
 export default App;

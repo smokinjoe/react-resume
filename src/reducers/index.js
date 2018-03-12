@@ -3,6 +3,10 @@
 // blocks, which causes all sorts of parse errors since I have imports
 // all over the place
 
+/* eslint-disable no-unreachable */
+// JOE: Need to do this to get lint to stop screaming at me
+
+
 import { combineReducers } from 'redux';
 
 /**
