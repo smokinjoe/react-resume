@@ -129,13 +129,18 @@ import {
   LOGIN_ERROR
 } from '../actions';
 
+import {
+  LOCAL_STORAGE
+} from '../utils/constants';
+
 const initialToken = {
-  data: null
+  data: localStorage.getItem(LOCAL_STORAGE.API_TOKEN)
 };
 
-const token = (state = {}, action) => {
+const token = (state = initialToken, action) => {
   switch (action.type) {
     case LOGIN:
+      localStorage.setItem(LOCAL_STORAGE.API_TOKEN, action.data);
       return Object.assign({}, state, {
         data: action.data
       });
