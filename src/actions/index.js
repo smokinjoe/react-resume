@@ -233,22 +233,35 @@ const _getProjects = (dispatch) => {
 */
 
 export const LOGIN = 'LOGIN';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const login = (username, password) => (dispatch) => _login(dispatch, username, password);
 
 const _login = (dispatch, username, password) => {
-  console.log('JOE: LOGIN with usernam: ', username);
 
-  axios.post(URL + 'login', {
-    usrname: username,
-    password: password
+  axios({
+    method: 'GET',
+    url: URL + 'token',
+    auth: {
+      username: username,
+      password: password
+    }
   })
   .then((response) => {
     console.log('JOE: response: ', response);
+
+    if (response.data && response.data.payload && response.data.payload.token) {
+      dispatch({
+        type: LOGIN,
+        data: response.data.payload.token
+      });
+    }
+    else {
+      dispatch({
+        type: LOGIN_ERROR
+      });
+    }
+
   });
 
-  dispatch({
-    type: LOGIN,
-    data: null
-  });
 };
 

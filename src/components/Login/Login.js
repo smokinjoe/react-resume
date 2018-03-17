@@ -17,13 +17,7 @@ class Login extends Component {
     };
   }
 
-  componentDidMount () {
-    // this.props.login();
-  }
-
   handleChange (event) {
-    // console.log('JOE: event.target.value: ', event.target.value);
-
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -66,7 +60,9 @@ class Login extends Component {
 };
 
 const _stateToProps = (state) => {
-  return {};
+  return {
+    token: state.token
+  };
 };
 
 const _dispatchToProps = (dispatch) => {

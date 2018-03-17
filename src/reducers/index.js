@@ -17,14 +17,15 @@ import {
   GET_USER_DATA
 } from '../actions';
 
+// JOE: NOTE: this stuff will be fetched via api later
 const initialUserData = {
-  city: null,
-  email: null,
-  name: null,
-  phone: null,
+  city: 'San Francisco',
+  email: 'joe.ekiert@gmail.com',
+  name: 'Joe Ekiert',
+  phone: '978.375.5916',
   state: null,
   street_address: null,
-  website: null,
+  website: 'http://ekiert.net',
   zip: null
 };
 
@@ -120,12 +121,43 @@ const resume = (state = intialResumeState, action) => {
 
 
 /**
+* Login and get that token!
+*/
+
+import {
+  LOGIN,
+  LOGIN_ERROR
+} from '../actions';
+
+import {
+  LOCAL_STORAGE
+} from '../utils/constants';
+
+const initialToken = {
+  data: localStorage.getItem(LOCAL_STORAGE.API_TOKEN)
+};
+
+const token = (state = initialToken, action) => {
+  switch (action.type) {
+    case LOGIN:
+      localStorage.setItem(LOCAL_STORAGE.API_TOKEN, action.data);
+      return Object.assign({}, state, {
+        data: action.data
+      });
+      break;
+    default:
+      return state;
+  }
+};
+
+/**
 * Combine 'em all
 */
 
 const reducers = {
   user,
-  resume
+  resume,
+  token
 };
 
 const rootReducer = combineReducers(reducers);
