@@ -121,12 +121,38 @@ const resume = (state = intialResumeState, action) => {
 
 
 /**
+* Login and get that token!
+*/
+
+import {
+  LOGIN,
+  LOGIN_ERROR
+} from '../actions';
+
+const initialToken = {
+  data: null
+};
+
+const token = (state = {}, action) => {
+  switch (action.type) {
+    case LOGIN:
+      return Object.assign({}, state, {
+        data: action.data
+      });
+      break;
+    default:
+      return state;
+  }
+};
+
+/**
 * Combine 'em all
 */
 
 const reducers = {
   user,
-  resume
+  resume,
+  token
 };
 
 const rootReducer = combineReducers(reducers);
