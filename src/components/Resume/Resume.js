@@ -6,6 +6,8 @@ import {
   getResume
 } from '../../actions';
 
+import TechnicalExperiences from '../TechnicalExperiences';
+
 import './styles.css';
 
 class Resume extends Component {
@@ -13,18 +15,6 @@ class Resume extends Component {
   constructor (props) {
     super(props);
     this.props.getResume();
-  }
-
-  renderTechnicalExperience () {
-    let arr = [];
-
-    this.props.resume.technicalExperiences.forEach((exp, i) => {
-      arr.push(
-        <li key={ i }>{ exp.title }: { exp.items.join(', ') }</li>
-      );
-    });
-
-    return arr;
   }
 
   renderHeader () {
@@ -132,12 +122,9 @@ class Resume extends Component {
       <div id="container">
         { this.renderHeader() }
 
-        <div>
-          <h2>Technical Experience</h2>
-          <ul className={["technical-experience"]}>
-            { this.renderTechnicalExperience() }
-          </ul>
-        </div>
+        <TechnicalExperiences
+            data={ this.props.resume.technicalExperiences }
+            edit={ this.props.edit } />
 
         <h2>Weapons of Choice</h2>
         <ul className={["weapons-of-choice"]}>
@@ -158,6 +145,7 @@ class Resume extends Component {
         <div className={["footer"]}>
           <span className={["refs"]}>References available upon request.</span>
         </div>
+
       </div>
     );
   }
