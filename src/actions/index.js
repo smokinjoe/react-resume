@@ -247,7 +247,7 @@ const _login = (dispatch, username, password) => {
     }
   })
   .then((response) => {
-    console.log('JOE: response: ', response);
+    // console.log('JOE: response: ', response);
 
     if (response.data && response.data.payload && response.data.payload.token) {
       dispatch({
@@ -265,3 +265,33 @@ const _login = (dispatch, username, password) => {
 
 };
 
+/**
+* Update Technical Experiences
+*/
+
+export const PUT_TECHNICAL_EXPERIENCE = 'PUT_TECHNICAL_EXPERIENCE';
+export const putTechnicalExperience = (data) => (dispatch, getState) => _putTechnicalExperience(dispatch, getState, data);
+
+const _putTechnicalExperience = (dispatch, getState, data) => {
+  let token = getState().token.data;
+
+  console.log('JOE: token: ', token);
+  console.log('JOE: data: ', data);
+
+  axios({
+    method: 'PUT',
+    url: URL + 'technical_experiences/' + data.id,
+    auth: {
+      username: token,
+      password: 'unused'
+    },
+    data: {
+      items: data.items,
+      title: data.title
+    }
+  })
+  .then(response => {
+    console.log('JOE: response: ', response);
+
+  });
+};
