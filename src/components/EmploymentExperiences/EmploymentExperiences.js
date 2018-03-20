@@ -11,8 +11,43 @@ class EmploymentExperiences extends Component {
     super(props);
 
     this.state = {
-      editing: false
+      editing: false,
+      editingId: null,
+      experience: {}
     };
+  }
+
+  toggleEditingFor (id) {
+    console.log('JOE: id: ', id);
+
+    if (this.state.editing) {
+      this.setState({
+        editing: false,
+        editingId: null,
+        experience: {}
+      });
+
+    }
+    else {
+      let experience = this.props.data.filter(obj => obj.id === id).pop();
+
+      this.setState({
+        editing: true,
+        editingId: id,
+        experience: experience
+      });
+
+    }
+  }
+
+  renderEditToggleFor (id) {
+    let canEdit = this.props.edit;
+
+    if (canEdit) {
+      return (
+        <button onClick={ this.toggleEditingFor.bind(this, id) }>Edit</button>
+      );
+    }
   }
 
   renderEmploymentExperiences () {
@@ -30,7 +65,7 @@ class EmploymentExperiences extends Component {
 
       arr.push(
         <div key={ xp.id }>
-          <h3>{ xp.company_name }</h3>
+          <h3>{ xp.company_name } { this.renderEditToggleFor(xp.id) }</h3>
           <div className={['subheader']}>
             { xp.date_start } ~ { xp.date_end }
           </div>
