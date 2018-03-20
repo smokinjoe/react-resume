@@ -52,17 +52,8 @@ class EmploymentExperiences extends Component {
   }
 
   handleChange (i, event) {
-    console.log('JOE: i: ', i);
-    console.log('JOE: event.target.value: ', event.target.value);
-
     let { experience } = this.state;
-
-    experience.items.forEach((obj, _i) => {
-      if (_i === i) {
-        obj = event.target.value
-      }
-    });
-
+    experience.items[i] = event.target.value;
     this.setState({ experience });
   }
 
