@@ -316,6 +316,34 @@ export const putWeaponOfChoice = (data) => (dispatch, getState) => _putWeaponOfC
 
 const _putWeaponOfChoice = (dispatch, getState, data) => {
   return new Promise((resolve, reject) => {
-    resolve();
+
+    let token = getState().token.data;
+
+    axios({
+      method: 'PUT',
+      url: URL + 'weapons_of_choice/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      },
+      data: {
+        items: data.items,
+        title: data.title
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: PUT_WEAPON_OF_CHOICE,
+        data: data
+      });
+
+      resolve(data);
+    })
+    .catch(error => {
+      console.log("ERROR: ", error);
+
+      reject();
+    });
+
   });
 };

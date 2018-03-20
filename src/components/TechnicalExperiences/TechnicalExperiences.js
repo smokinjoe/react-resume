@@ -56,7 +56,6 @@ class TechnicalExperiences extends Component {
 
   renderTechnicalExperience () {
     let { editing } = this.state;
-
     let arr = [];
 
     if (editing) {
