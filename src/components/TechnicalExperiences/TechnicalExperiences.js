@@ -49,9 +49,9 @@ class TechnicalExperiences extends Component {
       title: this.state[id].title
     };
 
-    this.props.putTechnicalExperience(payload);
-
-    this.toggleEditing();
+    this.props.putTechnicalExperience(payload).then(() => {
+      this.toggleEditing();
+    });
   }
 
   renderTechnicalExperience () {

@@ -273,25 +273,36 @@ export const PUT_TECHNICAL_EXPERIENCE = 'PUT_TECHNICAL_EXPERIENCE';
 export const putTechnicalExperience = (data) => (dispatch, getState) => _putTechnicalExperience(dispatch, getState, data);
 
 const _putTechnicalExperience = (dispatch, getState, data) => {
-  let token = getState().token.data;
 
-  axios({
-    method: 'PUT',
-    url: URL + 'technical_experiences/' + data.id,
-    auth: {
-      username: token,
-      password: 'unused'
-    },
-    data: {
-      items: data.items,
-      title: data.title
-    }
-  })
-  .then(response => {
+  return new Promise((resolve, reject) => {
+    let token = getState().token.data;
 
-    dispatch({
-      type: PUT_TECHNICAL_EXPERIENCE,
-      data: data
+    axios({
+      method: 'PUT',
+      url: URL + 'technical_experiences/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      },
+      data: {
+        items: data.items,
+        title: data.title
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: PUT_TECHNICAL_EXPERIENCE,
+        data: data
+      });
+
+      resolve(data);
+    })
+    .catch(error => {
+      console.log("ERROR: ", error);
+
+      reject();
     });
+
   });
+
 };
