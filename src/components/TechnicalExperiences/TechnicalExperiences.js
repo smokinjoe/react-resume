@@ -50,6 +50,8 @@ class TechnicalExperiences extends Component {
     };
 
     this.props.putTechnicalExperience(payload);
+
+    this.toggleEditing();
   }
 
   renderTechnicalExperience () {
