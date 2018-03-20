@@ -275,9 +275,6 @@ export const putTechnicalExperience = (data) => (dispatch, getState) => _putTech
 const _putTechnicalExperience = (dispatch, getState, data) => {
   let token = getState().token.data;
 
-  console.log('JOE: token: ', token);
-  console.log('JOE: data: ', data);
-
   axios({
     method: 'PUT',
     url: URL + 'technical_experiences/' + data.id,
@@ -291,7 +288,10 @@ const _putTechnicalExperience = (dispatch, getState, data) => {
     }
   })
   .then(response => {
-    console.log('JOE: response: ', response);
 
+    dispatch({
+      type: PUT_TECHNICAL_EXPERIENCE,
+      data: data
+    });
   });
 };

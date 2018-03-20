@@ -46,6 +46,7 @@ const user = (state = initialUserData, action) => {
 
 import {
   GET_TECHNICAL_EXPERIENCES,
+  PUT_TECHNICAL_EXPERIENCE,
   GET_WEAPONS_OF_CHOICE,
   GET_EMPLOYMENT_EXPERIENCES,
   GET_SCHOOLS,
@@ -113,6 +114,15 @@ const resume = (state = intialResumeState, action) => {
       return Object.assign({}, state, {
         projects: action.data
       });
+      break;
+    case PUT_TECHNICAL_EXPERIENCE:
+      state.technicalExperiences.forEach((exp, i) => {
+        if (exp.id === action.data.id) {
+          state.technicalExperiences[i] = action.data;
+        }
+      });
+
+      return Object.assign({}, state, state.technicalExperiences);
       break;
     default:
       return state;

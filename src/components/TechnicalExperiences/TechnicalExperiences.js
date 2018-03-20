@@ -16,19 +16,6 @@ class TechnicalExperiences extends Component {
 
   }
 
-  componentDidUpdate () {
-    // if (this.props.edit) {
-    //   console.log('JOE: this.props: ', this.props);
-    //   this.props.data.forEach(exp => {
-    //     // console.log('JOE: exp.id: ', exp.id);
-    //     this.setState({
-    //       [exp.id]: exp.items.join(',')
-    //     });
-    //   });
-    // }
-
-  }
-
   toggleEditing () {
     if (this.props.edit) {
       this.props.data.forEach(exp => {
@@ -47,8 +34,6 @@ class TechnicalExperiences extends Component {
   }
 
   handleChange (id, event) {
-    // console.log(event.target.value);
-
     this.setState({
       [id]: {
         title: this.state[id].title,
@@ -58,17 +43,13 @@ class TechnicalExperiences extends Component {
   }
 
   handleSubmit (id) {
-    // massage the data
     let payload = {
       id: id,
       items: this.state[id].items.split(','),
       title: this.state[id].title
     };
 
-    // console.log('JOE: this.state[id]: ', this.state[id]);
-
     this.props.putTechnicalExperience(payload);
-
   }
 
   renderTechnicalExperience () {
