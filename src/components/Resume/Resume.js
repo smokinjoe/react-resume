@@ -7,6 +7,7 @@ import {
 } from '../../actions';
 
 import TechnicalExperiences from '../TechnicalExperiences';
+import WeaponsOfChoice from '../WeaponsOfChoice';
 
 import './styles.css';
 
@@ -43,17 +44,7 @@ class Resume extends Component {
     );
   }
 
-  renderWeaponsOfChoice () {
-    let arr = [];
 
-    this.props.resume.weaponsOfChoice.forEach((env) => {
-      arr.push(
-        <li key={ env.id }>{ env.title }: { env.items.join(', ') }</li>
-      );
-    });
-
-    return arr;
-  }
 
   renderEmploymentExperiences () {
     let arr = [];
@@ -126,10 +117,9 @@ class Resume extends Component {
             data={ this.props.resume.technicalExperiences }
             edit={ this.props.edit } />
 
-        <h2>Weapons of Choice</h2>
-        <ul className={["weapons-of-choice"]}>
-          { this.renderWeaponsOfChoice() }
-        </ul>
+        <WeaponsOfChoice
+            data={ this.props.resume.weaponsOfChoice }
+            edit={ this.props.edit } />
 
         <h2>Relevant Experience</h2>
         { this.renderEmploymentExperiences() }

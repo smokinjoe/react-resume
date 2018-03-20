@@ -306,3 +306,16 @@ const _putTechnicalExperience = (dispatch, getState, data) => {
   });
 
 };
+
+/**
+* Update Weapons of Choice
+*/
+
+export const PUT_WEAPON_OF_CHOICE = 'PUT_WEAPON_OF_CHOICE';
+export const putWeaponOfChoice = (data) => (dispatch, getState) => _putWeaponOfChoice(dispatch, getState, data);
+
+const _putWeaponOfChoice = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+    resolve();
+  });
+};
