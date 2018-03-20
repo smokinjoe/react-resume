@@ -50,6 +50,7 @@ import {
   GET_WEAPONS_OF_CHOICE,
   PUT_WEAPON_OF_CHOICE,
   GET_EMPLOYMENT_EXPERIENCES,
+  PUT_EMPLOYMENT_EXPERIENCE,
   GET_SCHOOLS,
   GET_PROJECTS,
   GET_RESUME
@@ -133,6 +134,15 @@ const resume = (state = intialResumeState, action) => {
       });
 
       return Object.assign({}, state, state.weaponsOfChoice);
+      break;
+    case PUT_EMPLOYMENT_EXPERIENCE:
+      state.employmentExperiences.forEach((obj, i) => {
+        if (obj.id === action.data.id) {
+          state.employmentExperiences[i] = action.data;
+        }
+      });
+
+      return Object.assign({}, state, state.employmentExperiences);
       break;
     default:
       return state;

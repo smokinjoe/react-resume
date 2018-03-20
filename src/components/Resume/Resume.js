@@ -8,6 +8,7 @@ import {
 
 import TechnicalExperiences from '../TechnicalExperiences';
 import WeaponsOfChoice from '../WeaponsOfChoice';
+import EmploymentExperiences from '../EmploymentExperiences';
 
 import './styles.css';
 
@@ -42,38 +43,6 @@ class Resume extends Component {
         <div className={["clear"]}></div>
       </div>
     );
-  }
-
-
-
-  renderEmploymentExperiences () {
-    let arr = [];
-
-    this.props.resume.employmentExperiences.forEach((xp) => {
-      let tmpArray = [];
-      xp.items.forEach((r, i) => {
-        tmpArray.push(
-          <li key={ i }>
-            { r }
-          </li>
-        );
-      });
-
-      arr.push(
-        <div key={ xp.id }>
-          <h3>{ xp.company_name }</h3>
-          <div className={['subheader']}>
-            { xp.date_start } ~ { xp.date_end }
-          </div>
-          <ul className={['experience']}>
-            { tmpArray }
-          </ul>
-        </div>
-      );
-
-    });
-
-    return arr;
   }
 
   renderSchools () {
@@ -121,8 +90,9 @@ class Resume extends Component {
             data={ this.props.resume.weaponsOfChoice }
             edit={ this.props.edit } />
 
-        <h2>Relevant Experience</h2>
-        { this.renderEmploymentExperiences() }
+        <EmploymentExperiences
+            data={ this.props.resume.employmentExperiences }
+            edit={ this.props.edit } />
 
         <h2>Education</h2>
         { this.renderSchools() }

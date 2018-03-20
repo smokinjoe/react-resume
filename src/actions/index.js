@@ -347,3 +347,16 @@ const _putWeaponOfChoice = (dispatch, getState, data) => {
 
   });
 };
+
+/**
+* Update employment experiences
+*/
+
+export const PUT_EMPLOYMENT_EXPERIENCE = 'PUT_EMPLOYMENT_EXPERIENCE';
+export const putEmpoymentExperience = (data) => (dispatch, getState) => _putEmploymentExperience(dispatch, getState, data);
+
+const _putEmploymentExperience = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+    resolve();
+  })
+};
