@@ -51,7 +51,7 @@ class EmploymentExperiences extends Component {
     }
   }
 
-  handleChange (i, event) {
+  handleItemArrayChange (i, event) {
     let { experience } = this.state;
     experience.items[i] = event.target.value;
     this.setState({ experience });
@@ -76,7 +76,7 @@ class EmploymentExperiences extends Component {
               <input
                   type='text'
                   value={ r }
-                  onChange={ this.handleChange.bind(this, i) } />
+                  onChange={ this.handleItemArrayChange.bind(this, i) } />
               <button onClick={ this.handleSubmit.bind(this) }>Save</button>
             </div>
           );
