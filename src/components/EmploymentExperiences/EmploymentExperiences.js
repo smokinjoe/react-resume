@@ -135,6 +135,14 @@ class EmploymentExperiences extends Component {
     this.setState({ experience });
   }
 
+  handleRemoveItem (i) {
+    let { experience } = this.state;
+
+    experience.items.splice(i, 1);
+
+    this.setState({ experience });
+  }
+
   renderEmploymentExperiences () {
     let arr = [];
     let { experience, editingId } = this.state;
@@ -151,6 +159,11 @@ class EmploymentExperiences extends Component {
                   type='text'
                   value={ r }
                   onChange={ this.handleItemArrayChange.bind(this, i) } />
+              <button
+                  type='button'
+                  onClick={ this.handleRemoveItem.bind(this, i) }>
+                Remove
+              </button>
             </div>
           );
         });
