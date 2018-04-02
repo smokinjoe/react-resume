@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import {
-  saveEmpoymentExperience
+  saveEmpoymentExperience,
+  deleteEmploymentExperience
 } from '../../actions';
 
 class EmploymentExperiences extends Component {
@@ -94,6 +95,17 @@ class EmploymentExperiences extends Component {
 
   }
 
+  handleDelete () {
+    let confirmed = window.confirm('Are you sure you want to delete?');
+
+    if (confirmed) {
+      this.props.deleteEmploymentExperience(this.state.experience)
+        .then(() => {
+          this.toggleEditingFor();
+        });
+    }
+  }
+
   handleNewExperienceToggle () {
     let { editing, editingId } = this.state;
 
@@ -167,6 +179,7 @@ class EmploymentExperiences extends Component {
               { tmpArray }
             </ul>
             <button onClick={ this.handleSubmit.bind(this) }>Save</button>
+            <button onClick={ this.handleDelete.bind(this) }>Delete</button>
           </div>
         );
 
@@ -293,7 +306,8 @@ const _stateToProps = (state) => {
 
 const _dispatchToProps = (dispatch) => {
   return bindActionCreators({
-    saveEmpoymentExperience
+    saveEmpoymentExperience,
+    deleteEmploymentExperience
   }, dispatch);
 };
 

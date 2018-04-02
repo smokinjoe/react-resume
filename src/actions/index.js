@@ -354,7 +354,9 @@ const _putWeaponOfChoice = (dispatch, getState, data) => {
 
 export const PUT_EMPLOYMENT_EXPERIENCE = 'PUT_EMPLOYMENT_EXPERIENCE';
 export const POST_EMPLOYMENT_EXPERIENCE = 'POST_EMPLOYMENT_EXPERIENCE';
+export const DELETE_EMPLOYMENT_EXPERIENCE = 'DELETE_EMPLOYMENT_EXPERIENCE';
 export const saveEmpoymentExperience = (data) => (dispatch, getState) => _saveEmploymentExperience(dispatch, getState, data);
+export const deleteEmploymentExperience = (data) => (dispatch, getState) => _deleteEmploymentExperience(dispatch, getState, data);
 
 const _saveEmploymentExperience = (dispatch, getState, data) => {
   return new Promise((resolve, reject) => {
@@ -389,6 +391,7 @@ const _saveEmploymentExperience = (dispatch, getState, data) => {
       }
     })
     .then(response => {
+      data.id = response.data.payload.id;
       dispatch({
         type: type,
         data: data
@@ -402,4 +405,31 @@ const _saveEmploymentExperience = (dispatch, getState, data) => {
     });
 
   })
+};
+
+const _deleteEmploymentExperience = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+    let token = getState().token.data;
+
+    axios({
+      method: 'DELETE',
+      url: URL + 'employment_experiences/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: DELETE_EMPLOYMENT_EXPERIENCE,
+        data: data
+      });
+      resolve(data);
+    })
+    .catch(error => {
+      console.log('ERROR: ', error);
+      reject();
+    });
+
+  });
 };

@@ -52,6 +52,7 @@ import {
   GET_EMPLOYMENT_EXPERIENCES,
   PUT_EMPLOYMENT_EXPERIENCE,
   POST_EMPLOYMENT_EXPERIENCE,
+  DELETE_EMPLOYMENT_EXPERIENCE,
   GET_SCHOOLS,
   GET_PROJECTS,
   GET_RESUME
@@ -146,8 +147,16 @@ const resume = (state = intialResumeState, action) => {
       return Object.assign({}, state, state.employmentExperiences);
       break;
     case POST_EMPLOYMENT_EXPERIENCE:
-      state.employmentExperiences.push(action.data);
-      return Object.assign({}, state, state.employmentExperiences);
+      state.employmentExperiences.unshift(action.data);
+      return Object.assign({}, state, {
+        employmentExperiences: state.employmentExperiences
+      });
+      break;
+    case DELETE_EMPLOYMENT_EXPERIENCE:
+      let arr = state.employmentExperiences.filter(obj => obj.id !== action.data.id);
+      return Object.assign({}, state, {
+        employmentExperiences: arr
+      });
       break;
     default:
       return state;
