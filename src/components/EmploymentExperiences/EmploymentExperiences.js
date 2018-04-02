@@ -88,6 +88,12 @@ class EmploymentExperiences extends Component {
 
   handleSubmit () {
     console.log('JOE: this.state.experience: ', this.state.experience);
+
+    this.props.putEmpoymentExperience(this.state.experience)
+      .then(() => {
+        this.toggleEditingFor(this.state.experience.id);
+      });
+
   }
 
   renderEmploymentExperiences () {

@@ -357,6 +357,36 @@ export const putEmpoymentExperience = (data) => (dispatch, getState) => _putEmpl
 
 const _putEmploymentExperience = (dispatch, getState, data) => {
   return new Promise((resolve, reject) => {
-    resolve();
+
+    let token = getState().token.data;
+
+    axios({
+      method: 'PUT',
+      url: URL + 'employment_experiences/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      },
+      data: {
+        company_name: data.company_name,
+        company_role: data.company_role,
+        date_start: data.date_start,
+        date_end: data.date_end,
+        items: data.items
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: PUT_EMPLOYMENT_EXPERIENCE,
+        data: data
+      });
+
+      resolve(data);
+    })
+    .catch(error => {
+      console.log('ERROR: ', error);
+      reject();
+    });
+
   })
 };
