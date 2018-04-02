@@ -51,6 +51,7 @@ import {
   PUT_WEAPON_OF_CHOICE,
   GET_EMPLOYMENT_EXPERIENCES,
   PUT_EMPLOYMENT_EXPERIENCE,
+  POST_EMPLOYMENT_EXPERIENCE,
   GET_SCHOOLS,
   GET_PROJECTS,
   GET_RESUME
@@ -142,6 +143,10 @@ const resume = (state = intialResumeState, action) => {
         }
       });
 
+      return Object.assign({}, state, state.employmentExperiences);
+      break;
+    case POST_EMPLOYMENT_EXPERIENCE:
+      state.employmentExperiences.push(action.data);
       return Object.assign({}, state, state.employmentExperiences);
       break;
     default:

@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import {
-  putEmpoymentExperience
+  saveEmpoymentExperience
 } from '../../actions';
 
 class EmploymentExperiences extends Component {
@@ -87,7 +87,7 @@ class EmploymentExperiences extends Component {
 
   handleSubmit () {
 
-    this.props.putEmpoymentExperience(this.state.experience)
+    this.props.saveEmpoymentExperience(this.state.experience)
       .then(() => {
         this.toggleEditingFor(this.state.experience.id);
       });
@@ -107,14 +107,20 @@ class EmploymentExperiences extends Component {
       this.setState({
         editing: true,
         experience: {
-          company_name: null,
-          date_start: null,
-          date_end: null,
-          company_role: null,
-          items: []
+          company_name: 'Company name',
+          date_start: 'Date started',
+          date_end: 'Date ended',
+          company_role: 'Company role',
+          items: ['Lorem ipsum dolor sit employment experience.']
         }
       });
     }
+  }
+
+  handleNewEmploymentItem () {
+    let { experience } = this.state;
+    experience.items.push('Lorem ipsum dolor sit employment experience.');
+    this.setState({ experience });
   }
 
   renderEmploymentExperiences () {
@@ -196,7 +202,12 @@ class EmploymentExperiences extends Component {
   }
 
   renderNewEmploymentExperienceButton () {
-    return (<button onClick={ this.handleNewExperienceToggle.bind(this) }>New Experience</button>);
+    if (!this.state.editing) {
+      return (<button onClick={ this.handleNewExperienceToggle.bind(this) }>New Experience</button>);
+    }
+    else {
+      return <button disabled>New Experience</button>
+    }
   }
 
   renderCancelNewEmploymentExperienceButton () {
@@ -204,10 +215,61 @@ class EmploymentExperiences extends Component {
   }
 
   renderNewEmploymentExperience () {
-    let { editing, editingId } = this.state;
+    let { editing, editingId, experience } = this.state;
 
     if (editing && editingId === null) {
-      return this.renderCancelNewEmploymentExperienceButton();
+
+      let tmpArray = [];
+      let arr = [];
+
+      experience.items.forEach((r, i) => {
+        tmpArray.push(
+          <div key={ i }>
+            <input
+                type='text'
+                value={ r }
+                onChange={ this.handleItemArrayChange.bind(this, i) } />
+          </div>
+        );
+      });
+
+      tmpArray.push(
+        <button key='new-employment-item' onClick={ this.handleNewEmploymentItem.bind(this) }>New</button>
+      )
+
+      arr.push(
+        <div key='temp-new-form'>
+          <input
+              type='text'
+              value={ experience.company_name }
+              onChange={ this.handleCompanyNameChange.bind(this) } />
+          { this.renderCancelEditToggleFor(experience.id) }
+
+          <div className={['subheader']}>
+            <input
+                type='text'
+                value={ experience.date_start }
+                onChange={ this.handleDateStartChange.bind(this) } />
+            ~
+            <input
+                type='text'
+                value={ experience.date_end }
+                onChange={ this.handleDateEndChange.bind(this) } />
+            <br />
+          </div>
+          <ul className={['experience']}>
+            { tmpArray }
+          </ul>
+          <button onClick={ this.handleSubmit.bind(this) }>Save</button>
+        </div>
+      );
+
+      return (
+        <div>
+        { this.renderCancelNewEmploymentExperienceButton() }
+        { arr }
+        </div>
+      );
     }
     else {
       return this.renderNewEmploymentExperienceButton();
@@ -231,7 +293,7 @@ const _stateToProps = (state) => {
 
 const _dispatchToProps = (dispatch) => {
   return bindActionCreators({
-    putEmpoymentExperience
+    saveEmpoymentExperience
   }, dispatch);
 };
 

@@ -353,16 +353,29 @@ const _putWeaponOfChoice = (dispatch, getState, data) => {
 */
 
 export const PUT_EMPLOYMENT_EXPERIENCE = 'PUT_EMPLOYMENT_EXPERIENCE';
-export const putEmpoymentExperience = (data) => (dispatch, getState) => _putEmploymentExperience(dispatch, getState, data);
+export const POST_EMPLOYMENT_EXPERIENCE = 'POST_EMPLOYMENT_EXPERIENCE';
+export const saveEmpoymentExperience = (data) => (dispatch, getState) => _saveEmploymentExperience(dispatch, getState, data);
 
-const _putEmploymentExperience = (dispatch, getState, data) => {
+const _saveEmploymentExperience = (dispatch, getState, data) => {
   return new Promise((resolve, reject) => {
 
     let token = getState().token.data;
+    let method, url, type;
+
+    if (typeof data.id !== 'undefined') {
+      method = 'PUT';
+      url = URL + 'employment_experiences/' + data.id;
+      type = PUT_EMPLOYMENT_EXPERIENCE;
+    }
+    else {
+      method = 'POST';
+      url = URL + 'employment_experiences';
+      type = POST_EMPLOYMENT_EXPERIENCE
+    }
 
     axios({
-      method: 'PUT',
-      url: URL + 'employment_experiences/' + data.id,
+      method: method,
+      url: url,
       auth: {
         username: token,
         password: 'unused'
@@ -377,7 +390,7 @@ const _putEmploymentExperience = (dispatch, getState, data) => {
     })
     .then(response => {
       dispatch({
-        type: PUT_EMPLOYMENT_EXPERIENCE,
+        type: type,
         data: data
       });
 
