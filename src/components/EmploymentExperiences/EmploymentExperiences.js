@@ -18,7 +18,6 @@ class EmploymentExperiences extends Component {
   }
 
   toggleEditingFor (id) {
-    console.log('JOE: id: ', id);
 
     if (this.state.editing) {
       this.setState({
@@ -87,13 +86,35 @@ class EmploymentExperiences extends Component {
   }
 
   handleSubmit () {
-    console.log('JOE: this.state.experience: ', this.state.experience);
 
     this.props.putEmpoymentExperience(this.state.experience)
       .then(() => {
         this.toggleEditingFor(this.state.experience.id);
       });
 
+  }
+
+  handleNewExperienceToggle () {
+    let { editing, editingId } = this.state;
+
+    if (editing && editingId === null) {
+      this.setState({
+        editing: false,
+        experience: {}
+      });
+    }
+    else {
+      this.setState({
+        editing: true,
+        experience: {
+          company_name: null,
+          date_start: null,
+          date_end: null,
+          company_role: null,
+          items: []
+        }
+      });
+    }
   }
 
   renderEmploymentExperiences () {
@@ -174,10 +195,30 @@ class EmploymentExperiences extends Component {
     return arr;
   }
 
+  renderNewEmploymentExperienceButton () {
+    return (<button onClick={ this.handleNewExperienceToggle.bind(this) }>New Experience</button>);
+  }
+
+  renderCancelNewEmploymentExperienceButton () {
+    return (<button onClick={ this.handleNewExperienceToggle.bind(this) }>Cancel</button>);
+  }
+
+  renderNewEmploymentExperience () {
+    let { editing, editingId } = this.state;
+
+    if (editing && editingId === null) {
+      return this.renderCancelNewEmploymentExperienceButton();
+    }
+    else {
+      return this.renderNewEmploymentExperienceButton();
+    }
+  }
+
   render () {
     return (
       <div>
         <h2>Relevant Experience</h2>
+        { this.renderNewEmploymentExperience() }
         { this.renderEmploymentExperiences() }
       </div>
     );
