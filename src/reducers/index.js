@@ -54,6 +54,7 @@ import {
   POST_EMPLOYMENT_EXPERIENCE,
   DELETE_EMPLOYMENT_EXPERIENCE,
   GET_SCHOOLS,
+  PUT_SCHOOL,
   GET_PROJECTS,
   GET_RESUME
 } from '../actions';
@@ -107,6 +108,16 @@ const resume = (state = intialResumeState, action) => {
 
       return Object.assign({}, state, {
         employmentExperiences: action.data
+      });
+      break;
+    case PUT_SCHOOL:
+      state.schools.forEach((obj, i) => {
+        if (obj.id === action.data.id) {
+          state.schools[i] = action.data;
+        }
+      });
+      return Object.assign({}, state, {
+        schools: state.schools
       });
       break;
     case GET_SCHOOLS:
