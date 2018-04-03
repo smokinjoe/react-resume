@@ -10,6 +10,7 @@ import TechnicalExperiences from '../TechnicalExperiences';
 import WeaponsOfChoice from '../WeaponsOfChoice';
 import EmploymentExperiences from '../EmploymentExperiences';
 import Schools from '../Schools';
+import Projects from '../Projects';
 
 import './styles.css';
 
@@ -46,20 +47,6 @@ class Resume extends Component {
     );
   }
 
-  renderProjects () {
-    let arr = [];
-
-    this.props.resume.projects.forEach((project) => {
-      arr.push(
-        <div key={ project.id }>
-          <h3>{ project.title }</h3>
-          <a href={ project.link_url }>{ project.link_title }</a>
-        </div>);
-    });
-
-    return arr;
-  }
-
   render () {
     return (
       <div id="container">
@@ -81,10 +68,9 @@ class Resume extends Component {
             data={ this.props.resume.schools }
             edit={ this.props.edit } />
 
-        <h2>Projects</h2>
-        <div className={["projects"]}>
-          { this.renderProjects() }
-        </div>
+        <Projects
+            data={ this.props.resume.projects }
+            edit={ this.props.edit } />
 
         <div className={["footer"]}>
           <span className={["refs"]}>References available upon request.</span>

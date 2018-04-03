@@ -56,6 +56,7 @@ import {
   GET_SCHOOLS,
   PUT_SCHOOL,
   GET_PROJECTS,
+  PUT_PROJECT,
   GET_RESUME
 } from '../actions';
 
@@ -128,6 +129,16 @@ const resume = (state = intialResumeState, action) => {
     case GET_PROJECTS:
       return Object.assign({}, state, {
         projects: action.data
+      });
+      break;
+    case PUT_PROJECT:
+      state.projects.forEach((obj, i) => {
+        if (obj.id === action.data.id) {
+          state.projects[i] = action.data
+        }
+      });
+      return Object.assign({}, state, {
+        projects: state.projects
       });
       break;
     case PUT_TECHNICAL_EXPERIENCE:

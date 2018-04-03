@@ -473,3 +473,42 @@ const _saveSchool = (dispatch, getState, data) => {
 
   });
 };
+
+/**
+* Update Project stuffs
+*/
+
+export const PUT_PROJECT = 'PUT_PROJECT';
+export const saveProject = (data) => (dispatch, getState) => _saveProject(dispatch, getState, data);
+
+const _saveProject = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+    let token = getState().token.data;
+
+    axios({
+      method: 'PUT',
+      url: URL + 'projects/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      },
+      data: {
+        title: data.title,
+        link_url: data.link_url,
+        link_title: data.link_title
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: PUT_PROJECT,
+        data: data
+      });
+      resolve(data);
+    })
+    .catch(error => {
+      console.log('ERROR: ', error);
+      reject();
+    });
+
+  });
+};
