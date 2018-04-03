@@ -433,3 +433,43 @@ const _deleteEmploymentExperience = (dispatch, getState, data) => {
 
   });
 };
+
+/**
+* Update School stuffs
+*/
+
+export const PUT_SCHOOL = 'PUT_SCHOOL';
+export const saveSchool = (data) => (dispatch, getState) => _saveSchool(dispatch, getState, data);
+
+const _saveSchool = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+
+    let token = getState().token.data;
+
+    axios({
+      method: 'PUT',
+      url: URL + 'schools/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      },
+      data: {
+        school_name: data.school_name,
+        wut: data.wut,
+        date_of_graduation: data.date_of_graduation
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: PUT_SCHOOL,
+        data: data
+      });
+      resolve(data);
+    })
+    .catch(error => {
+      console.log('ERROR: ', error);
+      reject();
+    });
+
+  });
+};

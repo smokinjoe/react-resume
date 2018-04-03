@@ -9,6 +9,7 @@ import {
 import TechnicalExperiences from '../TechnicalExperiences';
 import WeaponsOfChoice from '../WeaponsOfChoice';
 import EmploymentExperiences from '../EmploymentExperiences';
+import Schools from '../Schools';
 
 import './styles.css';
 
@@ -45,24 +46,6 @@ class Resume extends Component {
     );
   }
 
-  renderSchools () {
-    let arr = [];
-
-    this.props.resume.schools.forEach((school) => {
-      arr.push(
-        <div key={ school.id }>
-          <h3>{ school.school_name }</h3>
-          <div className={['subheader']}>
-            { school.wut }<br />
-            { school.date_of_graduation }
-          </div>
-        </div>
-      );
-    });
-
-    return arr;
-  }
-
   renderProjects () {
     let arr = [];
 
@@ -94,8 +77,9 @@ class Resume extends Component {
             data={ this.props.resume.employmentExperiences }
             edit={ this.props.edit } />
 
-        <h2>Education</h2>
-        { this.renderSchools() }
+        <Schools
+            data={ this.props.resume.schools }
+            edit={ this.props.edit } />
 
         <h2>Projects</h2>
         <div className={["projects"]}>
