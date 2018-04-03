@@ -36,6 +36,28 @@ class Projects extends Component {
     }
   }
 
+  toggleNewProjectForm () {
+    let { editing, editingId } = this.state;
+
+    if (editing && editingId === null) {
+      this.setState({
+        editing: false,
+        project: {},
+        editingId: null
+      });
+    }
+    else {
+      this.setState({
+        editing: true,
+        project: {
+          title: 'Give me a title!',
+          link_url: 'Gimme a link url!',
+          link_title: 'Gimme a .. link title! Probably the same as the url!'
+        }
+      });
+    }
+  }
+
   handleSubmit () {
     let { project } = this.state;
 
@@ -62,7 +84,6 @@ class Projects extends Component {
                 type='text'
                 value={ project.title }
                 onChange={ this.handleChange.bind(this, 'title') } />
-            { this.renderEditToggle(project) }
             <br />
             <input
                 type='text'
@@ -75,6 +96,7 @@ class Projects extends Component {
                 onChange={ this.handleChange.bind(this, 'link_title') } />
             <br />
             <button onClick={ this.handleSubmit.bind(this) } >Save</button>
+            { this.renderEditToggle(project) }
           </div>
 
         );
@@ -108,11 +130,63 @@ class Projects extends Component {
     }
   }
 
+  renderNewProjectStuff () {
+    if (this.props.edit) {
+      let { editing, editingId, project } = this.state;
+
+      if (editing && editingId === null) {
+
+        return (
+          <div>
+            { this.renderNewProjectStuffButton() }
+            <br />
+            <input
+                type='text'
+                value={ project.title }
+                onChange={ this.handleChange.bind(this, 'title') } />
+            <br />
+            <input
+                type='text'
+                value={ project.link_title }
+                onChange={ this.handleChange.bind(this, 'link_title') } />
+            <br />
+            <input
+                type='text'
+                value={ project.link_url }
+                onChange={ this.handleChange.bind(this, 'link_url') } />
+            <br />
+            <button onClick={ this.handleSubmit.bind(this) }>Save</button>
+            <button onClick={ this.toggleEditing.bind(this) }>Cancel</button>
+
+          </div>
+        );
+
+
+      }
+      else {
+        return this.renderNewProjectStuffButton();
+      }
+
+    }
+  }
+
+  renderNewProjectStuffButton () {
+    if (this.props.edit) {
+      if (this.state.editing) {
+        return <button disabled>New project</button>;
+      }
+      else {
+        return <button onClick={ this.toggleNewProjectForm.bind(this) }>New project</button>;
+      }
+    }
+  }
+
   render () {
     return (
       <div>
         <h2>Projects</h2>
         <div className={["projects"]}>
+          { this.renderNewProjectStuff() }
           { this.renderProjects() }
         </div>
       </div>
