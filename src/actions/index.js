@@ -479,15 +479,31 @@ const _saveSchool = (dispatch, getState, data) => {
 */
 
 export const PUT_PROJECT = 'PUT_PROJECT';
+export const POST_PROJECT = 'POST_PROJECT';
+export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const saveProject = (data) => (dispatch, getState) => _saveProject(dispatch, getState, data);
+export const deleteProject = (data) => (dispatch, getState) => _deleteProject(dispatch, getState, data);
 
 const _saveProject = (dispatch, getState, data) => {
   return new Promise((resolve, reject) => {
     let token = getState().token.data;
 
+    let method, url, type;
+
+    if (typeof data.id === 'undefined') {
+      method = 'POST';
+      url = URL + 'projects';
+      type = POST_PROJECT;
+    }
+    else {
+      method = 'PUT';
+      url = URL + 'projects/' + data.id;
+      type = PUT_PROJECT;
+    }
+
     axios({
-      method: 'PUT',
-      url: URL + 'projects/' + data.id,
+      method: method,
+      url: url,
       auth: {
         username: token,
         password: 'unused'
@@ -499,8 +515,36 @@ const _saveProject = (dispatch, getState, data) => {
       }
     })
     .then(response => {
+      data.id = response.data.payload.id;
       dispatch({
-        type: PUT_PROJECT,
+        type: type,
+        data: data
+      });
+      resolve(data);
+    })
+    .catch(error => {
+      console.log('ERROR: ', error);
+      reject();
+    });
+
+  });
+};
+
+const _deleteProject = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+    let token = getState().token.data;
+
+    axios({
+      method: 'DELETE',
+      url: URL + 'projects/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: DELETE_PROJECT,
         data: data
       });
       resolve(data);

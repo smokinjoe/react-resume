@@ -57,6 +57,8 @@ import {
   PUT_SCHOOL,
   GET_PROJECTS,
   PUT_PROJECT,
+  POST_PROJECT,
+  DELETE_PROJECT,
   GET_RESUME
 } from '../actions';
 
@@ -141,6 +143,18 @@ const resume = (state = intialResumeState, action) => {
         projects: state.projects
       });
       break;
+    case POST_PROJECT:
+      state.projects.push(action.data);
+      return Object.assign({}, state, {
+        projects: state.projects
+      });
+      break;
+    case DELETE_PROJECT:
+      let projectsArr = state.projects.filter(obj => obj.id !== action.data.id);
+      return Object.assign({}, state, {
+        projects: projectsArr
+      });
+      break;
     case PUT_TECHNICAL_EXPERIENCE:
       state.technicalExperiences.forEach((exp, i) => {
         if (exp.id === action.data.id) {
@@ -175,9 +189,9 @@ const resume = (state = intialResumeState, action) => {
       });
       break;
     case DELETE_EMPLOYMENT_EXPERIENCE:
-      let arr = state.employmentExperiences.filter(obj => obj.id !== action.data.id);
+      let eeArr = state.employmentExperiences.filter(obj => obj.id !== action.data.id);
       return Object.assign({}, state, {
-        employmentExperiences: arr
+        employmentExperiences: eeArr
       });
       break;
     default:

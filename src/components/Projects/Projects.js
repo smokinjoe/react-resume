@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import {
-  saveProject
+  saveProject,
+  deleteProject
 } from '../../actions';
 
 class Projects extends Component {
@@ -71,6 +72,15 @@ class Projects extends Component {
     this.setState({ project });
   }
 
+  handleDelete (project) {
+    if (window.confirm('Are you sure you want to delete this project?')) {
+      this.props.deleteProject(project)
+        .then(() => {
+          this.toggleEditing(project);
+        });
+    }
+  }
+
   renderProjects () {
     let arr = [];
     let { editing, project, editingId } = this.state;
@@ -97,6 +107,7 @@ class Projects extends Component {
             <br />
             <button onClick={ this.handleSubmit.bind(this) } >Save</button>
             { this.renderEditToggle(project) }
+            <button onClick={ this.handleDelete.bind(this, project) }>Delete</button>
           </div>
 
         );
@@ -200,7 +211,8 @@ const _stateToProps = (state) => {
 
 const _dispatchToProps = (dispatch) => {
   return bindActionCreators({
-    saveProject
+    saveProject,
+    deleteProject
   }, dispatch);
 };
 
