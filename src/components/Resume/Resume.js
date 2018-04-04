@@ -6,6 +6,12 @@ import {
   getResume
 } from '../../actions';
 
+import TechnicalExperiences from '../TechnicalExperiences';
+import WeaponsOfChoice from '../WeaponsOfChoice';
+import EmploymentExperiences from '../EmploymentExperiences';
+import Schools from '../Schools';
+import Projects from '../Projects';
+
 import './styles.css';
 
 class Resume extends Component {
@@ -13,18 +19,6 @@ class Resume extends Component {
   constructor (props) {
     super(props);
     this.props.getResume();
-  }
-
-  renderTechnicalExperience () {
-    let arr = [];
-
-    this.props.resume.technicalExperiences.forEach((exp, i) => {
-      arr.push(
-        <li key={ i }>{ exp.title }: { exp.items.join(', ') }</li>
-      );
-    });
-
-    return arr;
   }
 
   renderHeader () {
@@ -53,111 +47,35 @@ class Resume extends Component {
     );
   }
 
-  renderWeaponsOfChoice () {
-    let arr = [];
-
-    this.props.resume.weaponsOfChoice.forEach((env) => {
-      arr.push(
-        <li key={ env.id }>{ env.title }: { env.items.join(', ') }</li>
-      );
-    });
-
-    return arr;
-  }
-
-  renderEmploymentExperiences () {
-    let arr = [];
-
-    this.props.resume.employmentExperiences.forEach((xp) => {
-      let tmpArray = [];
-      xp.items.forEach((r, i) => {
-        tmpArray.push(
-          <li key={ i }>
-            { r }
-          </li>
-        );
-      });
-
-      arr.push(
-        <div key={ xp.id }>
-          <h3>{ xp.company_name }</h3>
-          <div className={['subheader']}>
-            { xp.date_start } ~ { xp.date_end }
-          </div>
-          <ul className={['experience']}>
-            { tmpArray }
-          </ul>
-        </div>
-      );
-
-    });
-
-    return arr;
-  }
-
-  renderSchools () {
-    let arr = [];
-
-    this.props.resume.schools.forEach((school) => {
-      arr.push(
-        <div key={ school.id }>
-          <h3>{ school.school_name }</h3>
-          <div className={['subheader']}>
-            { school.wut }<br />
-            { school.date_of_graduation }
-          </div>
-        </div>
-      );
-    });
-
-    return arr;
-  }
-
-  renderProjects () {
-    let arr = [];
-
-    this.props.resume.projects.forEach((project) => {
-      arr.push(
-        <div key={ project.id }>
-          <h3>{ project.title }</h3>
-          <a href={ project.link_url }>{ project.link_title }</a>
-        </div>);
-    });
-
-    return arr;
-  }
-
   render () {
     return (
       <div id="container">
         { this.renderHeader() }
 
-        <div>
-          <h2>Technical Experience</h2>
-          <ul className={["technical-experience"]}>
-            { this.renderTechnicalExperience() }
-          </ul>
-        </div>
+        <TechnicalExperiences
+            data={ this.props.resume.technicalExperiences }
+            edit={ this.props.edit } />
 
-        <h2>Weapons of Choice</h2>
-        <ul className={["weapons-of-choice"]}>
-          { this.renderWeaponsOfChoice() }
-        </ul>
+        <WeaponsOfChoice
+            data={ this.props.resume.weaponsOfChoice }
+            edit={ this.props.edit } />
 
-        <h2>Relevant Experience</h2>
-        { this.renderEmploymentExperiences() }
+        <EmploymentExperiences
+            data={ this.props.resume.employmentExperiences }
+            edit={ this.props.edit } />
 
-        <h2>Education</h2>
-        { this.renderSchools() }
+        <Schools
+            data={ this.props.resume.schools }
+            edit={ this.props.edit } />
 
-        <h2>Projects</h2>
-        <div className={["projects"]}>
-          { this.renderProjects() }
-        </div>
+        <Projects
+            data={ this.props.resume.projects }
+            edit={ this.props.edit } />
 
         <div className={["footer"]}>
           <span className={["refs"]}>References available upon request.</span>
         </div>
+
       </div>
     );
   }

@@ -46,10 +46,19 @@ const user = (state = initialUserData, action) => {
 
 import {
   GET_TECHNICAL_EXPERIENCES,
+  PUT_TECHNICAL_EXPERIENCE,
   GET_WEAPONS_OF_CHOICE,
+  PUT_WEAPON_OF_CHOICE,
   GET_EMPLOYMENT_EXPERIENCES,
+  PUT_EMPLOYMENT_EXPERIENCE,
+  POST_EMPLOYMENT_EXPERIENCE,
+  DELETE_EMPLOYMENT_EXPERIENCE,
   GET_SCHOOLS,
+  PUT_SCHOOL,
   GET_PROJECTS,
+  PUT_PROJECT,
+  POST_PROJECT,
+  DELETE_PROJECT,
   GET_RESUME
 } from '../actions';
 
@@ -104,6 +113,16 @@ const resume = (state = intialResumeState, action) => {
         employmentExperiences: action.data
       });
       break;
+    case PUT_SCHOOL:
+      state.schools.forEach((obj, i) => {
+        if (obj.id === action.data.id) {
+          state.schools[i] = action.data;
+        }
+      });
+      return Object.assign({}, state, {
+        schools: state.schools
+      });
+      break;
     case GET_SCHOOLS:
       return Object.assign({}, state, {
         schools: action.data
@@ -112,6 +131,67 @@ const resume = (state = intialResumeState, action) => {
     case GET_PROJECTS:
       return Object.assign({}, state, {
         projects: action.data
+      });
+      break;
+    case PUT_PROJECT:
+      state.projects.forEach((obj, i) => {
+        if (obj.id === action.data.id) {
+          state.projects[i] = action.data
+        }
+      });
+      return Object.assign({}, state, {
+        projects: state.projects
+      });
+      break;
+    case POST_PROJECT:
+      state.projects.push(action.data);
+      return Object.assign({}, state, {
+        projects: state.projects
+      });
+      break;
+    case DELETE_PROJECT:
+      let projectsArr = state.projects.filter(obj => obj.id !== action.data.id);
+      return Object.assign({}, state, {
+        projects: projectsArr
+      });
+      break;
+    case PUT_TECHNICAL_EXPERIENCE:
+      state.technicalExperiences.forEach((exp, i) => {
+        if (exp.id === action.data.id) {
+          state.technicalExperiences[i] = action.data;
+        }
+      });
+
+      return Object.assign({}, state, state.technicalExperiences);
+      break;
+    case PUT_WEAPON_OF_CHOICE:
+      state.weaponsOfChoice.forEach((obj, i) => {
+        if (obj.id === action.data.id) {
+          state.weaponsOfChoice[i] = action.data;
+        }
+      });
+
+      return Object.assign({}, state, state.weaponsOfChoice);
+      break;
+    case PUT_EMPLOYMENT_EXPERIENCE:
+      state.employmentExperiences.forEach((obj, i) => {
+        if (obj.id === action.data.id) {
+          state.employmentExperiences[i] = action.data;
+        }
+      });
+
+      return Object.assign({}, state, state.employmentExperiences);
+      break;
+    case POST_EMPLOYMENT_EXPERIENCE:
+      state.employmentExperiences.unshift(action.data);
+      return Object.assign({}, state, {
+        employmentExperiences: state.employmentExperiences
+      });
+      break;
+    case DELETE_EMPLOYMENT_EXPERIENCE:
+      let eeArr = state.employmentExperiences.filter(obj => obj.id !== action.data.id);
+      return Object.assign({}, state, {
+        employmentExperiences: eeArr
       });
       break;
     default:

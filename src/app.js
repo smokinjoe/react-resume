@@ -31,6 +31,7 @@ const Main = () => (
   <Switch>
     <Route exact path='/' component={ Resume } />
     <Route path='/login' component={ Login } />
+    <Route path='/edit' render={ (props) => <Resume edit={ true } /> } />
   </Switch>
 );
 

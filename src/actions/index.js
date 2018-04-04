@@ -247,7 +247,6 @@ const _login = (dispatch, username, password) => {
     }
   })
   .then((response) => {
-    console.log('JOE: response: ', response);
 
     if (response.data && response.data.payload && response.data.payload.token) {
       dispatch({
@@ -265,3 +264,294 @@ const _login = (dispatch, username, password) => {
 
 };
 
+/**
+* Update Technical Experiences
+*/
+
+export const PUT_TECHNICAL_EXPERIENCE = 'PUT_TECHNICAL_EXPERIENCE';
+export const putTechnicalExperience = (data) => (dispatch, getState) => _putTechnicalExperience(dispatch, getState, data);
+
+const _putTechnicalExperience = (dispatch, getState, data) => {
+
+  return new Promise((resolve, reject) => {
+    let token = getState().token.data;
+
+    axios({
+      method: 'PUT',
+      url: URL + 'technical_experiences/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      },
+      data: {
+        items: data.items,
+        title: data.title
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: PUT_TECHNICAL_EXPERIENCE,
+        data: data
+      });
+
+      resolve(data);
+    })
+    .catch(error => {
+      console.log("ERROR: ", error);
+
+      reject();
+    });
+
+  });
+
+};
+
+/**
+* Update Weapons of Choice
+*/
+
+export const PUT_WEAPON_OF_CHOICE = 'PUT_WEAPON_OF_CHOICE';
+export const putWeaponOfChoice = (data) => (dispatch, getState) => _putWeaponOfChoice(dispatch, getState, data);
+
+const _putWeaponOfChoice = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+
+    let token = getState().token.data;
+
+    axios({
+      method: 'PUT',
+      url: URL + 'weapons_of_choice/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      },
+      data: {
+        items: data.items,
+        title: data.title
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: PUT_WEAPON_OF_CHOICE,
+        data: data
+      });
+
+      resolve(data);
+    })
+    .catch(error => {
+      console.log("ERROR: ", error);
+
+      reject();
+    });
+
+  });
+};
+
+/**
+* Update employment experiences
+*/
+
+export const PUT_EMPLOYMENT_EXPERIENCE = 'PUT_EMPLOYMENT_EXPERIENCE';
+export const POST_EMPLOYMENT_EXPERIENCE = 'POST_EMPLOYMENT_EXPERIENCE';
+export const DELETE_EMPLOYMENT_EXPERIENCE = 'DELETE_EMPLOYMENT_EXPERIENCE';
+export const saveEmpoymentExperience = (data) => (dispatch, getState) => _saveEmploymentExperience(dispatch, getState, data);
+export const deleteEmploymentExperience = (data) => (dispatch, getState) => _deleteEmploymentExperience(dispatch, getState, data);
+
+const _saveEmploymentExperience = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+
+    let token = getState().token.data;
+    let method, url, type;
+
+    if (typeof data.id !== 'undefined') {
+      method = 'PUT';
+      url = URL + 'employment_experiences/' + data.id;
+      type = PUT_EMPLOYMENT_EXPERIENCE;
+    }
+    else {
+      method = 'POST';
+      url = URL + 'employment_experiences';
+      type = POST_EMPLOYMENT_EXPERIENCE
+    }
+
+    axios({
+      method: method,
+      url: url,
+      auth: {
+        username: token,
+        password: 'unused'
+      },
+      data: {
+        company_name: data.company_name,
+        company_role: data.company_role,
+        date_start: data.date_start,
+        date_end: data.date_end,
+        items: data.items
+      }
+    })
+    .then(response => {
+      data.id = response.data.payload.id;
+      dispatch({
+        type: type,
+        data: data
+      });
+
+      resolve(data);
+    })
+    .catch(error => {
+      console.log('ERROR: ', error);
+      reject();
+    });
+
+  })
+};
+
+const _deleteEmploymentExperience = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+    let token = getState().token.data;
+
+    axios({
+      method: 'DELETE',
+      url: URL + 'employment_experiences/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: DELETE_EMPLOYMENT_EXPERIENCE,
+        data: data
+      });
+      resolve(data);
+    })
+    .catch(error => {
+      console.log('ERROR: ', error);
+      reject();
+    });
+
+  });
+};
+
+/**
+* Update School stuffs
+*/
+
+export const PUT_SCHOOL = 'PUT_SCHOOL';
+export const saveSchool = (data) => (dispatch, getState) => _saveSchool(dispatch, getState, data);
+
+const _saveSchool = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+
+    let token = getState().token.data;
+
+    axios({
+      method: 'PUT',
+      url: URL + 'schools/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      },
+      data: {
+        school_name: data.school_name,
+        wut: data.wut,
+        date_of_graduation: data.date_of_graduation
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: PUT_SCHOOL,
+        data: data
+      });
+      resolve(data);
+    })
+    .catch(error => {
+      console.log('ERROR: ', error);
+      reject();
+    });
+
+  });
+};
+
+/**
+* Update Project stuffs
+*/
+
+export const PUT_PROJECT = 'PUT_PROJECT';
+export const POST_PROJECT = 'POST_PROJECT';
+export const DELETE_PROJECT = 'DELETE_PROJECT';
+export const saveProject = (data) => (dispatch, getState) => _saveProject(dispatch, getState, data);
+export const deleteProject = (data) => (dispatch, getState) => _deleteProject(dispatch, getState, data);
+
+const _saveProject = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+    let token = getState().token.data;
+
+    let method, url, type;
+
+    if (typeof data.id === 'undefined') {
+      method = 'POST';
+      url = URL + 'projects';
+      type = POST_PROJECT;
+    }
+    else {
+      method = 'PUT';
+      url = URL + 'projects/' + data.id;
+      type = PUT_PROJECT;
+    }
+
+    axios({
+      method: method,
+      url: url,
+      auth: {
+        username: token,
+        password: 'unused'
+      },
+      data: {
+        title: data.title,
+        link_url: data.link_url,
+        link_title: data.link_title
+      }
+    })
+    .then(response => {
+      data.id = response.data.payload.id;
+      dispatch({
+        type: type,
+        data: data
+      });
+      resolve(data);
+    })
+    .catch(error => {
+      console.log('ERROR: ', error);
+      reject();
+    });
+
+  });
+};
+
+const _deleteProject = (dispatch, getState, data) => {
+  return new Promise((resolve, reject) => {
+    let token = getState().token.data;
+
+    axios({
+      method: 'DELETE',
+      url: URL + 'projects/' + data.id,
+      auth: {
+        username: token,
+        password: 'unused'
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: DELETE_PROJECT,
+        data: data
+      });
+      resolve(data);
+    })
+    .catch(error => {
+      console.log('ERROR: ', error);
+      reject();
+    });
+
+  });
+};
