@@ -83,7 +83,7 @@ class Projects extends Component {
 
   renderProjects () {
     let arr = [];
-    let { editing, project, editingId } = this.state;
+    let { editingId } = this.state;
 
     this.props.data.forEach((project) => {
       if (editingId === project.id) {
