@@ -29,7 +29,7 @@ class Schools extends Component {
       else {
         this.setState({
           editing: true,
-          school: school,
+          school: Object.assign({}, school),
           editingId: school.id
         });
       }
@@ -52,10 +52,10 @@ class Schools extends Component {
     let arr = [];
     let { editing, school, editingId } = this.state;
 
-    this.props.data.forEach((school) => {
-      if (editingId === school.id) {
+    this.props.data.forEach((_school) => {
+      if (editingId === _school.id) {
         arr.push(
-          <div key={ school.id }>
+          <div key={ _school.id }>
             <input
                 type='text'
                 value={ school.school_name }
@@ -73,17 +73,17 @@ class Schools extends Component {
             <br />
 
             <button onClick={ this.handleSubmit.bind(this) }>Save</button>
-            { this.renderEditToggle(school) }
+            { this.renderEditToggle(_school) }
           </div>
         );
       }
       else {
         arr.push(
-          <div key={ school.id }>
-            <h3>{ school.school_name } { this.renderEditToggle(school) }</h3>
+          <div key={ _school.id }>
+            <h3>{ _school.school_name } { this.renderEditToggle(_school) }</h3>
             <div className={['subheader']}>
-              { school.wut }<br />
-              { school.date_of_graduation }
+              { _school.wut }<br />
+              { _school.date_of_graduation }
             </div>
           </div>
         );

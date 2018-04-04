@@ -34,7 +34,7 @@ class EmploymentExperiences extends Component {
       this.setState({
         editing: true,
         editingId: id,
-        experience: experience
+        experience: Object.assign({}, experience)
       });
 
     }
@@ -172,18 +172,18 @@ class EmploymentExperiences extends Component {
           <div key={ xp.id }>
             <input
                 type='text'
-                value={ xp.company_name }
+                value={ experience.company_name }
                 onChange={ this.handleCompanyNameChange.bind(this) } />
 
             <div className={['subheader']}>
               <input
                   type='text'
-                  value={ xp.date_start }
+                  value={ experience.date_start }
                   onChange={ this.handleDateStartChange.bind(this) } />
               ~
               <input
                   type='text'
-                  value={ xp.date_end }
+                  value={ experience.date_end }
                   onChange={ this.handleDateEndChange.bind(this) } />
               <br />
             </div>

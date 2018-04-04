@@ -30,7 +30,7 @@ class Projects extends Component {
       else {
         this.setState({
           editing: true,
-          project: project,
+          project: Object.assign({}, project),
           editingId: project.id
         });
       }
@@ -83,13 +83,13 @@ class Projects extends Component {
 
   renderProjects () {
     let arr = [];
-    let { editingId } = this.state;
+    let { editingId, project } = this.state;
 
-    this.props.data.forEach((project) => {
-      if (editingId === project.id) {
+    this.props.data.forEach((_project) => {
+      if (editingId === _project.id) {
 
         arr.push(
-          <div key={ project.id }>
+          <div key={ _project.id }>
             <input
                 type='text'
                 value={ project.title }
@@ -106,8 +106,8 @@ class Projects extends Component {
                 onChange={ this.handleChange.bind(this, 'link_title') } />
             <br />
             <button onClick={ this.handleSubmit.bind(this) } >Save</button>
-            { this.renderEditToggle(project) }
-            <button onClick={ this.handleDelete.bind(this, project) }>Delete</button>
+            { this.renderEditToggle(_project) }
+            <button onClick={ this.handleDelete.bind(this, _project) }>Delete</button>
           </div>
 
         );
@@ -115,9 +115,9 @@ class Projects extends Component {
       }
       else {
         arr.push(
-          <div key={ project.id }>
-            <h3>{ project.title } { this.renderEditToggle(project) }</h3>
-            <a href={ project.link_url }>{ project.link_title }</a>
+          <div key={ _project.id }>
+            <h3>{ _project.title } { this.renderEditToggle(_project) }</h3>
+            <a href={ _project.link_url }>{ _project.link_title }</a>
           </div>);
 
       }
