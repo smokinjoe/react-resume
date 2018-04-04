@@ -174,7 +174,6 @@ class EmploymentExperiences extends Component {
                 type='text'
                 value={ xp.company_name }
                 onChange={ this.handleCompanyNameChange.bind(this) } />
-            { this.renderCancelEditToggleFor(xp.id) }
 
             <div className={['subheader']}>
               <input
@@ -192,6 +191,7 @@ class EmploymentExperiences extends Component {
               { tmpArray }
             </ul>
             <button onClick={ this.handleSubmit.bind(this) }>Save</button>
+            { this.renderCancelEditToggleFor(xp.id) }
             <button onClick={ this.handleDelete.bind(this) }>Delete</button>
           </div>
         );

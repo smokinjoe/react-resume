@@ -85,10 +85,13 @@ class WeaponsOfChoice extends Component {
 
   renderEditToggle () {
     let canEdit = this.props.edit;
+    let btnText = this.state.editing ? 'Cancel' : 'Edit';
 
     if (canEdit) {
       return (
-        <button onClick={ this.toggleEditing.bind(this) }>Edit</button>
+        <button onClick={ this.toggleEditing.bind(this) }>
+          { btnText }
+        </button>
       )
     }
   }

@@ -60,7 +60,6 @@ class Schools extends Component {
                 type='text'
                 value={ school.school_name }
                 onChange={ this.handleChange.bind(this, 'school_name') } />
-            { this.renderEditToggle(school) }
             <br />
             <input
                 type='text'
@@ -74,6 +73,7 @@ class Schools extends Component {
             <br />
 
             <button onClick={ this.handleSubmit.bind(this) }>Save</button>
+            { this.renderEditToggle(school) }
           </div>
         );
       }
