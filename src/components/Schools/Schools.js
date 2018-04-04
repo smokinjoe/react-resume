@@ -50,7 +50,7 @@ class Schools extends Component {
 
   renderSchools () {
     let arr = [];
-    let { editing, school, editingId } = this.state;
+    let { school, editingId } = this.state;
 
     this.props.data.forEach((_school) => {
       if (editingId === _school.id) {
