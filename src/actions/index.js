@@ -247,7 +247,6 @@ const _login = (dispatch, username, password) => {
     }
   })
   .then((response) => {
-    // console.log('JOE: response: ', response);
 
     if (response.data && response.data.payload && response.data.payload.token) {
       dispatch({
