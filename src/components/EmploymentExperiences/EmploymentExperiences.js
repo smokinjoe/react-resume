@@ -228,11 +228,13 @@ class EmploymentExperiences extends Component {
   }
 
   renderNewEmploymentExperienceButton () {
-    if (!this.state.editing) {
-      return (<button onClick={ this.handleNewExperienceToggle.bind(this) }>New Experience</button>);
-    }
-    else {
-      return <button disabled>New Experience</button>
+    if (this.props.edit) {
+      if (!this.state.editing) {
+        return (<button onClick={ this.handleNewExperienceToggle.bind(this) }>New Experience</button>);
+      }
+      else {
+        return <button disabled>New Experience</button>
+      }
     }
   }
 
