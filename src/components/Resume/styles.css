@@ -22,3 +22,15 @@ a:hover {color:#998D62;}
 .name-email {float:left;}
 .address {float:right;}
 .clear {clear:both;}
+
+div.vertical-align {
+  text-align: center;
+  display: block;
+  width: 100px;
+  margin-left: 50%;
+  left: -50px;
+}
+
+.sk-spinner {
+  margin-left: 33px;
+}
