@@ -75,23 +75,28 @@ export const GET_RESUME = 'GET_RESUME';
 export const getResume = () => (dispatch) => _getResume(dispatch);
 
 const _getResume = (dispatch) => {
-  _get({
-    endpoint: 'resume',
-    callback: (items) => {
-      dispatch({
-        type: GET_RESUME,
-        data: items.payload
-      });
-
-      if (typeof items.payload.user !== 'undefined') {
+  // return new Promise((resolve, reject) => {
+    _get({
+      endpoint: 'resume',
+      callback: (items) => {
         dispatch({
-          type: GET_USER_DATA,
-          data: items.payload.user.pop()
+          type: GET_RESUME,
+          data: items.payload
         });
-      }
 
-    }
-  })
+        if (typeof items.payload.user !== 'undefined') {
+          dispatch({
+            type: GET_USER_DATA,
+            data: items.payload.user.pop()
+          });
+        }
+
+      }
+    });
+
+  // });
+
+
 
 };
 
@@ -554,4 +559,20 @@ const _deleteProject = (dispatch, getState, data) => {
     });
 
   });
+};
+
+/**
+* Loading actions
+*/
+
+export const IDLE = 'IDLE';
+export const FETCHING = 'FETCHING';
+// export const COMPLETE = 'COMPLETE';
+// export const ERROR = 'ERROR';
+
+export const fetching = () => (dispatch) => _loading(dispatch, FETCHING);
+export const complete = () => (dispatch) => _loading(dispatch, IDLE);
+
+const _loading = (dispatch, type) => {
+  dispatch({ type });
 };

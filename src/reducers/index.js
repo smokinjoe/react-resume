@@ -231,10 +231,43 @@ const token = (state = initialToken, action) => {
 };
 
 /**
+* loading feedback dealie
+*/
+
+import {
+  IDLE,
+  FETCHING
+} from '../actions';
+
+const initialLoadingState = {
+  state: IDLE
+};
+
+const loading = (state = initialLoadingState, action) => {
+  switch (action.type) {
+    case IDLE:
+      return Object.assign({}, state, {
+        state: IDLE
+      });
+      break;
+
+    case FETCHING:
+      return Object.assign({}, state, {
+        state: FETCHING
+      });
+      break;
+
+    default:
+      return state;
+  }
+};
+
+/**
 * Combine 'em all
 */
 
 const reducers = {
+  loading,
   user,
   resume,
   token
