@@ -116,8 +116,10 @@ class Projects extends Component {
       else {
         arr.push(
           <div key={ _project.id }>
-            <h3>{ _project.title } { this.renderEditToggle(_project) }</h3>
-            <a href={ _project.link_url }>{ _project.link_title }</a>
+            <p>
+              { _project.title } { this.renderEditToggle(_project) } <br />
+              <a href={ _project.link_url }>{ _project.link_title }</a>
+            </p>
           </div>);
 
       }
@@ -195,7 +197,7 @@ class Projects extends Component {
   render () {
     return (
       <div>
-        <h2>Projects</h2>
+        <h3>Projects</h3>
         <div className={["projects"]}>
           { this.renderNewProjectStuff() }
           { this.renderProjects() }

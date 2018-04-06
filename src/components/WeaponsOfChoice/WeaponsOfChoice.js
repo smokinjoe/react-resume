@@ -99,7 +99,7 @@ class WeaponsOfChoice extends Component {
   render () {
     return (
       <div>
-        <h2>Weapons of Choice { this.renderEditToggle() } </h2>
+        <h3>Weapons of Choice { this.renderEditToggle() } </h3>
         <ul className={["weapons-of-choice"]}>
           { this.renderWeaponsOfChoice() }
         </ul>

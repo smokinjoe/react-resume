@@ -101,7 +101,7 @@ class TechnicalExperiences extends Component {
   render () {
     return (
       <div>
-        <h2>Technical Experience { this.renderEditToggle() }</h2>
+        <h3>Technical Experience { this.renderEditToggle() }</h3>
         <ul className={["technical-experience"]}>
           { this.renderTechnicalExperience() }
         </ul>

@@ -62,28 +62,52 @@ class Resume extends Component {
     }
 
     return (
-      <div id="container">
-        { this.renderHeader() }
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            { this.renderHeader() }
+          </div>
+        </div>
 
-        <TechnicalExperiences
-            data={ this.props.resume.technicalExperiences }
-            edit={ this.props.edit } />
+        <div className="row">
+          <div className="col">
+            <TechnicalExperiences
+                data={ this.props.resume.technicalExperiences }
+                edit={ this.props.edit } />
+          </div>
+        </div>
 
-        <WeaponsOfChoice
-            data={ this.props.resume.weaponsOfChoice }
-            edit={ this.props.edit } />
+        <div className="row">
+          <div className="col">
+            <WeaponsOfChoice
+                data={ this.props.resume.weaponsOfChoice }
+                edit={ this.props.edit } />
+          </div>
+        </div>
 
-        <EmploymentExperiences
-            data={ this.props.resume.employmentExperiences }
-            edit={ this.props.edit } />
+        <div className="row">
+          <div className="col">
+            <EmploymentExperiences
+                data={ this.props.resume.employmentExperiences }
+                edit={ this.props.edit } />
+          </div>
+        </div>
 
-        <Schools
-            data={ this.props.resume.schools }
-            edit={ this.props.edit } />
+        <div className="row">
+          <div className="col">
+            <Schools
+                data={ this.props.resume.schools }
+                edit={ this.props.edit } />
+          </div>
+        </div>
 
-        <Projects
-            data={ this.props.resume.projects }
-            edit={ this.props.edit } />
+        <div className="row">
+          <div className="col">
+            <Projects
+                data={ this.props.resume.projects }
+                edit={ this.props.edit } />
+          </div>
+        </div>
 
         <div className={["footer"]}>
           <span className={["refs"]}>References available upon request.</span>

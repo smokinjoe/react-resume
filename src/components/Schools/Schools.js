@@ -80,7 +80,7 @@ class Schools extends Component {
       else {
         arr.push(
           <div key={ _school.id }>
-            <h3>{ _school.school_name } { this.renderEditToggle(_school) }</h3>
+            <h5>{ _school.school_name } { this.renderEditToggle(_school) }</h5>
             <div className={['subheader']}>
               { _school.wut }<br />
               { _school.date_of_graduation }
@@ -104,7 +104,7 @@ class Schools extends Component {
   render () {
     return (
       <div>
-        <h2>Education</h2>
+        <h3>Education</h3>
         { this.renderSchools() }
       </div>
     );
