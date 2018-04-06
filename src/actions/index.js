@@ -76,6 +76,8 @@ export const getResume = () => (dispatch) => _getResume(dispatch);
 
 const _getResume = (dispatch) => {
   // return new Promise((resolve, reject) => {
+    _loading(dispatch, FETCHING);
+
     _get({
       endpoint: 'resume',
       callback: (items) => {
@@ -90,6 +92,8 @@ const _getResume = (dispatch) => {
             data: items.payload.user.pop()
           });
         }
+
+        _loading(dispatch, IDLE);
 
       }
     });
@@ -567,8 +571,6 @@ const _deleteProject = (dispatch, getState, data) => {
 
 export const IDLE = 'IDLE';
 export const FETCHING = 'FETCHING';
-// export const COMPLETE = 'COMPLETE';
-// export const ERROR = 'ERROR';
 
 export const fetching = () => (dispatch) => _loading(dispatch, FETCHING);
 export const complete = () => (dispatch) => _loading(dispatch, IDLE);
