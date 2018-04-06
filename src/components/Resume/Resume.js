@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import {
-  getResume
+  getResume,
+  FETCHING
 } from '../../actions';
 
 import TechnicalExperiences from '../TechnicalExperiences';
@@ -13,6 +14,8 @@ import Schools from '../Schools';
 import Projects from '../Projects';
 
 import './styles.css';
+
+let Spinner = require('react-spinkit');
 
 class Resume extends Component {
 
@@ -48,6 +51,16 @@ class Resume extends Component {
   }
 
   render () {
+
+    if (this.props.status === FETCHING) {
+      return (
+        <div className='absolute-middle'>
+          <h3>Please wait...</h3>
+          <Spinner name="cube-grid" />
+        </div>
+      );
+    }
+
     return (
       <div id="container">
         { this.renderHeader() }
@@ -84,7 +97,8 @@ class Resume extends Component {
 const _stateToProps = (state) => {
   return {
     user: state.user,
-    resume: state.resume
+    resume: state.resume,
+    status: state.loading.state
   };
 };
 

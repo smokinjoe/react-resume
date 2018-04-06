@@ -64,6 +64,11 @@ const _get = (options = {}) => {
     if (typeof options.callback === 'function') {
       options.callback(items);
     }
+  })
+  .catch(error => {
+    if (typeof options.error === 'function') {
+      options.error(error);
+    }
   });
 };
 
@@ -75,23 +80,44 @@ export const GET_RESUME = 'GET_RESUME';
 export const getResume = () => (dispatch) => _getResume(dispatch);
 
 const _getResume = (dispatch) => {
-  _get({
-    endpoint: 'resume',
-    callback: (items) => {
-      dispatch({
-        type: GET_RESUME,
-        data: items.payload
-      });
+  return new Promise((resolve, reject) => {
+    _loading(dispatch, FETCHING);
 
-      if (typeof items.payload.user !== 'undefined') {
+    _get({
+      endpoint: 'resume',
+      callback: (items) => {
         dispatch({
-          type: GET_USER_DATA,
-          data: items.payload.user.pop()
+          type: GET_RESUME,
+          data: items.payload
         });
-      }
 
-    }
-  })
+        if (typeof items.payload.user !== 'undefined') {
+          dispatch({
+            type: GET_USER_DATA,
+            data: items.payload.user.pop()
+          });
+        }
+
+        _loading(dispatch, IDLE);
+        resolve(items);
+
+      },
+      error: (error) => {
+        let letsGOOO = window.confirm('There has been an error fetching from the resume API endpoint. Would you like to be redirected to a static copy ... of my resume?');
+        console.log('Error: ', error);
+        reject();
+        if (letsGOOO) {
+          window.location = 'http://ekiert.net/resume';
+        }
+        else {
+          _loading(dispatch, IDLE);
+        }
+      }
+    });
+
+  });
+
+
 
 };
 
@@ -554,4 +580,18 @@ const _deleteProject = (dispatch, getState, data) => {
     });
 
   });
+};
+
+/**
+* Loading actions
+*/
+
+export const IDLE = 'IDLE';
+export const FETCHING = 'FETCHING';
+
+export const fetching = () => (dispatch) => _loading(dispatch, FETCHING);
+export const complete = () => (dispatch) => _loading(dispatch, IDLE);
+
+const _loading = (dispatch, type) => {
+  dispatch({ type });
 };
