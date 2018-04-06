@@ -64,6 +64,11 @@ const _get = (options = {}) => {
     if (typeof options.callback === 'function') {
       options.callback(items);
     }
+  })
+  .catch(error => {
+    if (typeof options.error === 'function') {
+      options.error(error);
+    }
   });
 };
 
@@ -75,7 +80,7 @@ export const GET_RESUME = 'GET_RESUME';
 export const getResume = () => (dispatch) => _getResume(dispatch);
 
 const _getResume = (dispatch) => {
-  // return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     _loading(dispatch, FETCHING);
 
     _get({
@@ -94,11 +99,23 @@ const _getResume = (dispatch) => {
         }
 
         _loading(dispatch, IDLE);
+        resolve(items);
 
+      },
+      error: (error) => {
+        let letsGOOO = window.confirm('There has been an error fetching from the resume API endpoint. Would you like to be redirected to a static copy ... of my resume?');
+        console.log('Error: ', error);
+        reject();
+        if (letsGOOO) {
+          window.location = 'http://ekiert.net/resume';
+        }
+        else {
+          _loading(dispatch, IDLE);
+        }
       }
     });
 
-  // });
+  });
 
 
 
