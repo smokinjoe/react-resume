@@ -75,7 +75,7 @@ class TechnicalExperiences extends Component {
     else {
       this.props.data.forEach((exp) => {
         arr.push(
-          <li key={ exp.id }>{ exp.title }: { exp.items.join(', ') }</li>
+          <li key={ exp.id }><strong>{ exp.title }:</strong> { exp.items.join(', ') }</li>
         );
       });
 

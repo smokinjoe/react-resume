@@ -24,8 +24,6 @@ a:hover {color:#998D62;}
 .clear {clear:both;}
 */
 
-
-
 div.vertical-align {
   text-align: center;
   display: block;
@@ -48,4 +46,21 @@ div.vertical-align {
   height: 75px;
   width: 100px;
   text-align: center;
+}
+
+/* Joe's magical style
+ *
+ *
+ *
+ *
+ *
+ * ..s
+*/
+
+.no-margin-bottom {
+  margin-bottom: 0px;
+}
+
+.yes-margin-bottom {
+  margin-bottom: 1rem;
 }

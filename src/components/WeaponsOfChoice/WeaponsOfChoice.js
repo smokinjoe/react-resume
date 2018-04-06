@@ -75,7 +75,7 @@ class WeaponsOfChoice extends Component {
     else {
       this.props.data.forEach((env) => {
         arr.push(
-          <li key={ env.id }>{ env.title }: { env.items.join(', ') }</li>
+          <li key={ env.id }><strong>{ env.title }:</strong> { env.items.join(', ') }</li>
         );
       });
     }
@@ -99,7 +99,7 @@ class WeaponsOfChoice extends Component {
   render () {
     return (
       <div>
-        <h3>Weapons of Choice { this.renderEditToggle() } </h3>
+        <h3>Preferred Tools { this.renderEditToggle() } </h3>
         <ul className={["weapons-of-choice"]}>
           { this.renderWeaponsOfChoice() }
         </ul>
