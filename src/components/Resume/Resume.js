@@ -64,7 +64,7 @@ class Resume extends Component {
     }
 
     return (
-      <div className="container">
+      <div className="container yes-margin-bottom">
         <div className="row">
           <div className="col">
             { this.renderHeader() }
@@ -111,8 +111,8 @@ class Resume extends Component {
           </div>
         </div>
 
-        <div className={["footer"]}>
-          <span className={["refs"]}>References available upon request.</span>
+        <div>
+          <h5>References available upon request.</h5>
         </div>
 
       </div>
