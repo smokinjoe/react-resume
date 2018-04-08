@@ -9,6 +9,8 @@ import reducers from './reducers';
 import App from './app';
 import registerServiceWorker from './utils/registerServiceWorker';
 
+import 'bootstrap/dist/css/bootstrap.css';
+
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 

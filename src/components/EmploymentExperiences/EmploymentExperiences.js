@@ -210,11 +210,9 @@ class EmploymentExperiences extends Component {
 
         arr.push(
           <div key={ xp.id }>
-            <h3>{ xp.company_name } { this.renderEditToggleFor(xp.id) }</h3>
-            <div className={['subheader']}>
-              { xp.date_start } ~ { xp.date_end }
-            </div>
-            <ul className={['experience']}>
+            <h5 className="no-margin-bottom">{ xp.company_name } { this.renderEditToggleFor(xp.id) }</h5>
+            <small>{ xp.date_start } ~ { xp.date_end }</small>
+            <ul>
               { tmpArray }
             </ul>
           </div>
@@ -307,7 +305,7 @@ class EmploymentExperiences extends Component {
   render () {
     return (
       <div>
-        <h2>Relevant Experience</h2>
+        <h3>Relevant Experience</h3>
         { this.renderNewEmploymentExperience() }
         { this.renderEmploymentExperiences() }
       </div>

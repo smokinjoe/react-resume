@@ -75,7 +75,7 @@ class TechnicalExperiences extends Component {
     else {
       this.props.data.forEach((exp) => {
         arr.push(
-          <li key={ exp.id }>{ exp.title }: { exp.items.join(', ') }</li>
+          <li key={ exp.id }><strong>{ exp.title }:</strong> { exp.items.join(', ') }</li>
         );
       });
 
@@ -101,7 +101,7 @@ class TechnicalExperiences extends Component {
   render () {
     return (
       <div>
-        <h2>Technical Experience { this.renderEditToggle() }</h2>
+        <h3>Technical Experience { this.renderEditToggle() }</h3>
         <ul className={["technical-experience"]}>
           { this.renderTechnicalExperience() }
         </ul>

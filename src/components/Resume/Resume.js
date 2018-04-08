@@ -37,15 +37,17 @@ class Resume extends Component {
     } = this.props.user;
 
     return (
-      <div className={["header"]}>
-        <div className={["name-email"]}>
+      <div className="row">
+        <div className="col-4">
           <span className={["name"]}>{name}<br />
             <a href={ "mailto:" + email }>{email}</a><br />
             <a href={website}>{website}</a>
           </span>
         </div>
-        <div className={["address"]}>{street_address}<br />{city} {state} {zip}<br />{phone}</div>
-        <div className={["clear"]}></div>
+        <div className="col-4 offset-4 text-right">
+          <div className={["address"]}>{street_address}<br />{city} {state} {zip}<br />{phone}</div>
+          <div className={["clear"]}></div>
+        </div>
       </div>
     );
   }
@@ -62,31 +64,55 @@ class Resume extends Component {
     }
 
     return (
-      <div id="container">
-        { this.renderHeader() }
+      <div className="container yes-margin-bottom">
+        <div className="row">
+          <div className="col">
+            { this.renderHeader() }
+          </div>
+        </div>
 
-        <TechnicalExperiences
-            data={ this.props.resume.technicalExperiences }
-            edit={ this.props.edit } />
+        <div className="row">
+          <div className="col">
+            <TechnicalExperiences
+                data={ this.props.resume.technicalExperiences }
+                edit={ this.props.edit } />
+          </div>
+        </div>
 
-        <WeaponsOfChoice
-            data={ this.props.resume.weaponsOfChoice }
-            edit={ this.props.edit } />
+        <div className="row">
+          <div className="col">
+            <WeaponsOfChoice
+                data={ this.props.resume.weaponsOfChoice }
+                edit={ this.props.edit } />
+          </div>
+        </div>
 
-        <EmploymentExperiences
-            data={ this.props.resume.employmentExperiences }
-            edit={ this.props.edit } />
+        <div className="row">
+          <div className="col">
+            <EmploymentExperiences
+                data={ this.props.resume.employmentExperiences }
+                edit={ this.props.edit } />
+          </div>
+        </div>
 
-        <Schools
-            data={ this.props.resume.schools }
-            edit={ this.props.edit } />
+        <div className="row">
+          <div className="col">
+            <Schools
+                data={ this.props.resume.schools }
+                edit={ this.props.edit } />
+          </div>
+        </div>
 
-        <Projects
-            data={ this.props.resume.projects }
-            edit={ this.props.edit } />
+        <div className="row">
+          <div className="col">
+            <Projects
+                data={ this.props.resume.projects }
+                edit={ this.props.edit } />
+          </div>
+        </div>
 
-        <div className={["footer"]}>
-          <span className={["refs"]}>References available upon request.</span>
+        <div>
+          <h5>References available upon request.</h5>
         </div>
 
       </div>
