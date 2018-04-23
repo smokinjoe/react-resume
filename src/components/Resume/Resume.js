@@ -37,16 +37,21 @@ class Resume extends Component {
     } = this.props.user;
 
     return (
-      <div className="row">
-        <div className="col-4">
-          <span className={["name"]}>{name}<br />
+      <div className="mb-4 mt-4">
+        <div className="row">
+          <div className="col-4">
+            <h2>{name}</h2>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-4">
             <a href={ "mailto:" + email }>{email}</a><br />
             <a href={website}>{website}</a>
-          </span>
-        </div>
-        <div className="col-4 offset-4 text-right">
-          <div className={["address"]}>{street_address}<br />{city} {state} {zip}<br />{phone}</div>
-          <div className={["clear"]}></div>
+          </div>
+          <div className="col-4 offset-4 text-right">
+            {city}<br />
+            {phone}
+          </div>
         </div>
       </div>
     );

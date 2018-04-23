@@ -24,6 +24,10 @@ a:hover {color:#998D62;}
 .clear {clear:both;}
 */
 
+html, body {
+  background-color: #F7F7F7 !important;
+}
+
 div.vertical-align {
   text-align: center;
   display: block;
