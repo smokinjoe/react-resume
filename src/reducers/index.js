@@ -76,10 +76,13 @@ const resume = (state = intialResumeState, action) => {
   switch (action.type) {
     case GET_RESUME:
       action.data.technicalExperiences.sort((a, b) => {
-        return b.id - a.id
+        return b.id - a.id;
       });
       action.data.employmentExperiences.sort((a, b) => {
-        return b.id - a.id
+        return b.id - a.id;
+      });
+      action.data.projects.sort((a, b) => {
+        return b.id - a.id;
       });
 
       return Object.assign({}, state, {
