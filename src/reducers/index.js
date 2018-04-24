@@ -239,7 +239,8 @@ const token = (state = initialToken, action) => {
 
 import {
   IDLE,
-  FETCHING
+  FETCHING,
+  ERROR
 } from '../actions';
 
 const initialLoadingState = {
@@ -257,6 +258,12 @@ const loading = (state = initialLoadingState, action) => {
     case FETCHING:
       return Object.assign({}, state, {
         state: FETCHING
+      });
+      break;
+
+    case ERROR:
+      return Object.assign({}, state, {
+        state: ERROR
       });
       break;
 

@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import {
   getResume,
-  FETCHING
+  FETCHING,
+  ERROR
 } from '../../actions';
 
 import TechnicalExperiences from '../TechnicalExperiences';
@@ -37,33 +38,35 @@ class Resume extends Component {
     } = this.props.user;
 
     return (
-      <div className="mb-4 mt-4">
-        <div className="row">
-          <div className="col-4">
-            <h2>{name}</h2>
-          </div>
+      <div className="mb-4 mt-4 row">
+        <div className="col-4">
+          <h2>{name}</h2>
+          <a href={ "mailto:" + email }>{email}</a>
         </div>
-        <div className="row">
-          <div className="col-4">
-            <a href={ "mailto:" + email }>{email}</a><br />
-            <a href={website}>{website}</a>
-          </div>
-          <div className="col-4 offset-4 text-right">
-            {city}<br />
-            {phone}
-          </div>
+        <div className="col-4 offset-4 text-right">
+          {city}<br />
+          {phone}
         </div>
       </div>
     );
   }
 
   render () {
+    let { website } = this.props.user;
 
     if (this.props.status === FETCHING) {
       return (
         <div className='absolute-middle'>
           <h3>Please wait...</h3>
           <Spinner name="cube-grid" />
+        </div>
+      );
+    }
+
+    if (this.props.status === ERROR) {
+      return (
+        <div className='wider-absolute-middle'>
+          There appears to be an error. Please view a static copy of my awesome resume at, <a href="http://ekiert.net/joe-ekiert-resume.pdf">this location.</a>
         </div>
       );
     }
@@ -118,6 +121,10 @@ class Resume extends Component {
 
         <div>
           <h5>References available upon request.</h5>
+        </div>
+
+        <div className="mt-5">
+          <a href={website + '/joe-ekiert-resume.pdf'}>Download PDF of resume</a>
         </div>
 
       </div>

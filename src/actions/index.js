@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const URL = process.env.REACT_APP_JOE_RESUME_API_URL;
+const TIMEOUT_SECONDS = process.env.REACT_APP_TIMEOUT_SECONDS;
 
 /**
 * options:
@@ -107,10 +108,10 @@ const _getResume = (dispatch) => {
         console.log('Error: ', error);
         reject();
         if (letsGOOO) {
-          window.location = 'http://ekiert.net/resume';
+          window.location = 'http://ekiert.net/joe-ekiert-resume.pdf';
         }
         else {
-          _loading(dispatch, IDLE);
+          _loading(dispatch, ERROR);
         }
       }
     });
@@ -588,10 +589,26 @@ const _deleteProject = (dispatch, getState, data) => {
 
 export const IDLE = 'IDLE';
 export const FETCHING = 'FETCHING';
+export const ERROR = 'ERROR';
 
-export const fetching = () => (dispatch) => _loading(dispatch, FETCHING);
-export const complete = () => (dispatch) => _loading(dispatch, IDLE);
+// export const fetching = () => (dispatch) => _loading(dispatch, FETCHING);
+// export const complete = () => (dispatch) => _loading(dispatch, IDLE);
+
+let timeout = null;
 
 const _loading = (dispatch, type) => {
+  if (type === FETCHING) {
+    timeout = setTimeout(() => {
+      dispatch({ type: ERROR })
+    }, TIMEOUT_SECONDS);
+  }
+
+  if (type === IDLE) {
+    if (timeout !== null) {
+      clearTimeout(timeout);
+      timeout = null;
+    }
+  }
+
   dispatch({ type });
 };
