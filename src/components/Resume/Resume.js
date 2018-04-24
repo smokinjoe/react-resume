@@ -37,27 +37,21 @@ class Resume extends Component {
     } = this.props.user;
 
     return (
-      <div className="mb-4 mt-4">
-        <div className="row">
-          <div className="col-4">
-            <h2>{name}</h2>
-          </div>
+      <div className="mb-4 mt-4 row">
+        <div className="col-4">
+          <h2>{name}</h2>
+          <a href={ "mailto:" + email }>{email}</a>
         </div>
-        <div className="row">
-          <div className="col-4">
-            <a href={ "mailto:" + email }>{email}</a><br />
-            <a href={website + '/joe-ekiert-resume.pdf'}>Link to static resume</a>
-          </div>
-          <div className="col-4 offset-4 text-right">
-            {city}<br />
-            {phone}
-          </div>
+        <div className="col-4 offset-4 text-right">
+          {city}<br />
+          {phone}
         </div>
       </div>
     );
   }
 
   render () {
+    let { website } = this.props.user;
 
     if (this.props.status === FETCHING) {
       return (
@@ -118,6 +112,10 @@ class Resume extends Component {
 
         <div>
           <h5>References available upon request.</h5>
+        </div>
+
+        <div className="mt-5">
+          <a href={website + '/joe-ekiert-resume.pdf'}>Download PDF of resume</a>
         </div>
 
       </div>
