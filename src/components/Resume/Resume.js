@@ -46,7 +46,7 @@ class Resume extends Component {
         <div className="row">
           <div className="col-4">
             <a href={ "mailto:" + email }>{email}</a><br />
-            <a href={website}>{website}</a>
+            <a href={website + '/joe-ekiert-resume.pdf'}>Link to static resume</a>
           </div>
           <div className="col-4 offset-4 text-right">
             {city}<br />
