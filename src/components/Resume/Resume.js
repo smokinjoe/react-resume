@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import {
   getResume,
-  FETCHING
+  FETCHING,
+  ERROR
 } from '../../actions';
 
 import TechnicalExperiences from '../TechnicalExperiences';
@@ -58,6 +59,14 @@ class Resume extends Component {
         <div className='absolute-middle'>
           <h3>Please wait...</h3>
           <Spinner name="cube-grid" />
+        </div>
+      );
+    }
+
+    if (this.props.status === ERROR) {
+      return (
+        <div className='wider-absolute-middle'>
+          There appears to be an error. Please view a static copy of my awesome resume at, <a href="http://ekiert.net/joe-ekiert-resume.pdf">this location.</a>
         </div>
       );
     }
