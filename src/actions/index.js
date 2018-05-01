@@ -1,4 +1,5 @@
 import axios from 'axios';
+import joeGet from '../utils/joeGet';
 
 const URL = process.env.REACT_APP_JOE_RESUME_API_URL;
 const TIMEOUT_SECONDS = process.env.REACT_APP_TIMEOUT_SECONDS;
@@ -37,41 +38,6 @@ const _authGet = (options = {}) => {
 
 };
 
-/**
-* options:
-*  endpoint
-*  callback
-*/
-
-const _get = (options = {}) => {
-  // JOE: NOTE: needs some sort of error logging
-
-  if (typeof options.endpoint === 'undefined') {
-    console.error('ERROR: You need to supply an endpoint.');
-    return;
-  }
-
-  let url = URL + options.endpoint;
-
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'Content-Type: application/json'
-    }
-  })
-  .then(response => response.json())
-  .then(items => {
-    if (typeof options.callback === 'function') {
-      options.callback(items);
-    }
-  })
-  .catch(error => {
-    if (typeof options.error === 'function') {
-      options.error(error);
-    }
-  });
-};
 
 /**
 * Load resume data from local json file
@@ -84,7 +50,7 @@ const _getResume = (dispatch) => {
   return new Promise((resolve, reject) => {
     _loading(dispatch, FETCHING);
 
-    _get({
+    joeGet({
       endpoint: 'resume',
       callback: (items) => {
         dispatch({
