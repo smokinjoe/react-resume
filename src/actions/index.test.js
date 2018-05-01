@@ -14,13 +14,12 @@ describe('Resume actions', () => {
     projects: []
   };
 
+  // struggling with this https://facebook.github.io/jest/docs/en/tutorial-async.html
   it('getResume should return a promise', () => {
-    // const expectedAction = new Promise((res, rej) => {});
-    // expect(getResume()).toEqual(expectedAction);
-
     expect.assertions(1);
-    // expect(getResume()).toEqual(resume);
-    return getResume().then(data => expect(data.payload).toEqual(resume));
+    return getResume().then(data => {
+      expect(data.payload).toEqual(resume)
+    });
   });
 
 });
