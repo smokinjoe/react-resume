@@ -18,7 +18,7 @@ export const getResume = () => (dispatch) => _getResume(dispatch);
 
 const _getResume = (dispatch) => {
   return new Promise((resolve, reject) => {
-    _loading(dispatch, FETCHING);
+    loading(dispatch, FETCHING);
 
     axios({
       method: 'GET',
@@ -28,7 +28,6 @@ const _getResume = (dispatch) => {
         'Content-Type': 'Content-Type: application/json'
       }
     })
-    // .then(response => response.json())
     .then(items => {
       dispatch({
         type: GET_RESUME,
@@ -42,7 +41,7 @@ const _getResume = (dispatch) => {
         });
       }
 
-      _loading(dispatch, IDLE);
+      loading(dispatch, IDLE);
       resolve(items.data);
     })
     .catch(error => {
@@ -53,7 +52,7 @@ const _getResume = (dispatch) => {
         window.location = 'http://ekiert.net/joe-ekiert-resume.pdf';
       }
       else {
-        _loading(dispatch, ERROR);
+        loading(dispatch, ERROR);
       }
 
     });
@@ -398,12 +397,27 @@ export const IDLE = 'IDLE';
 export const FETCHING = 'FETCHING';
 export const ERROR = 'ERROR';
 
-// export const fetching = () => (dispatch) => _loading(dispatch, FETCHING);
-// export const complete = () => (dispatch) => _loading(dispatch, IDLE);
-
 let timeout = null;
 
-const _loading = (dispatch, type) => {
+const idle = () => {
+  return {
+    type: IDLE
+  };
+};
+
+const fetching = () => {
+  return {
+    type: FETCHING
+  };
+};
+
+const err = () => {
+  return {
+    type: ERROR
+  };
+};
+
+const loading = (dispatch, type) => {
   if (type === FETCHING) {
     timeout = setTimeout(() => {
       dispatch({ type: ERROR })
