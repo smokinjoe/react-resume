@@ -1,6 +1,4 @@
 import axios from 'axios';
-import joeGet from '../utils/joeGet';
-import authGet from '../utils/authGet';
 
 const URL = process.env.REACT_APP_JOE_RESUME_API_URL;
 const TIMEOUT_SECONDS = process.env.REACT_APP_TIMEOUT_SECONDS;
