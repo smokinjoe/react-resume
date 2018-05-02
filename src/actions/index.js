@@ -18,7 +18,7 @@ export const getResume = () => (dispatch) => _getResume(dispatch);
 
 const _getResume = (dispatch) => {
   return new Promise((resolve, reject) => {
-    loading(dispatch, FETCHING);
+    dispatch(fetching());
 
     axios({
       method: 'GET',
@@ -41,19 +41,22 @@ const _getResume = (dispatch) => {
         });
       }
 
-      loading(dispatch, IDLE);
+      dispatch(idle());
+
       resolve(items.data);
     })
     .catch(error => {
-      let letsGOOO = window.confirm('There has been an error fetching from the resume API endpoint. Would you like to be redirected to a static copy ... of my resume?');
+      // let letsGOOO = window.confirm('There has been an error fetching from the resume API endpoint. Would you like to be redirected to a static copy ... of my resume?');
       console.log('Error: ', error);
       reject();
-      if (letsGOOO) {
-        window.location = 'http://ekiert.net/joe-ekiert-resume.pdf';
-      }
-      else {
-        loading(dispatch, ERROR);
-      }
+      // if (letsGOOO) {
+      //   window.location = 'http://ekiert.net/joe-ekiert-resume.pdf';
+      // }
+      // else {
+      //   dispatch(err());
+      // }
+
+      dispatch(err());
 
     });
 
@@ -400,12 +403,21 @@ export const ERROR = 'ERROR';
 let timeout = null;
 
 const idle = () => {
+  if (timeout !== null) {
+    clearTimeout(timeout);
+    timeout = null;
+  }
+
   return {
     type: IDLE
   };
 };
 
 const fetching = () => {
+  timeout = setTimeout(() => {
+    err();
+  }, TIMEOUT_SECONDS);
+
   return {
     type: FETCHING
   };
@@ -415,21 +427,4 @@ const err = () => {
   return {
     type: ERROR
   };
-};
-
-const loading = (dispatch, type) => {
-  if (type === FETCHING) {
-    timeout = setTimeout(() => {
-      dispatch({ type: ERROR })
-    }, TIMEOUT_SECONDS);
-  }
-
-  if (type === IDLE) {
-    if (timeout !== null) {
-      clearTimeout(timeout);
-      timeout = null;
-    }
-  }
-
-  dispatch({ type });
 };
