@@ -5,185 +5,65 @@ import authGet from '../utils/authGet';
 const URL = process.env.REACT_APP_JOE_RESUME_API_URL;
 const TIMEOUT_SECONDS = process.env.REACT_APP_TIMEOUT_SECONDS;
 
-
 /**
 * Load resume data from local json file
 */
 
 export const GET_RESUME = 'GET_RESUME';
-export const getResume = () => (dispatch) =>  {
+export const GET_USER_DATA = 'GET_USER_DATA';
+export const GET_TECHNICAL_EXPERIENCES = 'GET_TECHNICAL_EXPERIENCES';
+export const GET_WEAPONS_OF_CHOICE = 'GET_WEAPONS_OF_CHOICE';
+export const GET_EMPLOYMENT_EXPERIENCES = 'GET_EMPLOYMENT_EXPERIENCES';
+export const GET_SCHOOLS = 'GET_SCHOOLS';
+export const GET_PROJECTS = 'GET_PROJECTS';
+export const getResume = () => (dispatch) => _getResume(dispatch);
+
+const _getResume = (dispatch) => {
   return new Promise((resolve, reject) => {
-    _loading(dispatch, FETCHING);
+    dispatch(fetching());
 
-    joeGet({
-      endpoint: 'resume',
-      callback: (items) => {
-        dispatch({
-          type: GET_RESUME,
-          data: items.payload
-        });
-
-        if (typeof items.payload.user !== 'undefined') {
-          dispatch({
-            type: GET_USER_DATA,
-            data: items.payload.user.pop()
-          });
-        }
-
-        _loading(dispatch, IDLE);
-        resolve(items);
-
-      },
-      error: (error) => {
-        let letsGOOO = window.confirm('There has been an error fetching from the resume API endpoint. Would you like to be redirected to a static copy ... of my resume?');
-        console.log('Error: ', error);
-        reject();
-        if (letsGOOO) {
-          window.location = 'http://ekiert.net/joe-ekiert-resume.pdf';
-        }
-        else {
-          _loading(dispatch, ERROR);
-        }
+    axios({
+      method: 'GET',
+      url: URL + 'resume',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'Content-Type: application/json'
       }
+    })
+    .then(items => {
+      dispatch({
+        type: GET_RESUME,
+        data: items.data.payload
+      });
+
+      if (typeof items.data.payload.user !== 'undefined') {
+        dispatch({
+          type: GET_USER_DATA,
+          data: items.data.payload.user.pop()
+        });
+      }
+
+      dispatch(idle());
+
+      resolve(items.data);
+    })
+    .catch(error => {
+      // let letsGOOO = window.confirm('There has been an error fetching from the resume API endpoint. Would you like to be redirected to a static copy ... of my resume?');
+      console.log('Error: ', error);
+      reject();
+      // if (letsGOOO) {
+      //   window.location = 'http://ekiert.net/joe-ekiert-resume.pdf';
+      // }
+      // else {
+      //   dispatch(err());
+      // }
+
+      dispatch(err());
+
     });
 
   });
 
-
-
-};
-
-/**
-* Load user data from API endpoint
-*/
-
-export const GET_USER_DATA = 'GET_USER_DATA';
-export const getUserData = () => (dispatch) => _getUserData(dispatch);
-
-const _getUserData = (dispatch) => {
-
-  authGet({
-    endpoint: 'users',
-    callback: (items) => {
-      if (typeof items.payload !== 'undefined') {
-        dispatch({
-          type: GET_USER_DATA,
-          data: items.payload.pop()
-        });
-      }
-    }
-  })
-
-};
-
-/**
-* Load technical experience from API endpoint
-*/
-
-export const GET_TECHNICAL_EXPERIENCES = 'LOAD_TECHNICAL_EXPERIENCES';
-export const getTechnicalExperiences = () => (dispatch) => _getTechnicalExperiences(dispatch);
-
-const _getTechnicalExperiences = (dispatch) => {
-  authGet({
-    endpoint: 'technical_experiences',
-    callback: (items) => {
-      if (typeof items.payload !== 'undefined') {
-        dispatch({
-          type: GET_TECHNICAL_EXPERIENCES,
-          data: items.payload
-        });
-      }
-    }
-
-  });
-};
-
-/**
-* Load weapons of choice from API endpoint
-*/
-
-export const GET_WEAPONS_OF_CHOICE = 'GET_WEAPONS_OF_CHOICE';
-export const getWeaponsOfChoice = () => (dispatch) => _getWeaponsOfChoice(dispatch);
-
-const _getWeaponsOfChoice = (dispatch) => {
-  authGet({
-    endpoint: 'weapons_of_choice',
-    callback: (items) => {
-      if (typeof items.payload !== 'undefined') {
-        dispatch({
-          type: GET_WEAPONS_OF_CHOICE,
-          data: items.payload
-        });
-      }
-    }
-
-  });
-};
-
-/**
-* Load employment experiences from API endpoint
-*/
-
-export const GET_EMPLOYMENT_EXPERIENCES = 'GET_EMPLOYMENT_EXPERIENCES';
-export const getEmploymentExperiences = () => (dispatch) => _getEmploymentExperiences(dispatch);
-
-const _getEmploymentExperiences = (dispatch) => {
-  authGet({
-    endpoint: 'employment_experiences',
-    callback: (items) => {
-      if (typeof items.payload !== 'undefined') {
-        dispatch({
-          type: GET_EMPLOYMENT_EXPERIENCES,
-          data: items.payload
-        });
-      }
-    }
-
-  });
-};
-
-/**
-* Load schools from API endpoint
-*/
-
-export const GET_SCHOOLS = 'GET_SCHOOLS';
-export const getSchools = () => (dispatch) => _getSchools(dispatch);
-
-const _getSchools = (dispatch) => {
-  authGet({
-    endpoint: 'schools',
-    callback: (items) => {
-      if (typeof items.payload !== 'undefined') {
-        dispatch({
-          type: GET_SCHOOLS,
-          data: items.payload
-        });
-      }
-    }
-
-  });
-};
-
-/**
-* Load projects from API endpoint
-*/
-
-export const GET_PROJECTS = 'GET_PROJECTS';
-export const getProjects = () => (dispatch) => _getProjects(dispatch);
-
-const _getProjects = (dispatch) => {
-  authGet({
-    endpoint: 'projects',
-    callback: (items) => {
-      if (typeof items.payload !== 'undefined') {
-        dispatch({
-          type: GET_PROJECTS,
-          data: items.payload
-        });
-      }
-    }
-
-  });
 };
 
 /**
@@ -522,24 +402,31 @@ export const IDLE = 'IDLE';
 export const FETCHING = 'FETCHING';
 export const ERROR = 'ERROR';
 
-// export const fetching = () => (dispatch) => _loading(dispatch, FETCHING);
-// export const complete = () => (dispatch) => _loading(dispatch, IDLE);
-
 let timeout = null;
 
-const _loading = (dispatch, type) => {
-  if (type === FETCHING) {
-    timeout = setTimeout(() => {
-      dispatch({ type: ERROR })
-    }, TIMEOUT_SECONDS);
+const idle = () => {
+  if (timeout !== null) {
+    clearTimeout(timeout);
+    timeout = null;
   }
 
-  if (type === IDLE) {
-    if (timeout !== null) {
-      clearTimeout(timeout);
-      timeout = null;
-    }
-  }
+  return {
+    type: IDLE
+  };
+};
 
-  dispatch({ type });
+const fetching = () => {
+  timeout = setTimeout(() => {
+    err();
+  }, TIMEOUT_SECONDS);
+
+  return {
+    type: FETCHING
+  };
+};
+
+const err = () => {
+  return {
+    type: ERROR
+  };
 };
