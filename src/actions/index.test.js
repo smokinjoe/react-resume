@@ -5,6 +5,8 @@ import {
   getResume
 } from './index';
 
+// getResume
+
 describe('Resume actions', () => {
   const resume = {
     technicalExperiences: [],
@@ -23,3 +25,9 @@ describe('Resume actions', () => {
   });
 
 });
+
+// idle
+// fetching
+// err
+
+describe();
