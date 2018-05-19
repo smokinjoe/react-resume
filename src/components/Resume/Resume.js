@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import LoaderHOC from '../../HOC/LoaderHOC';
 
 import {
   getResume,
-  FETCHING,
-  ERROR
+  // // Constants are going away
+  // FETCHING,
+  // ERROR
 } from '../../actions';
 
 import TechnicalExperiences from '../TechnicalExperiences';
@@ -16,7 +18,8 @@ import Projects from '../Projects';
 
 import './styles.css';
 
-let Spinner = require('react-spinkit');
+// Going away
+// let Spinner = require('react-spinkit');
 
 class Resume extends Component {
 
@@ -54,22 +57,24 @@ class Resume extends Component {
   render () {
     let { website } = this.props.user;
 
-    if (this.props.status === FETCHING) {
-      return (
-        <div className='absolute-middle'>
-          <h3>Please wait...</h3>
-          <Spinner name="cube-grid" />
-        </div>
-      );
-    }
-
-    if (this.props.status === ERROR) {
-      return (
-        <div className='wider-absolute-middle'>
-          There appears to be an error. Please view a static copy of my awesome resume at, <a href="http://ekiert.net/joe-ekiert-resume.pdf">this location.</a>
-        </div>
-      );
-    }
+    // // Going away
+    // if (this.props.status === FETCHING) {
+    //   return (
+    //     <div className='absolute-middle'>
+    //       <h3>Please wait...</h3>
+    //       <Spinner name="cube-grid" />
+    //     </div>
+    //   );
+    // }
+    //
+    // // Going away
+    // if (this.props.status === ERROR) {
+    //   return (
+    //     <div className='wider-absolute-middle'>
+    //       There appears to be an error. Please view a static copy of my awesome resume at, <a href="http://ekiert.net/joe-ekiert-resume.pdf">this location.</a>
+    //     </div>
+    //   );
+    // }
 
     return (
       <div className="container yes-margin-bottom">
@@ -136,7 +141,7 @@ const _stateToProps = (state) => {
   return {
     user: state.user,
     resume: state.resume,
-    status: state.loading.state
+    // status: state.loading.state
   };
 };
 
@@ -146,4 +151,4 @@ const _dispatchToProps = (dispatch) => {
   }, dispatch);
 };
 
-export default connect(_stateToProps, _dispatchToProps)(Resume);
+export default connect(_stateToProps, _dispatchToProps)(LoaderHOC(Resume));
