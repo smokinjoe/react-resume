@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-import {
-  getResume,
-  FETCHING,
-  ERROR
-} from '../../actions';
+import LoaderHOC from '../../HOC/LoaderHOC';
 
 import TechnicalExperiences from '../TechnicalExperiences';
 import WeaponsOfChoice from '../WeaponsOfChoice';
@@ -16,13 +10,10 @@ import Projects from '../Projects';
 
 import './styles.css';
 
-let Spinner = require('react-spinkit');
-
 class Resume extends Component {
 
   constructor (props) {
     super(props);
-    this.props.getResume();
   }
 
   renderHeader () {
@@ -53,23 +44,6 @@ class Resume extends Component {
 
   render () {
     let { website } = this.props.user;
-
-    if (this.props.status === FETCHING) {
-      return (
-        <div className='absolute-middle'>
-          <h3>Please wait...</h3>
-          <Spinner name="cube-grid" />
-        </div>
-      );
-    }
-
-    if (this.props.status === ERROR) {
-      return (
-        <div className='wider-absolute-middle'>
-          There appears to be an error. Please view a static copy of my awesome resume at, <a href="http://ekiert.net/joe-ekiert-resume.pdf">this location.</a>
-        </div>
-      );
-    }
 
     return (
       <div className="container yes-margin-bottom">
@@ -135,15 +109,8 @@ class Resume extends Component {
 const _stateToProps = (state) => {
   return {
     user: state.user,
-    resume: state.resume,
-    status: state.loading.state
+    resume: state.resume
   };
 };
 
-const _dispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    getResume
-  }, dispatch);
-};
-
-export default connect(_stateToProps, _dispatchToProps)(Resume);
+export default connect(_stateToProps)(LoaderHOC(Resume));
