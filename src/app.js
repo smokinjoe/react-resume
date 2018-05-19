@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import { Switch, Route, Link } from 'react-router-dom';
+
+import {
+  getResume
+} from './actions';
 
 import Resume from './components/Resume';
 import Login from './components/Login';
 
 class App extends Component {
+  constructor (props) {
+    super(props);
+    this.props.getResume();
+  }
+
   render () {
     return (
       <div>
@@ -35,4 +46,10 @@ const Main = () => (
   </Switch>
 );
 
-export default App;
+const _dispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    getResume
+  }, dispatch);
+};
+
+export default connect(null, _dispatchToProps)(App);

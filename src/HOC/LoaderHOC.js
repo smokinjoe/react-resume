@@ -1,11 +1,8 @@
 // Borrowed from: https://www.youtube.com/watch?v=LTunyI2Oyzw
-
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import {
-  getResume,
   FETCHING,
   ERROR,
   IDLE
@@ -19,7 +16,6 @@ const LoaderHOC = (WrappedComponent) => {
   class LoaderHOC extends Component {
     constructor (props) {
       super(props);
-      this.props.getResume();
     }
 
     render () {
@@ -33,7 +29,6 @@ const LoaderHOC = (WrappedComponent) => {
       }
 
       if (this.props.status === IDLE) {
-        console.log(this.props.resume);
         return <WrappedComponent { ...this.props } />
       }
 
@@ -47,22 +42,13 @@ const LoaderHOC = (WrappedComponent) => {
 
   }
 
-  const _dispatchToProps = (dispatch) => {
-    return bindActionCreators({
-      getResume
-    }, dispatch);
-  };
-
   const _stateToProps = (state) => {
     return {
-      resume: state.resume,
       status: state.loading.state
     };
   };
 
-  return connect(_stateToProps, _dispatchToProps)(LoaderHOC);
-  // return LoaderHOC;
+  return connect(_stateToProps)(LoaderHOC);
 };
 
-// export default connect(_stateToProps)(LoaderHOC);
 export default LoaderHOC;
