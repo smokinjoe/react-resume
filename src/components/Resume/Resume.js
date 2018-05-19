@@ -25,7 +25,8 @@ class Resume extends Component {
 
   constructor (props) {
     super(props);
-    this.props.getResume();
+    // console.log('JOE: Resume contructor():');
+    // this.props.getResume();
   }
 
   renderHeader () {
@@ -56,6 +57,8 @@ class Resume extends Component {
 
   render () {
     let { website } = this.props.user;
+
+    // console.log('JOE: this.props: ', this.props);
 
     // // Going away
     // if (this.props.status === FETCHING) {
@@ -140,7 +143,7 @@ class Resume extends Component {
 const _stateToProps = (state) => {
   return {
     user: state.user,
-    resume: state.resume,
+    // resume: state.resume,
     // status: state.loading.state
   };
 };
@@ -151,4 +154,5 @@ const _dispatchToProps = (dispatch) => {
   }, dispatch);
 };
 
-export default connect(_stateToProps, _dispatchToProps)(LoaderHOC(Resume));
+// export default connect(_stateToProps, _dispatchToProps)(LoaderHOC(Resume));
+export default connect(_stateToProps)(LoaderHOC(Resume));
