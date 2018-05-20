@@ -80,7 +80,7 @@ describe('getResume()', () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
-        status: 422,
+        status: 403,
         response: {
           error: 'You done failed'
         }
@@ -98,9 +98,6 @@ describe('getResume()', () => {
     });
   });
 
-  it('should always pass', () => {
-    expect(true).toEqual(true);
-  });
 });
 
 import {
