@@ -26,7 +26,7 @@ describe('getResume', () => {
     moxios.uninstall();
   });
 
-  it('performs GET_RESUME and GET_USER_DATA after successful fetching', () => {
+  it('performs FETCHING, GET_RESUME, GET_USER_DATA, and IDLE in a complete fetch', () => {
     const data = {
       technicalExperiences: ['hi'],
       weaponsOfChoice: ['hi'],
@@ -52,7 +52,7 @@ describe('getResume', () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
-        stats: 200,
+        status: 200,
         response: items
       });
     });
@@ -72,7 +72,32 @@ describe('getResume', () => {
 
   });
 
+  // JOE: I want to say that the .catch is causing something weird.
+  // the dispatch(err()) should be happening, but it isn't .. ?
+  xit('calls ERROR if the fetch fails', () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 422,
+        response: {
+          error: 'You done failed'
+        }
+      });
+    });
+
+    const expectedActions = [
+      { type: ERROR }
+    ];
+
+    const store = mockStore({});
+
+    return store.dispatch(getResume()).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
   it('should always pass', () => {
     expect(true).toEqual(true);
   });
 });
+
