@@ -17,7 +17,7 @@ import {
   getResume
 } from './index';
 
-describe('getResume', () => {
+describe('getResume()', () => {
   beforeEach(() => {
     moxios.install();
   });
@@ -101,3 +101,48 @@ describe('getResume', () => {
   });
 });
 
+import {
+  login,
+  LOGIN,
+  LOGIN_ERROR
+} from './index';
+
+describe('login()', () => {
+  beforeEach(() => {
+    moxios.install();
+  });
+
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  it('should fire LOGIN if successful', () => {
+    const data = {
+      token: 'pb4ugo2bed'
+    };
+
+    const response = {
+      data: {
+        payload: data
+      }
+    };
+
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: response
+      });
+    });
+
+    const expectedActions = [
+      { type: LOGIN, data: data }
+    ];
+
+    const store = mockStore({});
+    return store.dispatch(login('name','pass')).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+});
