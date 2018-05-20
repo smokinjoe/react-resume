@@ -114,5 +114,257 @@ describe('resume reducer', () => {
       })).toEqual(expectedResumeState);
 
     });
+
+    it('should correctly sort technical experiences', () => {
+      const expectedResumeState = {
+        technicalExperiences: [],
+        weaponsOfChoice: [],
+        employmentExperiences: [],
+        schools: [],
+        projects: []
+      };
+
+      const testArray = [
+        {
+          id: 3
+        },
+        {
+          id: 1
+        },
+        {
+          id: 2
+        }
+      ];
+
+      expectedResumeState.technicalExperiences = testArray.slice();
+
+      testArray.sort((a, b) => {
+        return b.id - a.id
+      });
+
+      expect(resume(undefined, {
+        type: GET_RESUME,
+        data: expectedResumeState
+      }).technicalExperiences).toEqual(testArray);
+    });
+
+    it('should correctly sort employment experiences', () => {
+      const expectedResumeState = {
+        technicalExperiences: [],
+        weaponsOfChoice: [],
+        employmentExperiences: [],
+        schools: [],
+        projects: []
+      };
+
+      const testArray = [
+        {
+          id: 3
+        },
+        {
+          id: 1
+        },
+        {
+          id: 2
+        }
+      ];
+
+      expectedResumeState.employmentExperiences = testArray.slice();
+
+      testArray.sort((a, b) => {
+        return b.id - a.id
+      });
+
+      expect(resume(undefined, {
+        type: GET_RESUME,
+        data: expectedResumeState
+      }).employmentExperiences).toEqual(testArray);
+    });
+
+    it('should correctly sort projects', () => {
+      const expectedResumeState = {
+        technicalExperiences: [],
+        weaponsOfChoice: [],
+        employmentExperiences: [],
+        schools: [],
+        projects: []
+      };
+
+      const testArray = [
+        {
+          id: 3
+        },
+        {
+          id: 1
+        },
+        {
+          id: 2
+        }
+      ];
+
+      expectedResumeState.projects = testArray.slice();
+
+      testArray.sort((a, b) => {
+        return b.id - a.id
+      });
+
+      expect(resume(undefined, {
+        type: GET_RESUME,
+        data: expectedResumeState
+      }).projects).toEqual(testArray);
+    });
+
   });
+
+  describe('GET_TECHNICAL_EXPERIENCES', () => {
+    it('should appropriately sort technical experiences', () => {
+      const sortedArray = [
+        {
+          id: 3
+        },
+        {
+          id: 1
+        },
+        {
+          id: 2
+        }
+      ];
+      const shuffledArray = sortedArray.slice();
+      sortedArray.sort((a, b) => {
+        return b.id - a.id
+      });
+
+      expect(resume(undefined, {
+        type: GET_TECHNICAL_EXPERIENCES,
+        data: shuffledArray
+      }).technicalExperiences).toEqual(sortedArray);
+
+    });
+  });
+
+  describe('GET_WEAPONS_OF_CHOICE', () => {
+    it('should return weapons of choice', () => {
+      const testArray = ['foo', 'bar'];
+
+      expect(resume(undefined, {
+        type: GET_WEAPONS_OF_CHOICE,
+        data: testArray
+      }).weaponsOfChoice).toEqual(testArray);
+
+    });
+  });
+
+  describe('GET_EMPLOYMENT_EXPERIENCES', () => {
+    it('should appropriately sort employment experiences', () => {
+      const sortedArray = [
+        {
+          id: 3
+        },
+        {
+          id: 1
+        },
+        {
+          id: 2
+        }
+      ];
+      const shuffledArray = sortedArray.slice();
+      sortedArray.sort((a, b) => {
+        return b.id - a.id
+      });
+
+      expect(resume(undefined, {
+        type: GET_EMPLOYMENT_EXPERIENCES,
+        data: shuffledArray
+      }).employmentExperiences).toEqual(sortedArray);
+
+    });
+  });
+
+  describe('SCHOOLS', () => {
+    describe('GET_SCHOOLS', () => {
+      it('should return schools', () => {
+        const testArray = ['bar', 'foo'];
+
+        expect(resume(undefined, {
+          type: GET_SCHOOLS,
+          data: testArray
+        }).schools).toEqual(testArray);
+
+      });
+    });
+
+    describe('PUT_SCHOOL', () => {
+      it('should not update if id does not match', () => {
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: [],
+          schools: [
+            {
+              id: 1,
+              name: 'name1'
+            },
+            {
+              id: 2,
+              name: 'name2'
+            },
+            {
+              id: 3,
+              name: 'name3'
+            }
+          ],
+          projects: []
+        };
+
+        const schoolWithWrongId = {
+          id: 4,
+          name: 'you should never see this'
+        };
+
+        expect(resume(mockResumeState, {
+          type: PUT_SCHOOL,
+          data: schoolWithWrongId
+        })).toEqual(mockResumeState);
+
+      });
+
+      it('should update if id does match', () => {
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: [],
+          schools: [
+            {
+              id: 1,
+              name: 'name1'
+            }
+          ],
+          projects: []
+        };
+
+        const updateData = {
+          id: 1,
+          name: 'Awesome Name'
+        };
+
+        expect(resume(mockResumeState, {
+          type: PUT_SCHOOL,
+          data: updateData
+        }).schools[0]).toEqual(updateData);
+      });
+    });
+
+  });
+
+  describe('GET_PROJECTS', () => {
+    it('should return projects', () => {
+      const testArray = ['meep', 'mee', 'me'];
+
+      expect(resume(undefined, {
+        type: GET_PROJECTS,
+        data: testArray
+      }).projects).toEqual(testArray);
+    });
+  });
+
 });
