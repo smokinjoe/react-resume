@@ -216,29 +216,89 @@ describe('resume reducer', () => {
 
   });
 
-  describe('GET_TECHNICAL_EXPERIENCES', () => {
-    it('should appropriately sort technical experiences', () => {
-      const sortedArray = [
-        {
-          id: 3
-        },
-        {
-          id: 1
-        },
-        {
-          id: 2
-        }
-      ];
-      const shuffledArray = sortedArray.slice();
-      sortedArray.sort((a, b) => {
-        return b.id - a.id
+  describe('TECHNICAL_EXPERIENCES', () => {
+    describe('GET_TECHNICAL_EXPERIENCES', () => {
+      it('should appropriately sort technical experiences', () => {
+        const sortedArray = [
+          {
+            id: 3
+          },
+          {
+            id: 1
+          },
+          {
+            id: 2
+          }
+        ];
+        const shuffledArray = sortedArray.slice();
+        sortedArray.sort((a, b) => {
+          return b.id - a.id
+        });
+
+        expect(resume(undefined, {
+          type: GET_TECHNICAL_EXPERIENCES,
+          data: shuffledArray
+        }).technicalExperiences).toEqual(sortedArray);
+
+      });
+    });
+
+    describe('PUT_TECHNICAL_EXPERIENCE', () => {
+      it('should not update any experiences if id does not match', () => {
+        const expectedExperiences = [
+          {
+            id: 1,
+            name: 'name1'
+          }
+        ];
+
+        const mockResumeState = {
+          technicalExperiences: expectedExperiences,
+          weaponsOfChoice: [],
+          employmentExperiences: [],
+          schools: [],
+          projects: []
+        };
+
+        const updateObject = {
+          id: 2,
+          name: 'name2'
+        };
+
+        expect(resume(mockResumeState, {
+          type: PUT_TECHNICAL_EXPERIENCE,
+          data: updateObject
+        }).technicalExperiences).toEqual(expectedExperiences);
+
       });
 
-      expect(resume(undefined, {
-        type: GET_TECHNICAL_EXPERIENCES,
-        data: shuffledArray
-      }).technicalExperiences).toEqual(sortedArray);
+      it('should update experience if id does match', () => {
+        const existingExperiences = [
+          {
+            id: 1,
+            name: 'name1'
+          }
+        ];
 
+        const mockResumeState = {
+          technicalExperiences: existingExperiences,
+          weaponsOfChoice: [],
+          employmentExperiences: [],
+          schools: [],
+          projects: []
+        };
+
+        const updateObject = {
+          id: 1,
+          name: 'hello there'
+        };
+
+        expect(resume(mockResumeState, {
+          type: PUT_TECHNICAL_EXPERIENCE,
+          data: updateObject
+        }).technicalExperiences).toEqual([updateObject]);
+
+      });
     });
   });
 
