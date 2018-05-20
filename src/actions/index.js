@@ -47,7 +47,8 @@ const _getResume = (dispatch) => {
     })
     .catch(error => {
       // let letsGOOO = window.confirm('There has been an error fetching from the resume API endpoint. Would you like to be redirected to a static copy ... of my resume?');
-      console.log('Error: ', error);
+      // console.log('Error: ', error);
+      dispatch(err());
       reject();
       // if (letsGOOO) {
       //   window.location = 'http://ekiert.net/joe-ekiert-resume.pdf';
@@ -55,8 +56,6 @@ const _getResume = (dispatch) => {
       // else {
       //   dispatch(err());
       // }
-
-      dispatch(err());
 
     });
 
@@ -74,27 +73,34 @@ export const login = (username, password) => (dispatch) => _login(dispatch, user
 
 const _login = (dispatch, username, password) => {
 
-  axios({
-    method: 'GET',
-    url: URL + 'token',
-    auth: {
-      username: username,
-      password: password
-    }
-  })
-  .then((response) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: 'GET',
+      url: URL + 'token',
+      auth: {
+        username: username,
+        password: password
+      }
+    })
+    .then((response) => {
 
-    if (response.data && response.data.payload && response.data.payload.token) {
-      dispatch({
-        type: LOGIN,
-        data: response.data.payload.token
-      });
-    }
-    else {
-      dispatch({
-        type: LOGIN_ERROR
-      });
-    }
+      if (response.data && response.data.payload && response.data.payload.token) {
+        dispatch({
+          type: LOGIN,
+          data: response.data.payload.token
+        });
+
+        resolve(response.data.payload.token);
+      }
+      else {
+        dispatch({
+          type: LOGIN_ERROR
+        });
+
+        reject();
+      }
+
+    });
 
   });
 
@@ -190,7 +196,7 @@ const _putWeaponOfChoice = (dispatch, getState, data) => {
 export const PUT_EMPLOYMENT_EXPERIENCE = 'PUT_EMPLOYMENT_EXPERIENCE';
 export const POST_EMPLOYMENT_EXPERIENCE = 'POST_EMPLOYMENT_EXPERIENCE';
 export const DELETE_EMPLOYMENT_EXPERIENCE = 'DELETE_EMPLOYMENT_EXPERIENCE';
-export const saveEmpoymentExperience = (data) => (dispatch, getState) => _saveEmploymentExperience(dispatch, getState, data);
+export const saveEmploymentExperience = (data) => (dispatch, getState) => _saveEmploymentExperience(dispatch, getState, data);
 export const deleteEmploymentExperience = (data) => (dispatch, getState) => _deleteEmploymentExperience(dispatch, getState, data);
 
 const _saveEmploymentExperience = (dispatch, getState, data) => {
