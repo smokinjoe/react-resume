@@ -29,7 +29,7 @@ const initialUserData = {
   zip: null
 };
 
-const user = (state = initialUserData, action) => {
+export const user = (state = initialUserData, action) => {
   switch (action.type) {
     case GET_USER_DATA:
       return Object.assign({}, state, action.data);
@@ -72,7 +72,7 @@ const intialResumeState = {
   projects: []
 };
 
-const resume = (state = intialResumeState, action) => {
+export const resume = (state = intialResumeState, action) => {
   switch (action.type) {
     case GET_RESUME:
       action.data.technicalExperiences.sort((a, b) => {
@@ -220,7 +220,7 @@ const initialToken = {
   data: localStorage.getItem(LOCAL_STORAGE.API_TOKEN)
 };
 
-const token = (state = initialToken, action) => {
+export const token = (state = initialToken, action) => {
   switch (action.type) {
     case LOGIN:
       localStorage.setItem(LOCAL_STORAGE.API_TOKEN, action.data);
@@ -247,7 +247,7 @@ const initialLoadingState = {
   state: IDLE
 };
 
-const loading = (state = initialLoadingState, action) => {
+export const loading = (state = initialLoadingState, action) => {
   switch (action.type) {
     case IDLE:
       return Object.assign({}, state, {
