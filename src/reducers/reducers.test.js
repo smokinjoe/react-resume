@@ -356,15 +356,165 @@ describe('resume reducer', () => {
 
   });
 
-  describe('GET_PROJECTS', () => {
-    it('should return projects', () => {
-      const testArray = ['meep', 'mee', 'me'];
+  describe('PROJECTS', () => {
+    describe('GET_PROJECTS', () => {
+      it('should return projects', () => {
+        const testArray = ['meep', 'mee', 'me'];
 
-      expect(resume(undefined, {
-        type: GET_PROJECTS,
-        data: testArray
-      }).projects).toEqual(testArray);
+        expect(resume(undefined, {
+          type: GET_PROJECTS,
+          data: testArray
+        }).projects).toEqual(testArray);
+      });
     });
+
+    describe('PUT_PROJECT', () => {
+      it('should not update if id does not match', () => {
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: [],
+          schools: [],
+          projects: [
+            {
+              id: 1,
+              name: 'name1'
+            },
+            {
+              id: 2,
+              name: 'name2'
+            },
+            {
+              id: 3,
+              name: 'name3'
+            }
+          ]
+        };
+
+        const projectWithWrongId = {
+          id: 4,
+          name: 'you should never see this'
+        };
+
+        expect(resume(mockResumeState, {
+          type: PUT_PROJECT,
+          data: projectWithWrongId
+        })).toEqual(mockResumeState);
+
+      });
+
+      it('should update if id does match', () => {
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: [],
+          schools: [],
+          projects: [
+            {
+              id: 1,
+              name: 'name1'
+            }
+          ]
+        };
+
+        const updateData = {
+          id: 1,
+          name: 'Awesome Name'
+        };
+
+        expect(resume(mockResumeState, {
+          type: PUT_PROJECT,
+          data: updateData
+        }).projects[0]).toEqual(updateData);
+      });
+
+    });
+
+    describe('POST_PROJECT', () => {
+      it('should update the projects array with new object', () => {
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: [],
+          schools: [],
+          projects: [
+            {
+              id: 1,
+              name: 'name1'
+            }
+          ]
+        };
+
+        const postObject = {
+          id: 2,
+          name: 'name2'
+        };
+
+        expect(resume(mockResumeState, {
+          type: POST_PROJECT,
+          data: postObject
+        }).projects.length).toEqual(2);
+
+      });
+    });
+
+    describe('DELETE_PROJECT', () => {
+      it('should not remove any projects if id does not match', () => {
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: [],
+          schools: [],
+          projects: [
+            {
+              id: 1
+            }
+          ]
+        };
+
+        const deleteObject = {
+          id: 2
+        };
+
+        expect(resume(mockResumeState, {
+          type: DELETE_PROJECT,
+          data: deleteObject
+        }).projects).toEqual(mockResumeState.projects);
+
+      });
+
+      it('should remove project when id matches', () => {
+        const projects = [
+          {
+            id: 1,
+          },
+          {
+            id: 2
+          }
+        ]
+
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: [],
+          schools: [],
+          projects: projects
+        };
+
+        const deleteObject = {
+          id: 2
+        };
+
+        const expectedResult = projects.filter(p => p.id !== deleteObject.id);
+
+        expect(resume(mockResumeState, {
+          type: DELETE_PROJECT,
+          data: deleteObject
+        }).projects).toEqual(expectedResult);
+
+      });
+    });
+
   });
 
 });
