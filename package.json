@@ -33,6 +33,6 @@
     "eject": "react-scripts eject"
   },
   "jest": {
-    "setupFiles": []
+    "setupFiles": ["<rootDir>/src/mocks/LocalStorageMock.js"]
   }
 }
