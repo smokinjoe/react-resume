@@ -220,7 +220,7 @@ const initialToken = {
   data: localStorage.getItem(LOCAL_STORAGE.API_TOKEN)
 };
 
-const token = (state = initialToken, action) => {
+export const token = (state = initialToken, action) => {
   switch (action.type) {
     case LOGIN:
       localStorage.setItem(LOCAL_STORAGE.API_TOKEN, action.data);

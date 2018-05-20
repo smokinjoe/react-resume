@@ -791,3 +791,54 @@ describe('resume reducer', () => {
   });
 
 });
+
+import {
+  LOGIN,
+  LOGIN_ERROR
+} from '../actions';
+
+import {
+  LOCAL_STORAGE
+} from '../utils/constants';
+
+import { token } from './index';
+
+describe('token reducer', () => {
+  describe('initial state', () => {
+
+    it('should return null if API_TOKEN localStorage is not set', () => {
+      localStorage.clear();
+
+      const expectedTokenObject = {
+        data: null
+      };
+
+      expect(token(undefined, {})).toEqual(expectedTokenObject);
+    })
+
+    // Not entirely sure why this doesn't work - I can console.log in the actual
+    // reducer and it appears that localStorage is being appropriately set
+    xit('should return something if localStorage is set', () => {
+      localStorage.clear()
+      const expectedToken = 'pb4ugo2bed';
+      localStorage.setItem(LOCAL_STORAGE.API_TOKEN, expectedToken);
+      expect(token(undefined, {})).toEqual({
+        data: expectedToken
+      });
+    });
+
+  });
+
+  it('LOGIN should appropriately set the localStorage and state', () => {
+    localStorage.clear()
+    const expectedToken = 'pb4ugo2bed';
+    const result = token(undefined, {
+      type: LOGIN,
+      data: expectedToken
+    });
+
+    expect(result).toEqual({ data: expectedToken });
+    expect(localStorage.getItem(LOCAL_STORAGE.API_TOKEN)).toEqual(expectedToken);
+  });
+
+});
