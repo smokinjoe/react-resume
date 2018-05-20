@@ -17,6 +17,8 @@ import {
   getResume
 } from './index';
 
+const MOCK_TOKEN = 'pb4ugo2bed';
+
 describe('getResume()', () => {
   beforeEach(() => {
     moxios.install();
@@ -118,7 +120,7 @@ describe('login()', () => {
 
   it('should fire LOGIN if successful', () => {
     const data = {
-      token: 'pb4ugo2bed'
+      token: MOCK_TOKEN
     };
 
     const response = {
@@ -161,7 +163,6 @@ describe('putTechnicalExperience()', () => {
 
   it('should fire PUT_TECHNICAL_EXPERIENCE if successful', () => {
     const expectedTechnicalExperience = {
-      id: 1,
       title: 'title1',
       items: [1, 2, 3]
     };
@@ -182,12 +183,12 @@ describe('putTechnicalExperience()', () => {
       { type: PUT_TECHNICAL_EXPERIENCE, data: expectedTechnicalExperience }
     ];
 
-    const store = mockStore({ token: { data: 'pb4ugo2bed' } });
+    const store = mockStore({ token: { data: MOCK_TOKEN } });
     return store.dispatch(putTechnicalExperience(expectedTechnicalExperience)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
 
-    // Don't forget some failure tests
+    // JOE: NOTE: Don't forget some failure tests
 
   });
 
@@ -209,7 +210,6 @@ describe('putWeaponOfChoice', () => {
 
   it('should fire PUT_WEAPON_OF_CHOICE if successful', () => {
     const expectedWoC = {
-      id: 1,
       title: 'title1',
       items: [1, 2, 3]
     };
@@ -230,12 +230,143 @@ describe('putWeaponOfChoice', () => {
       { type: PUT_WEAPON_OF_CHOICE, data: expectedWoC }
     ];
 
-    const store = mockStore({ token: { data: 'pb4ugo2bed' } });
+    const store = mockStore({ token: { data: MOCK_TOKEN } });
     return store.dispatch(putWeaponOfChoice(expectedWoC)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
 
-    // Don't forget some failure tests
+    // JOE: NOTE: Don't forget some failure tests
 
   });
+});
+
+import {
+  PUT_EMPLOYMENT_EXPERIENCE,
+  POST_EMPLOYMENT_EXPERIENCE,
+  DELETE_EMPLOYMENT_EXPERIENCE,
+  saveEmploymentExperience,
+  deleteEmploymentExperience
+} from './index';
+
+describe('Employment Experience fun fun fun', () => {
+  beforeEach(() => {
+    moxios.install();
+  });
+
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  describe('saveEmploymentExperience', () => {
+
+    it('should fire POST_EMPLOYMENT_EXPERIENCE if no id is present', () => {
+
+      const employmentExperience = {
+        company_name: 'company name',
+        company_role: 'company role',
+        date_start: 'date start',
+        date_end: 'date end',
+        items: [1, 2, 3]
+      };
+
+      const id = 7;
+
+      const expectedEmploymentExperience = Object.assign({},
+            employmentExperience,
+            { id: 7 });
+
+      const response = {
+        payload: expectedEmploymentExperience
+      };
+
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: response
+        });
+      });
+
+      const expectedActions = [
+        { type: POST_EMPLOYMENT_EXPERIENCE, data: expectedEmploymentExperience }
+      ];
+
+      const store = mockStore({ token: { data: MOCK_TOKEN } });
+
+      return store.dispatch(saveEmploymentExperience(employmentExperience)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+
+      // JOE: NOTE: Don't forget some failure tests
+
+    });
+
+    it('should fire PUT_EMPLOYMENT_EXPERIENCE if id is present', () => {
+
+      const expectedEmploymentExperience = {
+        id: 7,
+        company_name: 'company name',
+        company_role: 'company role',
+        date_start: 'date start',
+        date_end: 'date end',
+        items: [1, 2, 3]
+      };
+
+      const response = {
+        payload: expectedEmploymentExperience
+      };
+
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: response
+        });
+      });
+
+      const expectedActions = [
+        { type: PUT_EMPLOYMENT_EXPERIENCE, data: expectedEmploymentExperience }
+      ];
+
+      const store = mockStore({ token: { data: MOCK_TOKEN } });
+
+      return store.dispatch(saveEmploymentExperience(expectedEmploymentExperience)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+
+      // JOE: NOTE: Don't forget some failure tests
+
+    });
+
+  });
+
+  describe('deleteEmploymentExperience', () => {
+    it('should fire off a DELETE_EMPLOYMENT_EXPERIENCE if successful!', () => {
+      const expectedObject = {
+        id: 2,
+        foo: 'bar'
+      };
+
+      moxios.wait(() => {
+        const request = moxios.request.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {}
+        });
+      });
+
+      const expectedActions = [
+        { type: DELETE_EMPLOYMENT_EXPERIENCE, data: expectedObject }
+      ];
+
+      const store = mockStore({ token: { data: MOCK_TOKEN } });
+
+      return store.dispatch(deleteEmploymentExperience(expectedObject)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+
+    });
+
+  });
+
 });
