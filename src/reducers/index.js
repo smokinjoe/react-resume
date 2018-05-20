@@ -247,7 +247,7 @@ const initialLoadingState = {
   state: IDLE
 };
 
-const loading = (state = initialLoadingState, action) => {
+export const loading = (state = initialLoadingState, action) => {
   switch (action.type) {
     case IDLE:
       return Object.assign({}, state, {

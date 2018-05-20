@@ -842,3 +842,42 @@ describe('token reducer', () => {
   });
 
 });
+
+import {
+  IDLE,
+  FETCHING,
+  ERROR
+} from '../actions';
+
+import { loading } from './index';
+
+describe('loading reducer', () => {
+
+  it('should return the initial state', () => {
+    const expectedInitialLoadingState = { state: IDLE };
+    expect(loading(undefined, {})).toEqual(expectedInitialLoadingState);
+
+  });
+
+  it('should return IDLE when hit with the IDLE', () => {
+    const expectedInitialLoadingState = { state: IDLE };
+    expect(loading(undefined, {
+      type: IDLE
+    })).toEqual(expectedInitialLoadingState);
+  });
+
+  it('should return FETCHING when hit with the FETCHING', () => {
+    const expectedInitialLoadingState = { state: FETCHING };
+    expect(loading(undefined, {
+      type: FETCHING
+    })).toEqual(expectedInitialLoadingState);
+  });
+
+  it('should return ERROR when hit with the ERROR', () => {
+    const expectedInitialLoadingState = { state: ERROR };
+    expect(loading(undefined, {
+      type: ERROR
+    })).toEqual(expectedInitialLoadingState);
+  });
+
+});
