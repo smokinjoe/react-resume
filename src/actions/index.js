@@ -47,7 +47,8 @@ const _getResume = (dispatch) => {
     })
     .catch(error => {
       // let letsGOOO = window.confirm('There has been an error fetching from the resume API endpoint. Would you like to be redirected to a static copy ... of my resume?');
-      console.log('Error: ', error);
+      // console.log('Error: ', error);
+      dispatch(err());
       reject();
       // if (letsGOOO) {
       //   window.location = 'http://ekiert.net/joe-ekiert-resume.pdf';
@@ -55,8 +56,6 @@ const _getResume = (dispatch) => {
       // else {
       //   dispatch(err());
       // }
-
-      dispatch(err());
 
     });
 
