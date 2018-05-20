@@ -302,14 +302,78 @@ describe('resume reducer', () => {
     });
   });
 
-  describe('GET_WEAPONS_OF_CHOICE', () => {
-    it('should return weapons of choice', () => {
-      const testArray = ['foo', 'bar'];
+  describe('WEAPONS_OF_CHOICE', () => {
+    describe('GET_WEAPONS_OF_CHOICE', () => {
+      it('should return weapons of choice', () => {
+        const testArray = ['foo', 'bar'];
 
-      expect(resume(undefined, {
-        type: GET_WEAPONS_OF_CHOICE,
-        data: testArray
-      }).weaponsOfChoice).toEqual(testArray);
+        expect(resume(undefined, {
+          type: GET_WEAPONS_OF_CHOICE,
+          data: testArray
+        }).weaponsOfChoice).toEqual(testArray);
+
+      });
+    });
+
+    describe('PUT_WEAPON_OF_CHOICE', () => {
+
+      it('should not update weepon if id does not match', () => {
+        const expectedWeepons = [
+          {
+            id: 1,
+            name: 'blah'
+          },
+          {
+            id: 2,
+            name: 'bleh'
+          }
+        ];
+
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: expectedWeepons,
+          employmentExperiences: [],
+          schools: [],
+          projects: []
+        };
+
+        const updateObject = {
+          id: 3,
+          name: 'howdy howdy'
+        };
+
+        expect(resume(mockResumeState, {
+          type: PUT_WEAPON_OF_CHOICE,
+          data: updateObject
+        }).weaponsOfChoice).toEqual(expectedWeepons);
+
+      });
+
+      it('should update weepon if id does match', () => {
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [
+            {
+              id: 1,
+              name: 'this gets updated'
+            }
+          ],
+          employmentExperiences: [],
+          schools: [],
+          projects: []
+        };
+
+        const updateObject = {
+          id: 1,
+          name: 'pb4ugo2bed'
+        };
+
+        expect(resume(mockResumeState, {
+          type: PUT_WEAPON_OF_CHOICE,
+          data: updateObject
+        }).weaponsOfChoice).toEqual([updateObject]);
+
+      });
 
     });
   });
