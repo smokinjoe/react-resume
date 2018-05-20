@@ -29,7 +29,7 @@ const initialUserData = {
   zip: null
 };
 
-const user = (state = initialUserData, action) => {
+export const user = (state = initialUserData, action) => {
   switch (action.type) {
     case GET_USER_DATA:
       return Object.assign({}, state, action.data);
