@@ -122,9 +122,7 @@ describe('login()', () => {
     };
 
     const response = {
-      data: {
-        payload: data
-      }
+      payload: data
     };
 
     moxios.wait(() => {
@@ -136,7 +134,7 @@ describe('login()', () => {
     });
 
     const expectedActions = [
-      { type: LOGIN, data: data }
+      { type: LOGIN, data: data.token }
     ];
 
     const store = mockStore({});
@@ -145,4 +143,99 @@ describe('login()', () => {
     });
   });
 
+});
+
+import {
+  PUT_TECHNICAL_EXPERIENCE,
+  putTechnicalExperience
+} from './index';
+
+describe('putTechnicalExperience()', () => {
+  beforeEach(() => {
+    moxios.install();
+  });
+
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  it('should fire PUT_TECHNICAL_EXPERIENCE if successful', () => {
+    const expectedTechnicalExperience = {
+      id: 1,
+      title: 'title1',
+      items: [1, 2, 3]
+    };
+
+    const response = {
+      payload: expectedTechnicalExperience
+    };
+
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: response
+      });
+    });
+
+    const expectedActions = [
+      { type: PUT_TECHNICAL_EXPERIENCE, data: expectedTechnicalExperience }
+    ];
+
+    const store = mockStore({ token: { data: 'pb4ugo2bed' } });
+    return store.dispatch(putTechnicalExperience(expectedTechnicalExperience)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    // Don't forget some failure tests
+
+  });
+
+});
+
+import {
+  PUT_WEAPON_OF_CHOICE,
+  putWeaponOfChoice
+} from './index';
+
+describe('putWeaponOfChoice', () => {
+  beforeEach(() => {
+    moxios.install();
+  });
+
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  it('should fire PUT_WEAPON_OF_CHOICE if successful', () => {
+    const expectedWoC = {
+      id: 1,
+      title: 'title1',
+      items: [1, 2, 3]
+    };
+
+    const response = {
+      payload: expectedWoC
+    };
+
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: response
+      });
+    });
+
+    const expectedActions = [
+      { type: PUT_WEAPON_OF_CHOICE, data: expectedWoC }
+    ];
+
+    const store = mockStore({ token: { data: 'pb4ugo2bed' } });
+    return store.dispatch(putWeaponOfChoice(expectedWoC)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    // Don't forget some failure tests
+
+  });
 });
