@@ -348,7 +348,7 @@ describe('Employment Experience fun fun fun', () => {
       };
 
       moxios.wait(() => {
-        const request = moxios.request.mostRecent();
+        const request = moxios.requests.mostRecent();
         request.respondWith({
           status: 200,
           response: {}
@@ -363,6 +363,185 @@ describe('Employment Experience fun fun fun', () => {
 
       return store.dispatch(deleteEmploymentExperience(expectedObject)).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
+      });
+
+    });
+
+  });
+
+});
+
+import {
+  PUT_SCHOOL,
+  saveSchool
+} from './index';
+
+describe('saveSchool', () => {
+  beforeEach(() => {
+    moxios.install();
+  });
+
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  it('should fire PUT_SCHOOL when successful', (done) => {
+    const expectedSchool = {
+      id: 7,
+      school_name: 'school name',
+      wut: 'lol',
+      date_of_graduation: 'sometime in 2005'
+    };
+
+    const response = {
+      payload: expectedSchool
+    };
+
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: response
+      });
+    });
+
+    const expectedActions = [
+      { type: PUT_SCHOOL, data: expectedSchool }
+    ];
+
+    const store = mockStore({ token: { data: MOCK_TOKEN } });
+
+    return store.dispatch(saveSchool(expectedSchool)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+      done();
+    });
+
+  });
+});
+
+import {
+  PUT_PROJECT,
+  POST_PROJECT,
+  DELETE_PROJECT,
+  saveProject,
+  deleteProject
+} from './index';
+
+describe('PROJECT FUN!', () => {
+  beforeEach(() => {
+    moxios.install();
+  });
+
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  describe('saveProject', () => {
+
+    it('should fire POST_PROJECT if no id is present', () => {
+
+      const project = {
+        title: 'neato',
+        link_url: 'http://lipsum.com',
+        link_title: 'Lorem ipsum dolor sit amet'
+      };
+
+      const id = 7;
+
+      const expectedProject = Object.assign({},
+            project,
+            { id: 7 });
+
+      const response = {
+        payload: expectedProject
+      };
+
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: response
+        });
+      });
+
+      const expectedActions = [
+        { type: POST_PROJECT, data: expectedProject }
+      ];
+
+      const store = mockStore({ token: { data: MOCK_TOKEN } });
+
+      return store.dispatch(saveProject(project)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+
+      // JOE: NOTE: Don't forget some failure tests
+
+    });
+
+    it('should fire PUT_PROJECT if id is present', () => {
+
+      const expectedProject = {
+        id: 7,
+        title: 'neato',
+        link_url: 'http://lipsum.com',
+        link_title: 'Lorem ipsum dolor sit amet'
+      };
+
+      const response = {
+        payload: expectedProject
+      };
+
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: response
+        });
+      });
+
+      const expectedActions = [
+        { type: PUT_PROJECT, data: expectedProject }
+      ];
+
+      const store = mockStore({ token: { data: MOCK_TOKEN } });
+
+      return store.dispatch(saveProject(expectedProject)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+
+      // JOE: NOTE: Don't forget some failure tests
+
+    });
+
+  });
+
+  describe('deleteProject', () => {
+    it('should fire off a DELETE_PROJECT if successful!', (done) => {
+      const expectedProject = {
+        id: 7,
+        title: 'neato',
+        link_url: 'http://lipsum.com',
+        link_title: 'Lorem ipsum dolor sit amet'
+      };
+
+
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 200,
+          response: {}
+        });
+      });
+
+      const expectedActions = [
+        { type: DELETE_PROJECT, data: expectedProject }
+      ];
+
+      const store = mockStore({ token: { data: MOCK_TOKEN } });
+
+      return store.dispatch(deleteProject(expectedProject)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+        done();
       });
 
     });
