@@ -196,7 +196,7 @@ const _putWeaponOfChoice = (dispatch, getState, data) => {
 export const PUT_EMPLOYMENT_EXPERIENCE = 'PUT_EMPLOYMENT_EXPERIENCE';
 export const POST_EMPLOYMENT_EXPERIENCE = 'POST_EMPLOYMENT_EXPERIENCE';
 export const DELETE_EMPLOYMENT_EXPERIENCE = 'DELETE_EMPLOYMENT_EXPERIENCE';
-export const saveEmpoymentExperience = (data) => (dispatch, getState) => _saveEmploymentExperience(dispatch, getState, data);
+export const saveEmploymentExperience = (data) => (dispatch, getState) => _saveEmploymentExperience(dispatch, getState, data);
 export const deleteEmploymentExperience = (data) => (dispatch, getState) => _deleteEmploymentExperience(dispatch, getState, data);
 
 const _saveEmploymentExperience = (dispatch, getState, data) => {
