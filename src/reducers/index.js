@@ -72,7 +72,7 @@ const intialResumeState = {
   projects: []
 };
 
-const resume = (state = intialResumeState, action) => {
+export const resume = (state = intialResumeState, action) => {
   switch (action.type) {
     case GET_RESUME:
       action.data.technicalExperiences.sort((a, b) => {
