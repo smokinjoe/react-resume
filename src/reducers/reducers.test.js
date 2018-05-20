@@ -378,28 +378,177 @@ describe('resume reducer', () => {
     });
   });
 
-  describe('GET_EMPLOYMENT_EXPERIENCES', () => {
-    it('should appropriately sort employment experiences', () => {
-      const sortedArray = [
-        {
-          id: 3
-        },
-        {
-          id: 1
-        },
-        {
-          id: 2
-        }
-      ];
-      const shuffledArray = sortedArray.slice();
-      sortedArray.sort((a, b) => {
-        return b.id - a.id
+  describe('EMPLOYMENT_EXPERIENCES', () => {
+    describe('GET_EMPLOYMENT_EXPERIENCES', () => {
+      it('should appropriately sort employment experiences', () => {
+        const sortedArray = [
+          {
+            id: 3
+          },
+          {
+            id: 1
+          },
+          {
+            id: 2
+          }
+        ];
+        const shuffledArray = sortedArray.slice();
+        sortedArray.sort((a, b) => {
+          return b.id - a.id
+        });
+
+        expect(resume(undefined, {
+          type: GET_EMPLOYMENT_EXPERIENCES,
+          data: shuffledArray
+        }).employmentExperiences).toEqual(sortedArray);
+
+      });
+    });
+
+    describe('PUT_EMPLOYMENT_EXPERIENCE', () => {
+      it('should not update when id does not match', () => {
+        const expectedEmploymentExperiences = [
+          {
+            id: 1,
+            name: 'name1'
+          }
+        ];
+
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: expectedEmploymentExperiences,
+          schools: [],
+          projects: []
+        };
+
+        const updateObject = {
+          id: 2,
+          name: 'namey mcnamerson'
+        };
+
+        expect(resume(mockResumeState, {
+          type: PUT_EMPLOYMENT_EXPERIENCE,
+          data: updateObject
+        }).employmentExperiences).toEqual(expectedEmploymentExperiences);
+
       });
 
-      expect(resume(undefined, {
-        type: GET_EMPLOYMENT_EXPERIENCES,
-        data: shuffledArray
-      }).employmentExperiences).toEqual(sortedArray);
+      it('should update when id does match', () => {
+        const employmentExperiences = [
+          {
+            id: 1,
+            name: 'name1'
+          }
+        ];
+
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: employmentExperiences,
+          schools: [],
+          projects: []
+        };
+
+        const updateObject = {
+          id: 1,
+          name: 'namey mcnamerson'
+        };
+
+        expect(resume(mockResumeState, {
+          type: PUT_EMPLOYMENT_EXPERIENCE,
+          data: updateObject
+        }).employmentExperiences).toEqual([updateObject]);
+
+      });
+
+    });
+
+    describe('POST_EMPLOYMENT_EXPERIENCE', () => {
+      it('should place the new experience at the beginning of the array', () => {
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: [
+            {
+              id: 1,
+              name: 'name1'
+            }
+          ],
+          schools: [],
+          projects: []
+        };
+
+        const insertObject = {
+          id: 2, // yeah yeah, I know
+          name: 'name2'
+        };
+
+        const reducerResult = resume(mockResumeState, {
+          type: POST_EMPLOYMENT_EXPERIENCE,
+          data: insertObject
+        });
+
+        expect(reducerResult.employmentExperiences.length).toEqual(2);
+        expect(reducerResult.employmentExperiences[0]).toEqual(insertObject);
+
+      });
+    });
+
+    describe('DELETE_EMPLOYMENT_EXPERIENCE', () => {
+      it('should not delete if id does not match', () => {
+        const expectedEmploymentExperiences = [
+          {
+            id: 1,
+            name: 'name1'
+          }
+        ];
+
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: expectedEmploymentExperiences,
+          schools: [],
+          projects: []
+        };
+
+        const deleteObject = {
+          id: 2
+        };
+
+        expect(resume(mockResumeState, {
+          type: DELETE_EMPLOYMENT_EXPERIENCE,
+          data: deleteObject
+        }).employmentExperiences).toEqual(expectedEmploymentExperiences);
+
+      });
+
+      it('should delete if id does match', () => {
+        const employmentExperiences = [
+          {
+            id: 1,
+            name: 'name1'
+          }
+        ];
+
+        const mockResumeState = {
+          technicalExperiences: [],
+          weaponsOfChoice: [],
+          employmentExperiences: employmentExperiences,
+          schools: [],
+          projects: []
+        };
+
+        const deleteObject = {
+          id: 1
+        };
+
+        expect(resume(mockResumeState, {
+          type: DELETE_EMPLOYMENT_EXPERIENCE,
+          data: deleteObject
+        }).employmentExperiences).toEqual([]);
+
+      });
 
     });
   });
