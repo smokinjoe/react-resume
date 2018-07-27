@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import resumeClient from '../utils/resumeClient';
+
 const URL = process.env.REACT_APP_JOE_RESUME_API_URL;
 const TIMEOUT_SECONDS = process.env.REACT_APP_TIMEOUT_SECONDS;
 
@@ -17,6 +19,30 @@ export const GET_PROJECTS = 'GET_PROJECTS';
 export const getResume = () => (dispatch) => _getResume(dispatch);
 
 const _getResume = (dispatch) => {
+  dispatch(fetching());
+  resumeClient.getResume({
+    successCb: (items) => {
+      dispatch({
+        type: GET_RESUME,
+        data: items.data.payload
+      });
+
+      if (typeof items.data.payload.user !== 'undefined') {
+        dispatch({
+          type: GET_USER_DATA,
+          data: items.data.payload.user.pop()
+        });
+      }
+      dispatch(idle());      
+    },
+    failCb: () => {
+      dispatch(err());
+    }
+  });
+
+
+  return;
+
   return new Promise((resolve, reject) => {
     dispatch(fetching());
 
