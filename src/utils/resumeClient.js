@@ -6,18 +6,16 @@ const TIMEOUT_SECONDS = process.env.REACT_APP_TIMEOUT_SECONDS;
 const resumeClient = {};
 
 // JOE: WIP: I think I want to remove successCb and failCb
-const _resumeClient = ({ method, endpoint, successCb, failCb }) => {
-
+const _resumeClient = ({ headers, auth, method, endpoint }) => {
+  
   return new Promise((resolve, reject) => {
     // dispatch(fetching());
 
     axios({
       method: method,
       url: buildUri(URL, endpoint),
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'Content-Type: application/json'
-      }
+      headers: headers,
+      auth: auth
     })
     .then(items => {
       // success dispatch();
@@ -38,7 +36,11 @@ resumeClient.getResume = ({successCb, failCb}) => {
   
   _resumeClient({ 
       method: 'GET', 
-      endpoint: 'resume'
+      endpoint: 'resume',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'Content-Type: application/json'
+      }
     })
     .then(items => {
       if (typeof successCb === 'function') {
@@ -51,6 +53,27 @@ resumeClient.getResume = ({successCb, failCb}) => {
       }
     });
 
+};
+
+resumeClient.login = ({username, password, successCb, failCb}) => {
+  _resumeClient({
+      method: 'GET',
+      endpoint: 'token',
+      auth: {
+        username,
+        password
+      }
+    })
+    .then(respones => {
+      if (typeof successCb === 'function') {
+        successCb(respones);
+      }
+    })
+    .catch(error => {
+      if (typeof failCb === 'function') {
+        failCb();
+      }
+    });
 };
 
 export default resumeClient;
