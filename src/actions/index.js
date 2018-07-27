@@ -51,60 +51,26 @@ export const login = (username, password) => (dispatch) => _login(dispatch, user
 
 const _login = (dispatch, username, password) => {
   resumeClient.login({
-      username: username,
-      password: password,
-      successCb: (response) => {
-        if (response.data && response.data.payload && response.data.payload.token) {
-          dispatch({
-            type: LOGIN,
-            data: response.data.payload.token
-          });
-        }
-        else {
-          dispatch({
-            type: LOGIN_ERROR
-          });
-        }
-      },
-      failCb: () => {
-        dispatch({
-          type: LOGIN_ERROR
-        });
-      }
-    });
-
-
-  return;
-
-  return new Promise((resolve, reject) => {
-    axios({
-      method: 'GET',
-      url: URL + 'token',
-      auth: {
-        username: username,
-        password: password
-      }
-    })
-    .then((response) => {
-
+    username: username,
+    password: password,
+    successCb: (response) => {
       if (response.data && response.data.payload && response.data.payload.token) {
         dispatch({
           type: LOGIN,
           data: response.data.payload.token
         });
-
-        resolve(response.data.payload.token);
       }
       else {
         dispatch({
           type: LOGIN_ERROR
         });
-
-        reject();
       }
-
-    });
-
+    },
+    failCb: () => {
+      dispatch({
+        type: LOGIN_ERROR
+      });
+    }
   });
 
 };
