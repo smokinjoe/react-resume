@@ -83,9 +83,9 @@ resumeClient.login = ({username, password, successCb, failCb}) => {
         password
       }
     })
-    .then(respones => {
+    .then(response => {
       if (typeof successCb === 'function') {
-        successCb(respones);
+        successCb(response);
       }
     })
     .catch(error => {
@@ -93,6 +93,31 @@ resumeClient.login = ({username, password, successCb, failCb}) => {
         failCb();
       }
     });
+};
+
+resumeClient.putTechnicalExperience = ({ data, token, successCb, failCb }) => {
+  let { id, items, title } = data;
+
+  _resumeClient({
+    method: 'PUT',
+    endpoint: 'technical_experiences',
+    auth: {
+      usrename: token
+    },
+    data: {
+      items, title
+    }
+  })
+  .then(response => {
+    if (typeof successCb === 'function') {
+      successCb(response);
+    }
+  })
+  .catch(error => {
+    if (typeof failCb === 'function') {
+      failCb();
+    }
+  });
 };
 
 export default resumeClient;
