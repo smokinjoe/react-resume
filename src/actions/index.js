@@ -39,54 +39,6 @@ const _getResume = (dispatch) => {
       dispatch(err());
     }
   });
-
-
-  return;
-
-  return new Promise((resolve, reject) => {
-    dispatch(fetching());
-
-    axios({
-      method: 'GET',
-      url: URL + 'resume',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'Content-Type: application/json'
-      }
-    })
-    .then(items => {
-      dispatch({
-        type: GET_RESUME,
-        data: items.data.payload
-      });
-
-      if (typeof items.data.payload.user !== 'undefined') {
-        dispatch({
-          type: GET_USER_DATA,
-          data: items.data.payload.user.pop()
-        });
-      }
-
-      dispatch(idle());
-
-      resolve(items.data);
-    })
-    .catch(error => {
-      // let letsGOOO = window.confirm('There has been an error fetching from the resume API endpoint. Would you like to be redirected to a static copy ... of my resume?');
-      // console.log('Error: ', error);
-      dispatch(err());
-      reject();
-      // if (letsGOOO) {
-      //   window.location = 'http://ekiert.net/joe-ekiert-resume.pdf';
-      // }
-      // else {
-      //   dispatch(err());
-      // }
-
-    });
-
-  });
-
 };
 
 /**
@@ -98,6 +50,31 @@ export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const login = (username, password) => (dispatch) => _login(dispatch, username, password);
 
 const _login = (dispatch, username, password) => {
+  resumeClient.login({
+      username: username,
+      password: password,
+      successCb: (response) => {
+        if (response.data && response.data.payload && response.data.payload.token) {
+          dispatch({
+            type: LOGIN,
+            data: response.data.payload.token
+          });
+        }
+        else {
+          dispatch({
+            type: LOGIN_ERROR
+          });
+        }
+      },
+      failCb: () => {
+        dispatch({
+          type: LOGIN_ERROR
+        });
+      }
+    });
+
+
+  return;
 
   return new Promise((resolve, reject) => {
     axios({
