@@ -38,8 +38,14 @@ const _buildOpts = ({ headers, auth, method, endpoint }) => {
   if (_isDef(method)) {
     _opts.method = method;
   }
+  else {
+    throw "Error: Method must be present.";
+  }
   if (_isDef(endpoint)) {
     _opts.url = _buildUri(URL, endpoint);
+  }
+  else {
+    throw "Error: Endpoint must be present";
   }
 
   return _opts;
