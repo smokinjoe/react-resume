@@ -6,30 +6,43 @@ const TIMEOUT_SECONDS = process.env.REACT_APP_TIMEOUT_SECONDS;
 const resumeClient = {};
 
 // JOE: WIP: I think I want to remove successCb and failCb
-const _resumeClient = ({ headers, auth, method, endpoint }) => {
-  
-  return new Promise((resolve, reject) => {
-    // dispatch(fetching());
+const _resumeClient = (params) => {
+  const options = _buildOpts(params);
 
-    axios({
-      method: method,
-      url: buildUri(URL, endpoint),
-      headers: headers,
-      auth: auth
-    })
+  return new Promise((resolve, reject) => {
+    axios(options)
     .then(items => {
-      // success dispatch();
       resolve(items.data);
     })
     .catch(error => {
-      // dispatch(err());
       reject();
     });
   });
 };
 
-const buildUri = (base, nextSegment) => {
+const _isDef = (a) => typeof a !== 'undefined';
+
+const _buildUri = (base, nextSegment) => {
   return base + nextSegment;
+};
+
+const _buildOpts = ({ headers, auth, method, endpoint }) => {
+  const _opts = {};
+
+  if (_isDef(headers)) {
+    _opts.headers = headers;
+  }
+  if (_isDef(auth)) {
+    _opts.auth = auth;
+  }
+  if (_isDef(method)) {
+    _opts.method = method;
+  }
+  if (_isDef(endpoint)) {
+    _opts.url = _buildUri(URL, endpoint);
+  }
+
+  return _opts;
 };
 
 resumeClient.getResume = ({successCb, failCb}) => {
